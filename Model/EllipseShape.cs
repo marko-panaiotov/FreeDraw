@@ -15,7 +15,7 @@ namespace FreeDraw.Model
         {
         }
 
-        public EllipseShape(RectangleShape rectangle) : base(rectangle)
+        public EllipseShape(EllipseShape ellipse) : base(ellipse)
         {
         }
 
@@ -47,7 +47,7 @@ namespace FreeDraw.Model
             base.DrawSelf(grfx);
 
             grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawEllipse(Pens.Black, Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            grfx.DrawEllipse(new Pen(BorderColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 
         }
     }

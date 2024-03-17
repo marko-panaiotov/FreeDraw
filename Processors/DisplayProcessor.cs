@@ -66,6 +66,8 @@ namespace FreeDraw.Processors
             item.DrawSelf(grfx);
         }
 
+      
+
         #endregion
     }
 }

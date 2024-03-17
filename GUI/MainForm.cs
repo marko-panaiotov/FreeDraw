@@ -88,7 +88,7 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
 
-        private void drawTriangleSpeedButton_Click(object sender, EventArgs e)
+        private void DrawTriangleSpeedButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.AddRandomTriangle();
 
@@ -97,7 +97,7 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
 
-        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        private void DrawCircleSpeedButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.AddRandomCircle();
 
@@ -158,15 +158,6 @@ namespace FreeDraw
         void ViewPortMouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             dialogProcessor.IsDragging = false;
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            dialogProcessor.AddRandomEllipse();
-
-            statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
-
-            viewPort.Invalidate();
         }
 
         private void PickColorButton_Click(object sender, EventArgs e)

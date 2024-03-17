@@ -14,7 +14,7 @@ namespace FreeDraw.Model
         {
         }
 
-        public CircleShape(RectangleShape rectangle) : base(rectangle)
+        public CircleShape(CircleShape circle) : base(circle)
         {
         }
 
@@ -45,9 +45,12 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
 
+            //DrawBorder(grfx);
             grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, 200, 200);
-            grfx.DrawEllipse(Pens.Black, Rectangle.X, Rectangle.Y, 200, 200);
-
+            grfx.DrawEllipse(new Pen(BorderColor),Rectangle.X, Rectangle.Y, 200, 200);
+            
         }
+
+       
     }
 }

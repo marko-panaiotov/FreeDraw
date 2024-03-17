@@ -161,7 +161,7 @@
             drawTriangleSpeedButton.Size = new Size(23, 22);
             drawTriangleSpeedButton.Text = "DrawTriangleButton";
             drawTriangleSpeedButton.TextAlign = ContentAlignment.MiddleRight;
-            drawTriangleSpeedButton.Click += drawTriangleSpeedButton_Click;
+            drawTriangleSpeedButton.Click += DrawTriangleSpeedButton_Click;
             // 
             // drawCircleSpeedButton
             // 
@@ -171,7 +171,7 @@
             drawCircleSpeedButton.Name = "drawCircleSpeedButton";
             drawCircleSpeedButton.Size = new Size(23, 22);
             drawCircleSpeedButton.Text = "DrawCircleButton";
-            drawCircleSpeedButton.Click += toolStripButton1_Click_1;
+            drawCircleSpeedButton.Click += DrawCircleSpeedButton_Click;
             // 
             // pickColorButton
             // 

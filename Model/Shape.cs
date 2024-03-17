@@ -27,6 +27,7 @@ namespace FreeDraw.Model
             this.rectangle = shape.rectangle;
 
             this.FillColor = shape.FillColor;
+            this.BorderColor = shape.BorderColor;
         }
         #endregion
 
@@ -79,6 +80,13 @@ namespace FreeDraw.Model
             set { fillColor = value; }
         }
 
+        private Color borderColor = Color.Black;
+        public virtual Color BorderColor
+        {
+            get { return borderColor; }
+            set { borderColor = value; }
+        } 
+
         #endregion
 
 
@@ -101,6 +109,8 @@ namespace FreeDraw.Model
         {
             // shape.Rectangle.Inflate(shape.BorderWidth, shape.BorderWidth);
         }
+
+   
 
     }
 }
