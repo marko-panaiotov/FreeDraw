@@ -19,6 +19,12 @@ namespace FreeDraw
         /// Агрегирания диалогов процесор във формата улеснява манипулацията на модела.
         /// </summary>
         private DialogProcessor dialogProcessor = new DialogProcessor();
+        private Point startPoint;
+        private Point endPoint;
+        private bool isDoubleClicking;
+        private const int DoubleClickInterval = 300; // Интервал на двойно натискане в милисекунди
+        private DateTime lastClickTime = DateTime.MinValue;
+        private bool singleClickPending = false;
 
         public MainForm()
         {
@@ -54,18 +60,48 @@ namespace FreeDraw
         /// </summary>
         void DrawRectangleSpeedButtonClick(object sender, EventArgs e)
         {
+
             dialogProcessor.AddRandomRectangle();
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
 
             viewPort.Invalidate();
+
         }
+        /* void DrawRectangleSpeedButtonDoubleClick(object sender, EventArgs e)
+         {
+
+             dialogProcessor.AddRandomRectangle();
+
+             statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+
+             viewPort.Invalidate();
+             isDoubleClicking = true;
+         }*/
 
         private void DrawEllipseSpeedButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.AddRandomEllipse();
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
+
+            viewPort.Invalidate();
+        }
+
+        private void drawTriangleSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomTriangle();
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
+
+            viewPort.Invalidate();
+        }
+
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomCircle();
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на кръг";
 
             viewPort.Invalidate();
         }
@@ -80,7 +116,7 @@ namespace FreeDraw
         {
             if (pickUpSpeedButton.Checked)
             {
-                Shape sel=dialogProcessor.ContainsPoint(e.Location);
+                Shape sel = dialogProcessor.ContainsPoint(e.Location);
                 if (sel != null)
                 {
                     if (dialogProcessor.Selection.Contains(sel))
@@ -88,16 +124,16 @@ namespace FreeDraw
 
                         dialogProcessor.Selection.Remove(sel);
                     }
-
-                    else {
+                    else
+                    {
                         dialogProcessor.Selection.Add(sel);
                     }
-                    
-                 }
-                 statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
-                 dialogProcessor.IsDragging = true;
-                 dialogProcessor.LastLocation = e.Location;
-                 viewPort.Invalidate();  
+
+                }
+                statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
+                dialogProcessor.IsDragging = true;
+                dialogProcessor.LastLocation = e.Location;
+                viewPort.Invalidate();
             }
         }
 
@@ -133,29 +169,10 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
 
-        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void statusBar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void pickUpSpeedButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void PickColorButton_Click(object sender, EventArgs e)
         {
-            if (colorPickerDialog.ShowDialog() == DialogResult.OK) {
+            if (colorPickerDialog.ShowDialog() == DialogResult.OK)
+            {
                 foreach (Shape item in dialogProcessor.Selection)
                 {
                     item.FillColor = colorPickerDialog.Color;
@@ -163,5 +180,8 @@ namespace FreeDraw
                 }
             }
         }
+
+ 
     }
 }
+

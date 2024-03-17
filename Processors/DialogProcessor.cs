@@ -1,4 +1,5 @@
-﻿using FreeDraw.Model;
+﻿using FreeDraw.GUI;
+using FreeDraw.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,13 @@ namespace FreeDraw.Processors
         {
             get { return isDragging; }
             set { isDragging = value; }
+        }
+
+        private PointF startLocation;
+        public PointF StartLocation
+        {
+            get { return startLocation; }
+            set { startLocation = value; }
         }
 
         /// <summary>
@@ -79,6 +87,30 @@ namespace FreeDraw.Processors
             ShapeList.Add(ellipse);
         }
 
+        public void AddRandomCircle()
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(100, 1000);
+            int y = rnd.Next(100, 600);
+
+            CircleShape circle = new CircleShape(new Rectangle(x, y, 100, 200));
+            circle.FillColor = Color.White;
+
+            ShapeList.Add(circle);
+        }
+
+        public void AddRandomTriangle()
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(100, 1000);
+            int y = rnd.Next(100, 600);
+
+            TriangleShape triangle = new TriangleShape(new Rectangle(x, y, 100, 200));
+            triangle.FillColor = Color.White;
+
+            ShapeList.Add(triangle);
+        }
+
         /// <summary>
         /// Проверява дали дадена точка е в елемента.
         /// Обхожда в ред обратен на визуализацията с цел намиране на
@@ -106,13 +138,14 @@ namespace FreeDraw.Processors
         /// <param name="p">Вектор на транслация.</param>
         public void TranslateTo(PointF p)
         {
-           
+            if (selection != null)
+            {
                 foreach (Shape item in Selection)
                 {
                     item.Location = new PointF(item.Location.X + p.X - lastLocation.X, item.Location.Y + p.Y - lastLocation.Y);
                     lastLocation = p;
                 }
-            
+            }
         }
     }
 }

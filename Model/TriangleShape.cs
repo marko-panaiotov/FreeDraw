@@ -6,21 +6,19 @@ using System.Threading.Tasks;
 
 namespace FreeDraw.Model
 {
-    public class GroupShape: Shape
+    public class TriangleShape : Shape
     {
         #region Constructor
 
-        public GroupShape(RectangleF rect) : base(rect)
+        public TriangleShape(RectangleF rect) : base(rect)
         {
         }
 
-        public GroupShape(RectangleShape rectangle) : base(rectangle)
+        public TriangleShape(RectangleShape rectangle) : base(rectangle)
         {
         }
 
         #endregion
-
-        public List<Shape> SubShape=new List<Shape>();
 
         /// <summary>
         /// Проверка за принадлежност на точка point към правоъгълника.
@@ -47,9 +45,18 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
 
-            grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawEllipse(Pens.Black, Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            Point point1 = new Point(50, 50);
+            Point point2 = new Point(150, 150);
+            Point point3 = new Point(200, 100);
 
+            Point[] trianglePoints = { point1, point2, point3 };
+
+            // Draw the triangle
+            grfx.FillPolygon(new SolidBrush(FillColor), trianglePoints);
+            grfx.DrawPolygon(Pens.Black, trianglePoints);
+
+            //grfx.FillPolygon(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            //grfx.DrawEllipse(Pens.Black, Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FreeDraw.Model
 {
+    [Serializable] // za zapisvane na fail
     public class RectangleShape : Shape
     {
         #region Constructor
