@@ -111,6 +111,19 @@ namespace FreeDraw.Processors
             ShapeList.Add(triangle);
         }
 
+        public void AddRandomDot()
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(100, 1000);
+            int y = rnd.Next(100, 600);
+
+            DotShape dot = new DotShape(new Rectangle(x, y, 100, 200));
+           // DotShape dot = new Rectangle( - 3, y - 3, 7, 7);
+            dot.FillColor = Color.Black;
+
+            ShapeList.Add(dot);
+        }
+
         /// <summary>
         /// Проверява дали дадена точка е в елемента.
         /// Обхожда в ред обратен на визуализацията с цел намиране на

@@ -58,32 +58,39 @@ namespace FreeDraw
         /// Бутон, който поставя на произволно място правоъгълник със зададените размери.
         /// Променя се лентата със състоянието и се инвалидира контрола, в който визуализираме.
         /// </summary>
-        void DrawRectangleSpeedButtonClick(object sender, EventArgs e)
+        /// 
+
+        private void DrawDotSpeedButton_Click(object sender, EventArgs e)
         {
+            dialogProcessor.AddRandomDot();
 
-            dialogProcessor.AddRandomRectangle();
-
-            statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+            statusBar.Items[0].Text = "Последно действие: Рисуване на точка";
 
             viewPort.Invalidate();
-
         }
-        /* void DrawRectangleSpeedButtonDoubleClick(object sender, EventArgs e)
-         {
 
-             dialogProcessor.AddRandomRectangle();
+        private void DrawCirclesSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomCircle();
 
-             statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+            statusBar.Items[0].Text = "Последно действие: Рисуване на кръг";
 
-             viewPort.Invalidate();
-             isDoubleClicking = true;
-         }*/
-
-        private void DrawEllipseSpeedButton_Click(object sender, EventArgs e)
+            viewPort.Invalidate();
+        }
+        private void DrawEllipseButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.AddRandomEllipse();
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
+
+            viewPort.Invalidate();
+        }
+
+        private void DrawRectangleSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomRectangle();
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
 
             viewPort.Invalidate();
         }
@@ -93,15 +100,6 @@ namespace FreeDraw
             dialogProcessor.AddRandomTriangle();
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
-
-            viewPort.Invalidate();
-        }
-
-        private void DrawCircleSpeedButton_Click(object sender, EventArgs e)
-        {
-            dialogProcessor.AddRandomCircle();
-
-            statusBar.Items[0].Text = "Последно действие: Рисуване на кръг";
 
             viewPort.Invalidate();
         }
@@ -172,7 +170,7 @@ namespace FreeDraw
             }
         }
 
- 
+        
     }
 }
 
