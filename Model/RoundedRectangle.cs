@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,15 @@ using System.Threading.Tasks;
 namespace FreeDraw.Model
 {
     [Serializable] // za zapisvane na fail
-    public class RectangleShape : Shape
+    public class RoundedRectangleShape : Shape
     {
         #region Constructor
 
-        public RectangleShape(RectangleF rect) : base(rect)
+        public RoundedRectangleShape(RectangleF rect) : base(rect)
         {
         }
 
-        public RectangleShape(RectangleShape rectangle) : base(rectangle)
+        public RoundedRectangleShape(RectangleShape rectangle) : base(rectangle)
         {
         }
 
@@ -46,11 +47,27 @@ namespace FreeDraw.Model
         public override void DrawSelf(Graphics grfx)
         {
             base.DrawSelf(grfx);
-            
-            
-            grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawRectangle(new Pen(BorderColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-           
+
+            GraphicsPath path = new GraphicsPath();
+
+            int diameter = CornerRadius * 2;
+            Size size = new Size(diameter, diameter);
+            RectangleF arc = new RectangleF(Rectangle.Location, size);
+
+            path.AddArc(arc, 180, 90);
+            arc.X = Rectangle.Right - diameter;
+            path.AddArc(arc, 270, 90);
+            arc.Y = Rectangle.Bottom - diameter;
+            path.AddArc(arc, 0, 90);
+            arc.X = Rectangle.Left;
+            path.AddArc(arc, 90, 90);
+            path.CloseFigure();
+
+            grfx.FillPath(new SolidBrush(FillColor), path);
+            grfx.DrawPath(new Pen(BorderColor), path);
+
+            //grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            //grfx.DrawRectangle(new Pen(BorderColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 
         }
     }

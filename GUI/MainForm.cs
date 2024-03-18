@@ -95,6 +95,15 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
 
+        private void DrawRoundedRectangleSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomRoundedRectangle();
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на заоблен правоъгълник";
+
+            viewPort.Invalidate();
+        }
+
         private void DrawTriangleSpeedButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.AddRandomTriangle();
@@ -170,7 +179,7 @@ namespace FreeDraw
             }
         }
 
-        
+       
     }
 }
 

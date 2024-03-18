@@ -28,6 +28,7 @@ namespace FreeDraw.Model
 
             this.FillColor = shape.FillColor;
             this.BorderColor = shape.BorderColor;
+            this.CornerRadius = shape.cornerRadius;
         }
         #endregion
 
@@ -85,8 +86,15 @@ namespace FreeDraw.Model
         {
             get { return borderColor; }
             set { borderColor = value; }
-        } 
+        }
 
+        private int cornerRadius = 20;
+
+        public virtual int CornerRadius 
+        {
+            get { return cornerRadius; }
+            set { cornerRadius = value; }
+        }
         #endregion
 
 

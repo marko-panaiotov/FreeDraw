@@ -45,7 +45,7 @@
             drawCircleSpeedButton = new ToolStripSplitButton();
             drawEllipseButton = new ToolStripMenuItem();
             drawRectangleSpeedButton = new ToolStripSplitButton();
-            toolStripMenuItem3 = new ToolStripMenuItem();
+            drawRoundedRectangleSpeedButton = new ToolStripMenuItem();
             drawTriangleSpeedButton = new ToolStripButton();
             pickColorButton = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
@@ -158,14 +158,14 @@
             // 
             drawEllipseButton.Image = (Image)resources.GetObject("drawEllipseButton.Image");
             drawEllipseButton.Name = "drawEllipseButton";
-            drawEllipseButton.Size = new Size(134, 22);
+            drawEllipseButton.Size = new Size(180, 22);
             drawEllipseButton.Text = "DrawEllipse";
             drawEllipseButton.Click += DrawEllipseButton_Click;
             // 
             // drawRectangleSpeedButton
             // 
             drawRectangleSpeedButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            drawRectangleSpeedButton.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem3 });
+            drawRectangleSpeedButton.DropDownItems.AddRange(new ToolStripItem[] { drawRoundedRectangleSpeedButton });
             drawRectangleSpeedButton.Image = (Image)resources.GetObject("drawRectangleSpeedButton.Image");
             drawRectangleSpeedButton.ImageTransparentColor = Color.Magenta;
             drawRectangleSpeedButton.Name = "drawRectangleSpeedButton";
@@ -173,11 +173,13 @@
             drawRectangleSpeedButton.Text = "DrawRectangleButton";
             drawRectangleSpeedButton.ButtonClick += DrawRectangleSpeedButton_Click;
             // 
-            // toolStripMenuItem3
+            // drawRoundedRectangleSpeedButton
             // 
-            toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(180, 22);
-            toolStripMenuItem3.Text = "toolStripMenuItem3";
+            drawRoundedRectangleSpeedButton.Image = (Image)resources.GetObject("drawRoundedRectangleSpeedButton.Image");
+            drawRoundedRectangleSpeedButton.Name = "drawRoundedRectangleSpeedButton";
+            drawRoundedRectangleSpeedButton.Size = new Size(201, 22);
+            drawRoundedRectangleSpeedButton.Text = "DrawRoundedRectangle";
+            drawRoundedRectangleSpeedButton.Click += DrawRoundedRectangleSpeedButton_Click;
             // 
             // drawTriangleSpeedButton
             // 
@@ -299,7 +301,7 @@
         private BindingSource ellipseShapeBindingSource;
         private ToolStripButton drawDotSpeedButton;
         private ToolStripSplitButton drawRectangleSpeedButton;
-        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem drawRoundedRectangleSpeedButton;
         private ToolStripDropDownButton toolStripDropDownButton1;
         private ToolStripMenuItem toolStripMenuItem4;
         private ToolStripSplitButton drawCircleSpeedButton;
