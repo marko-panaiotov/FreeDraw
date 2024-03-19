@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,6 +43,7 @@ namespace FreeDraw.Processors
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             Draw(e.Graphics);
+
         }
 
         /// <summary>
@@ -66,7 +69,7 @@ namespace FreeDraw.Processors
             item.DrawSelf(grfx);
         }
 
-      
+        
 
         #endregion
     }

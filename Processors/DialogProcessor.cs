@@ -2,9 +2,11 @@
 using FreeDraw.Model;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
 
 namespace FreeDraw.Processors
 {
@@ -20,14 +22,31 @@ namespace FreeDraw.Processors
 
         #region Properties
 
+        /* private List<Shape> selection = new List<Shape>();
+         public List<Shape> Selection
+         {
+             get { return selection; }
+             set { selection = value; }
+         }*/
+
+        protected Shape selection;
         /// <summary>
-        /// Избран елемент.
+        /// Shape елемент използвам при селекция.
         /// </summary>
-        private List<Shape> selection=new List<Shape>();
-        public List<Shape> Selection
+        public Shape Selection
         {
             get { return selection; }
             set { selection = value; }
+        }
+
+        protected List<Shape> groupSelection = new List<Shape>();
+        /// <summary>
+        /// Списък на Shape примитиви за мулти селекция.
+        /// </summary>
+        public List<Shape> GroupSelection
+        {
+            get { return groupSelection; }
+            set { groupSelection = value; }
         }
 
         /// <summary>
@@ -40,11 +59,54 @@ namespace FreeDraw.Processors
             set { isDragging = value; }
         }
 
-        private PointF startLocation;
-        public PointF StartLocation
+        protected bool isRotating;
+        /// <summary>
+        /// Дали в момента диалога е в режим на "ротация" на избрания елемент.
+        /// </summary>
+        public bool IsRotating
         {
-            get { return startLocation; }
-            set { startLocation = value; }
+            get { return isRotating; }
+            set { isRotating = value; }
+        }
+
+        protected bool isdrawing;
+        /// <summary>
+        /// Дали в момента диалога е в режим на "рисуване".
+        /// </summary>
+        public bool IsDrawing
+        {
+            get { return isdrawing; }
+            set { isdrawing = value; }
+        }
+
+        protected bool isResizing;
+        /// <summary>
+        /// Дали в момента диалога е в режим на "оразмеряване" на избрания елемент.
+        /// </summary>
+        public bool IsResizing
+        {
+            get { return isResizing; }
+            set { isResizing = value; }
+        }
+
+        protected bool controlKey;
+        /// <summary>
+        /// Дали в момента диалога е в режим на натиснат CTRL-клавиш.
+        /// </summary>
+        public bool ControlKey
+        {
+            get { return controlKey; }
+            set { controlKey = value; }
+        }
+
+        protected bool shiftKey;
+        /// <summary>
+        /// Дали в момента диалога е в режим на натиснат SHIFT-клавиш.
+        /// </summary>
+        public bool ShiftKey
+        {
+            get { return shiftKey; }
+            set { shiftKey = value; }
         }
 
         /// <summary>
@@ -59,6 +121,8 @@ namespace FreeDraw.Processors
         }
 
         #endregion
+
+        #region Creating Shapes
 
         /// <summary>
         /// Добавя примитив - правоъгълник на произволно място върху клиентската област.
@@ -137,6 +201,37 @@ namespace FreeDraw.Processors
             ShapeList.Add(roundedRectangle);
         }
 
+        public void AddRandomSquare()
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(100, 1000);
+            int y = rnd.Next(100, 600);
+
+            SquareShape square = new SquareShape(new Rectangle(x, y, 100, 200));
+
+            square.FillColor = Color.White;
+
+            ShapeList.Add(square);
+        }
+
+        public void AddRandomLine()
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(100, 1000);
+            int y = rnd.Next(100, 600);
+
+            LineShape line = new LineShape(new Rectangle(x, y, 100, 200));
+
+            line.FillColor = Color.White;
+
+            ShapeList.Add(line);
+        }
+        #endregion Creating Shapes
+
+        #region Shape Properties
+        #endregion Shape Properties  
+
+    
         /// <summary>
         /// Проверява дали дадена точка е в елемента.
         /// Обхожда в ред обратен на визуализацията с цел намиране на
@@ -164,14 +259,52 @@ namespace FreeDraw.Processors
         /// <param name="p">Вектор на транслация.</param>
         public void TranslateTo(PointF p)
         {
-            if (selection != null)
+            if (groupSelection != null)
             {
-                foreach (Shape item in Selection)
+                foreach (Shape item in GroupSelection)
                 {
                     item.Location = new PointF(item.Location.X + p.X - lastLocation.X, item.Location.Y + p.Y - lastLocation.Y);
                     lastLocation = p;
                 }
             }
+        }
+
+        public bool ComparePoints(PointF old, PointF current)
+        {
+            var d = Math.Sqrt(Math.Pow(old.X - current.X, 2) + Math.Pow(old.Y - current.Y, 2));
+            if (d < 15) return true;
+            else
+                return false;
+        }
+
+        public List<PointF> GetHandlePoint(RectangleF shape)
+        {
+            List<PointF> result = new List<PointF>();
+            // Горня лява
+            result.Add(new PointF(shape.Left, shape.Top));
+
+            //Долна лява
+            result.Add(new PointF(shape.Left,
+                                shape.Top + shape.Height));
+
+            //Дясна долна
+            result.Add(new PointF(shape.Left + shape.Width,
+                                shape.Top + shape.Height));
+
+            //Дясна горна
+            result.Add(new PointF(shape.Left + shape.Width,
+                                shape.Top));
+
+
+            return result;
+        }
+
+        public bool GroupSelectionContains(Shape item)
+        {
+            if (groupSelection.Contains(item))
+                return true;
+            else
+                return false;
         }
     }
 }

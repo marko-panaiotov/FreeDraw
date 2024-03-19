@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FreeDraw
 {
@@ -104,11 +105,29 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
 
+        private void DrawSquareSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomSquare();
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат";
+
+            viewPort.Invalidate();
+        }
+
         private void DrawTriangleSpeedButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.AddRandomTriangle();
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
+
+            viewPort.Invalidate();
+        }
+
+        private void DrawLineSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomLine();
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на права";
 
             viewPort.Invalidate();
         }
@@ -126,14 +145,14 @@ namespace FreeDraw
                 Shape sel = dialogProcessor.ContainsPoint(e.Location);
                 if (sel != null)
                 {
-                    if (dialogProcessor.Selection.Contains(sel))
+                    if (dialogProcessor.GroupSelection.Contains(sel))
                     {
 
-                        dialogProcessor.Selection.Remove(sel);
+                        dialogProcessor.GroupSelection.Remove(sel);
                     }
                     else
                     {
-                        dialogProcessor.Selection.Add(sel);
+                        dialogProcessor.GroupSelection.Add(sel);
                     }
 
                 }
@@ -143,7 +162,7 @@ namespace FreeDraw
                 viewPort.Invalidate();
             }
         }
-
+  
         /// <summary>
         /// Прихващане на преместването на мишката.
         /// Ако сме в режм на "влачене", то избрания елемент се транслира.
@@ -156,8 +175,9 @@ namespace FreeDraw
                 dialogProcessor.TranslateTo(e.Location);
                 viewPort.Invalidate();
             }
-        }
 
+
+        }
         /// <summary>
         /// Прихващане на отпускането на бутона на мишката.
         /// Излизаме от режим "влачене".
@@ -171,7 +191,7 @@ namespace FreeDraw
         {
             if (colorPickerDialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (Shape item in dialogProcessor.Selection)
+                foreach (Shape item in dialogProcessor.GroupSelection)
                 {
                     item.FillColor = colorPickerDialog.Color;
                     viewPort.Invalidate();
@@ -179,7 +199,13 @@ namespace FreeDraw
             }
         }
 
-       
+        private void pickUpSpeedButton_Click(object sender, EventArgs e)
+        {
+            pickUpSpeedButton.Checked = true;
+            dialogProcessor.IsDrawing = false;
+           // polyPoints.Clear();
+            viewPort.Invalidate();
+        }
     }
 }
 

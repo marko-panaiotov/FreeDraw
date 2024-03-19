@@ -17,7 +17,7 @@ namespace FreeDraw.Model
         {
         }
 
-        public DotShape(CircleShape circle) : base(circle)
+        public DotShape(DotShape dot) : base(dot)
         {
         }
 

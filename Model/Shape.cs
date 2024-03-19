@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,15 +26,25 @@ namespace FreeDraw.Model
             this.Height = shape.Height;
             this.Width = shape.Width;
             this.Location = shape.Location;
+            this.Size = shape.Size;
             this.rectangle = shape.rectangle;
 
             this.FillColor = shape.FillColor;
             this.BorderColor = shape.BorderColor;
             this.CornerRadius = shape.cornerRadius;
+            this.Transperancy = shape.Transperancy;
+            this.Transform = shape.Transform.Clone();
         }
         #endregion
 
         #region Properties
+
+        private SizeF size;
+        public virtual SizeF Size
+        {
+            get { return size; }
+            set { size = value; }
+        }
 
         /// <summary>
         /// Обхващащ правоъгълник на елемента.
@@ -95,6 +107,54 @@ namespace FreeDraw.Model
             get { return cornerRadius; }
             set { cornerRadius = value; }
         }
+
+        private float borderWidth;
+        /// <summary>
+        /// Дебелина на рамката на елемента.
+        /// </summary>
+        public virtual float BorderWidth
+        {
+            get { return borderWidth; }
+            set { borderWidth = value; }
+        }
+
+        private int transperancy;
+        /// <summary>
+        /// Прозрачност на цвета на елемента.
+        /// </summary>
+        public virtual int Transperancy
+        {
+            get { return transperancy; }
+            set { transperancy = value; }
+        }
+
+        private string name;
+        /// <summary>
+        /// Име на елемента.
+        /// </summary>
+        public virtual string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        private AppMatrix transform = new AppMatrix();
+        /// <summary>
+        /// Трансформираща матрица.
+        /// </summary>
+        public Matrix Transform
+        {
+            get { return transform.matrix; }
+            set { transform.matrix = value; }
+        }
+
+        private AppGraphicPath gpath = new AppGraphicPath();
+        public virtual GraphicsPath Gpath
+        {
+            get { return gpath.path; }
+            set { gpath.path = value; }
+        }
+
         #endregion
 
 
@@ -106,7 +166,19 @@ namespace FreeDraw.Model
         /// false, ако не пренадлежи</returns>
         public virtual bool Contains(PointF point)
         {
+            /*if (Transperancy == 0)
+            {
+                return Gpath.IsOutlineVisible(point, new Pen(BorderColor, BorderWidth));
+            }
+            else
+            {
+                return Gpath.IsVisible(point);
+            }*/
+
             return Rectangle.Contains(point.X, point.Y);
+
+
+
         }
 
         /// <summary>
@@ -118,7 +190,22 @@ namespace FreeDraw.Model
             // shape.Rectangle.Inflate(shape.BorderWidth, shape.BorderWidth);
         }
 
-   
+        public virtual void Translate(float offsetX, float offsetY)
+        {
+            this.Transform.Translate(offsetX, offsetY, MatrixOrder.Append);
+        }
+
+        public virtual void Rotate(float angle, PointF center)
+        {
+            this.Transform.RotateAt(angle, center, MatrixOrder.Append);
+        }
+
+        public virtual void Scale(float offsetX, float offsetY, PointF center)
+        {
+            this.Transform.Translate(center.X, center.Y);
+            this.Transform.Scale(offsetX, offsetY);
+            this.Transform.Translate(-center.X, -center.Y);
+        }
 
     }
 }

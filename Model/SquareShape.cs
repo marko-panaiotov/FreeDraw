@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FreeDraw.Model
 {
-    public class EllipseShape : Shape
+    [Serializable] // za zapisvane na fail
+    public class SquareShape : Shape
     {
         #region Constructor
 
-        public EllipseShape(RectangleF rect) : base(rect)
+        public SquareShape(RectangleF rect) : base(rect)
         {
         }
 
-        public EllipseShape(EllipseShape ellipse) : base(ellipse)
+        public SquareShape(SquareShape square) : base(square)
         {
         }
 
@@ -45,10 +45,10 @@ namespace FreeDraw.Model
         public override void DrawSelf(Graphics grfx)
         {
             base.DrawSelf(grfx);
-            
-            
-            grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawEllipse(new Pen(BorderColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+
+            grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, 100, 100);
+            grfx.DrawRectangle(new Pen(BorderColor), Rectangle.X, Rectangle.Y, 100, 100);
+
 
         }
     }

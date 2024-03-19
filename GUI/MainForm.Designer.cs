@@ -42,16 +42,17 @@
             currentStatusLabel = new ToolStripStatusLabel();
             speedMenu = new ToolStrip();
             drawDotSpeedButton = new ToolStripButton();
+            drawLineSpeedButton = new ToolStripDropDownButton();
+            toolStripMenuItem4 = new ToolStripMenuItem();
             drawCircleSpeedButton = new ToolStripSplitButton();
             drawEllipseButton = new ToolStripMenuItem();
             drawRectangleSpeedButton = new ToolStripSplitButton();
             drawRoundedRectangleSpeedButton = new ToolStripMenuItem();
+            drawSquareSpeedButton = new ToolStripMenuItem();
             drawTriangleSpeedButton = new ToolStripButton();
             pickColorButton = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             pickUpSpeedButton = new ToolStripButton();
-            toolStripDropDownButton1 = new ToolStripDropDownButton();
-            toolStripMenuItem4 = new ToolStripMenuItem();
             viewPort = new GUI.DoubleBufferedPanel();
             colorPickerDialog = new ColorDialog();
             mainMenu.SuspendLayout();
@@ -125,7 +126,7 @@
             // 
             // speedMenu
             // 
-            speedMenu.Items.AddRange(new ToolStripItem[] { drawDotSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator1, pickUpSpeedButton, toolStripDropDownButton1 });
+            speedMenu.Items.AddRange(new ToolStripItem[] { drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator1, pickUpSpeedButton });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
             speedMenu.Size = new Size(808, 25);
@@ -143,6 +144,23 @@
             drawDotSpeedButton.Text = "DrawDotButton";
             drawDotSpeedButton.Click += DrawDotSpeedButton_Click;
             // 
+            // drawLineSpeedButton
+            // 
+            drawLineSpeedButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            drawLineSpeedButton.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem4 });
+            drawLineSpeedButton.Image = (Image)resources.GetObject("drawLineSpeedButton.Image");
+            drawLineSpeedButton.ImageTransparentColor = Color.Magenta;
+            drawLineSpeedButton.Name = "drawLineSpeedButton";
+            drawLineSpeedButton.Size = new Size(29, 22);
+            drawLineSpeedButton.Text = "DrawLineButton";
+            drawLineSpeedButton.Click += DrawLineSpeedButton_Click;
+            // 
+            // toolStripMenuItem4
+            // 
+            toolStripMenuItem4.Name = "toolStripMenuItem4";
+            toolStripMenuItem4.Size = new Size(180, 22);
+            toolStripMenuItem4.Text = "toolStripMenuItem4";
+            // 
             // drawCircleSpeedButton
             // 
             drawCircleSpeedButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -158,14 +176,14 @@
             // 
             drawEllipseButton.Image = (Image)resources.GetObject("drawEllipseButton.Image");
             drawEllipseButton.Name = "drawEllipseButton";
-            drawEllipseButton.Size = new Size(180, 22);
+            drawEllipseButton.Size = new Size(134, 22);
             drawEllipseButton.Text = "DrawEllipse";
             drawEllipseButton.Click += DrawEllipseButton_Click;
             // 
             // drawRectangleSpeedButton
             // 
             drawRectangleSpeedButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            drawRectangleSpeedButton.DropDownItems.AddRange(new ToolStripItem[] { drawRoundedRectangleSpeedButton });
+            drawRectangleSpeedButton.DropDownItems.AddRange(new ToolStripItem[] { drawRoundedRectangleSpeedButton, drawSquareSpeedButton });
             drawRectangleSpeedButton.Image = (Image)resources.GetObject("drawRectangleSpeedButton.Image");
             drawRectangleSpeedButton.ImageTransparentColor = Color.Magenta;
             drawRectangleSpeedButton.Name = "drawRectangleSpeedButton";
@@ -180,6 +198,15 @@
             drawRoundedRectangleSpeedButton.Size = new Size(201, 22);
             drawRoundedRectangleSpeedButton.Text = "DrawRoundedRectangle";
             drawRoundedRectangleSpeedButton.Click += DrawRoundedRectangleSpeedButton_Click;
+            // 
+            // drawSquareSpeedButton
+            // 
+            drawSquareSpeedButton.Image = (Image)resources.GetObject("drawSquareSpeedButton.Image");
+            drawSquareSpeedButton.Name = "drawSquareSpeedButton";
+            drawSquareSpeedButton.Size = new Size(201, 22);
+            drawSquareSpeedButton.Text = "DrawSquare";
+            drawSquareSpeedButton.ToolTipText = "DrawSquare";
+            drawSquareSpeedButton.Click += DrawSquareSpeedButton_Click;
             // 
             // drawTriangleSpeedButton
             // 
@@ -217,22 +244,7 @@
             pickUpSpeedButton.Name = "pickUpSpeedButton";
             pickUpSpeedButton.Size = new Size(23, 22);
             pickUpSpeedButton.Text = "toolStripButton1";
-            // 
-            // toolStripDropDownButton1
-            // 
-            toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem4 });
-            toolStripDropDownButton1.Image = (Image)resources.GetObject("toolStripDropDownButton1.Image");
-            toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
-            toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            toolStripDropDownButton1.Size = new Size(29, 22);
-            toolStripDropDownButton1.Text = "toolStripDropDownButton1";
-            // 
-            // toolStripMenuItem4
-            // 
-            toolStripMenuItem4.Name = "toolStripMenuItem4";
-            toolStripMenuItem4.Size = new Size(180, 22);
-            toolStripMenuItem4.Text = "toolStripMenuItem4";
+            pickUpSpeedButton.Click += pickUpSpeedButton_Click;
             // 
             // viewPort
             // 
@@ -302,9 +314,10 @@
         private ToolStripButton drawDotSpeedButton;
         private ToolStripSplitButton drawRectangleSpeedButton;
         private ToolStripMenuItem drawRoundedRectangleSpeedButton;
-        private ToolStripDropDownButton toolStripDropDownButton1;
+        private ToolStripDropDownButton drawLineSpeedButton;
         private ToolStripMenuItem toolStripMenuItem4;
         private ToolStripSplitButton drawCircleSpeedButton;
         private ToolStripMenuItem drawEllipseButton;
+        private ToolStripMenuItem drawSquareSpeedButton;
     }
 }

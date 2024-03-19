@@ -1,55 +1,158 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FreeDraw.Model
 {
-    public class GroupShape: Shape
+    [Serializable]
+    public class GroupShape : Shape
     {
         #region Constructor
 
-        public GroupShape(RectangleF rect) : base(rect)
+        public GroupShape(List<Shape> SubFigures)
         {
+            subShape.AddRange(SubFigures);
+
+            float minX = subShape[0].Gpath.GetBounds().Left;
+            float minY = subShape[0].Gpath.GetBounds().Top;
+            float maxX = subShape[0].Gpath.GetBounds().Right;
+            float maxY = subShape[0].Gpath.GetBounds().Bottom;
+
+            foreach (Shape sh in subShape)
+            {
+                minX = Math.Min(minX, sh.Gpath.GetBounds().Left);
+                minY = Math.Min(minY, sh.Gpath.GetBounds().Top);
+                maxX = Math.Max(maxX, sh.Gpath.GetBounds().Right);
+                maxY = Math.Max(maxY, sh.Gpath.GetBounds().Bottom);
+            }
+            PointF pinch = new PointF(minX, minY);
+            this.Location = pinch;
+            SizeF size = new SizeF(maxX - minX, maxY - minY);
+            this.Size = size;
+
+            this.Gpath.AddRectangle(new RectangleF(pinch, size));
         }
 
-        public GroupShape(RectangleShape rectangle) : base(rectangle)
+        public GroupShape(RectangleF rect)
+            : base(rect)
         {
+            this.Location = rect.Location;
+            this.Size = rect.Size;
         }
+
+        public GroupShape(GroupShape rectangle)
+            : base(rectangle) { }
 
         #endregion
 
-        public List<Shape> SubShape=new List<Shape>();
+        #region Properties
 
-        /// <summary>
-        /// Проверка за принадлежност на точка point към правоъгълника.
-        /// В случая на правоъгълник този метод може да не бъде пренаписван, защото
-        /// Реализацията съвпада с тази на абстрактния клас Shape, който проверява
-        /// дали точката е в обхващащия правоъгълник на елемента (а той съвпада с
-        /// елемента в този случай).
-        /// </summary>
-        public override bool Contains(PointF point)
+        public List<Shape> subShape = new List<Shape>();
+
+        private Color fillColor;
+        public override Color FillColor
         {
-            if (base.Contains(point))
-                // Проверка дали е в обекта само, ако точката е в обхващащия правоъгълник.
-                // В случая на правоъгълник - директно връщаме true
-                return true;
-            else
-                // Ако не е в обхващащия правоъгълник, то неможе да е в обекта и => false
-                return false;
+            get { return fillColor; }
+            set
+            {
+                fillColor = value;
+                foreach (Shape sh in subShape)
+                    sh.FillColor = fillColor;
+            }
         }
 
-        /// <summary>
-        /// Частта, визуализираща конкретния примитив.
-        /// </summary>
+        private float borderWidth;
+        public override float BorderWidth
+        {
+            get { return borderWidth; }
+            set
+            {
+                borderWidth = value;
+                foreach (Shape sh in subShape)
+                    sh.BorderWidth = borderWidth;
+            }
+        }
+
+        private Color borderColor;
+        public override Color BorderColor
+        {
+            get { return borderColor; }
+            set
+            {
+                borderColor = value;
+                foreach (Shape sh in subShape)
+                    sh.BorderColor = borderColor;
+            }
+        }
+
+        private int transperancy;
+        public override int Transperancy
+        {
+            get { return transperancy; }
+            set
+            {
+                transperancy = value;
+                foreach (Shape s in subShape)
+                    s.Transperancy = transperancy;
+            }
+        }
+
+        #endregion Properties
+
+        #region Operations
+
+        public override bool Contains(PointF point)
+        {
+            foreach (Shape sh in subShape)
+            {
+                if (sh.Contains(point)) return true;
+            }
+            return false;
+        }
+
+        public override void Translate(float offsetX, float offsetY)
+        {
+            base.Translate(offsetX, offsetY);
+
+            foreach (Shape sh in subShape)
+                sh.Translate(offsetX, offsetY);
+        }
+
+        public override void Rotate(float angle, PointF center)
+        {
+            base.Rotate(angle, center);
+
+            foreach (Shape sh in subShape)
+                sh.Rotate(angle, center);
+        }
+
+        public override void Scale(float offsetX, float offsetY, PointF center)
+        {
+            base.Scale(offsetX, offsetY, center);
+
+            foreach (Shape sh in subShape)
+            {
+                sh.Scale(offsetX, offsetY, center);
+            }
+        }
+
         public override void DrawSelf(Graphics grfx)
         {
             base.DrawSelf(grfx);
 
-            grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawEllipse(Pens.Black, Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-           
+            Gpath.Reset();
+            Gpath.AddRectangle(new RectangleF(this.Location, this.Size));
+            Gpath.Transform(this.Transform);
+
+            foreach (Shape sh in subShape)
+            {
+                sh.DrawSelf(grfx);
+            }
         }
+
+        #endregion Operations
     }
 }

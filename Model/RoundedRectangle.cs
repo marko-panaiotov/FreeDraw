@@ -17,7 +17,7 @@ namespace FreeDraw.Model
         {
         }
 
-        public RoundedRectangleShape(RectangleShape rectangle) : base(rectangle)
+        public RoundedRectangleShape(RoundedRectangleShape roundedRectangle) : base(roundedRectangle)
         {
         }
 
