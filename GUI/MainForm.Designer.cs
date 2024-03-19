@@ -33,6 +33,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             mainMenu = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
+            New = new ToolStripMenuItem();
+            Open = new ToolStripMenuItem();
+            Save = new ToolStripMenuItem();
+            SaveAs = new ToolStripMenuItem();
+            toolStripSeparator2 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
             editToolStripMenuItem = new ToolStripMenuItem();
             imageToolStripMenuItem = new ToolStripMenuItem();
@@ -72,15 +77,52 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { New, Open, Save, SaveAs, toolStripSeparator2, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 20);
             fileToolStripMenuItem.Text = "File";
             // 
+            // New
+            // 
+            New.Name = "New";
+            New.ShortcutKeyDisplayString = "Ctrl+N";
+            New.Size = new Size(180, 22);
+            New.Text = "New";
+            New.Click += New_Click;
+            // 
+            // Open
+            // 
+            Open.Name = "Open";
+            Open.ShortcutKeyDisplayString = "Ctrl+O";
+            Open.Size = new Size(180, 22);
+            Open.Text = "Open...";
+            Open.Click += Open_Click;
+            // 
+            // Save
+            // 
+            Save.Name = "Save";
+            Save.ShortcutKeyDisplayString = "Ctrl+S";
+            Save.Size = new Size(180, 22);
+            Save.Text = "Save";
+            Save.Click += Save_Click;
+            // 
+            // SaveAs
+            // 
+            SaveAs.Name = "SaveAs";
+            SaveAs.Size = new Size(180, 22);
+            SaveAs.Text = "Save As...";
+            SaveAs.Click += SaveAs_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(177, 6);
+            // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.ShortcutKeyDisplayString = "Alt+F4";
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItemClick;
             // 
@@ -255,6 +297,8 @@
             viewPort.Size = new Size(808, 417);
             viewPort.TabIndex = 4;
             viewPort.Paint += ViewPortPaint;
+            viewPort.KeyDown += new System.Windows.Forms.KeyEventHandler(Key_Down);
+            viewPort.KeyUp += new System.Windows.Forms.KeyEventHandler(Key_Up);
             viewPort.MouseDown += ViewPortMouseDown;
             viewPort.MouseMove += ViewPortMouseMove;
             viewPort.MouseUp += ViewPortMouseUp;
@@ -319,5 +363,10 @@
         private ToolStripSplitButton drawCircleSpeedButton;
         private ToolStripMenuItem drawEllipseButton;
         private ToolStripMenuItem drawSquareSpeedButton;
+        private ToolStripMenuItem New;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem Open;
+        private ToolStripMenuItem Save;
+        private ToolStripMenuItem SaveAs;
     }
 }

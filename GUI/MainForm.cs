@@ -1,4 +1,5 @@
-﻿using FreeDraw.Model;
+﻿using FreeDraw.GUI;
+using FreeDraw.Model;
 using FreeDraw.Processors;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FreeDraw
@@ -38,6 +40,168 @@ namespace FreeDraw
             // TODO: Add constructor code after the InitializeComponent() call.
             //
         }
+
+        #region Variable
+
+
+        private SaveFileDialog saveFileDialog = new SaveFileDialog();
+        private OpenFileDialog openFileDialog = new OpenFileDialog();
+        private ColorDialog colorDialog = new ColorDialog();
+        private List<PointF> polyPoints = new List<PointF>();
+        private int dragHandle = 0;
+        private PointF dragPoint;
+
+        #endregion Variable
+
+        #region Key Events
+        void Key_Down(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            #region Control Key
+
+            if (e.Control)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.C:
+                       // Copy2.PerformClick();
+                        break;
+                    case Keys.X:
+                       // Cut2.PerformClick();
+                        break;
+                    case Keys.V:
+                        //Paste2.PerformClick();
+                        break;
+                    case Keys.A:
+                       // SelectAll2.PerformClick();
+                        viewPort.Invalidate();
+                        break;
+                    case Keys.G:
+                        if (e.Alt)
+                        {
+                           // Break.PerformClick();
+                            break;
+                        }
+                        else
+                        {
+                           // GroupSelection.PerformClick();
+                            break;
+                        }
+                    case Keys.N:
+                        New.PerformClick();
+                        break;
+                    case Keys.S:
+                        Save.PerformClick();
+                        break;
+                    case Keys.O:
+                        Open.PerformClick();
+                        break;
+                    case Keys.Z:
+                        //undo.PerformClick();
+                        break;
+
+                    default:
+                        dialogProcessor.ControlKey = true;
+                        break;
+                }
+                viewPort.Invalidate();
+            }
+
+            #endregion Control Key
+
+            #region Shift Key
+
+            if (e.Shift)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.F:
+                       // bringToFrontToolStripMenuItem.PerformClick();
+                        break;
+                    case Keys.B:
+                        //sendToBackToolStripMenuItem.PerformClick();
+                        break;
+                    case Keys.R:
+                       // ChangeName.PerformClick();
+                        break;
+                    default:
+                        if (dialogProcessor.IsDrawing)
+                        {
+                            statusBar.Items[1].Text = "Draw: Чертаене на правилна фигура";
+                            dialogProcessor.ShiftKey = true;
+                        }
+                        break;
+                }
+                viewPort.Invalidate();
+            }
+
+            #endregion Shift Key
+
+            #region Delete Key
+            if (e.KeyCode == Keys.Delete)
+            {
+                //Delete2.PerformClick();
+            }
+            #endregion Delete Key
+
+            #region Esc Key
+            if (e.KeyCode == Keys.Escape)
+            {
+                /*if (DrawPolygon.Checked && polyPoints.Count > 0)
+                {
+                    polyPoints.Clear();
+                }
+                else
+                {
+                    DrawEllipse.Checked = false;
+                    DrawRectangle.Checked = false;
+                    DrawLine.Checked = false;
+                    DrawPolygon.Checked = false;
+                    DrawTriangle.Checked = false;
+                    DrawPentagon.Checked = false;
+                    dialogProcessor.IsDrawing = false;
+                    pickUpSpeedButton.Checked = true;
+                }
+                dialogProcessor.GroupSelection.Clear();*/
+                viewPort.Invalidate();
+            }
+            #endregion Esc Key
+
+            #region Just Keys
+
+           /* if (e.KeyCode == Keys.Oemplus)
+            {
+                Expand.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.OemMinus)
+            {
+                Shrink.PerformClick();
+            }
+
+            if (e.Alt && e.KeyCode == Keys.F4)
+            {
+                Exit.PerformClick();
+            }*/
+
+            #endregion Just Keys
+        }
+
+        void Key_Up(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (dialogProcessor.ControlKey)
+            {
+                dialogProcessor.ControlKey = false;
+            }
+            if (dialogProcessor.ShiftKey)
+            {
+                dialogProcessor.ShiftKey = false;
+                statusBar.Items[1].Text = "Draw: Чертаене на неправилна фигура";
+            }
+        }
+
+        #endregion Key Events
+
+       
 
         /// <summary>
         /// Изход от програмата. Затваря главната форма, а с това и програмата.
@@ -145,14 +309,14 @@ namespace FreeDraw
                 Shape sel = dialogProcessor.ContainsPoint(e.Location);
                 if (sel != null)
                 {
-                    if (dialogProcessor.GroupSelection.Contains(sel))
+                    if (dialogProcessor.SelectionList.Contains(sel))
                     {
 
-                        dialogProcessor.GroupSelection.Remove(sel);
+                        dialogProcessor.SelectionList.Remove(sel);
                     }
                     else
                     {
-                        dialogProcessor.GroupSelection.Add(sel);
+                        dialogProcessor.SelectionList.Add(sel);
                     }
 
                 }
@@ -162,7 +326,7 @@ namespace FreeDraw
                 viewPort.Invalidate();
             }
         }
-  
+
         /// <summary>
         /// Прихващане на преместването на мишката.
         /// Ако сме в режм на "влачене", то избрания елемент се транслира.
@@ -191,7 +355,7 @@ namespace FreeDraw
         {
             if (colorPickerDialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (Shape item in dialogProcessor.GroupSelection)
+                foreach (Shape item in dialogProcessor.SelectionList)
                 {
                     item.FillColor = colorPickerDialog.Color;
                     viewPort.Invalidate();
@@ -203,9 +367,93 @@ namespace FreeDraw
         {
             pickUpSpeedButton.Checked = true;
             dialogProcessor.IsDrawing = false;
-           // polyPoints.Clear();
+            // polyPoints.Clear();
             viewPort.Invalidate();
         }
+
+        #region File Menu
+
+        private void New_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.ShapeList.Count > 0)
+            {
+                if (statusBar.Items[0].Text != "Запазване във " + saveFileDialog.FileName
+                    && statusBar.Items[0].Text != "Запазване във " + openFileDialog.FileName)
+                {
+                    SaveForm decisiondialog = new SaveForm("Вие не запазихте промените. \n Желаете ли да продължите?");
+                    if (decisiondialog.ShowDialog() == DialogResult.OK)
+                    {
+                        dialogProcessor.New();
+                        openFileDialog.FileName = null;
+                        saveFileDialog.FileName = null;
+                        //dialogProcessor.ComboboxUpdate(comboBox1);
+
+                        viewPort.Invalidate();
+                    }
+                    else
+                        return;
+                }
+            }
+        }
+
+        private void Open_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Отваряне на... ";
+
+            dialogProcessor.FileDialogFilters(openFileDialog, "Open");
+            New.PerformClick();
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                dialogProcessor.Open(openFileDialog.FileName);
+
+                dialogProcessor.ControlKey = false;
+
+                //dialogProcessor.ComboboxUpdate(comboBox1);
+                //comboBox1.SelectedItem = dialogProcessor.ShapeList.Last();
+            }
+
+            statusBar.Items[0].Text = "Отваряне на " + openFileDialog.FileName;
+            pickUpSpeedButton.Checked = true;
+            viewPort.Invalidate();
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.FileDialogFilters(saveFileDialog, "Save");
+
+            if (openFileDialog.FileName.Length != 0)
+            {
+                dialogProcessor.Save(openFileDialog.FileName);
+                statusBar.Items[1].Text = "Запазване във " + openFileDialog.FileName;
+            }
+            else if (saveFileDialog.FileName.Length != 0)
+            {
+                dialogProcessor.Save(saveFileDialog.FileName);
+                statusBar.Items[1].Text = "Запазване във " + saveFileDialog.FileName;
+            }
+            else
+                SaveAs.PerformClick();
+
+            pickUpSpeedButton.Checked = true;
+            viewPort.Invalidate();
+        }
+
+        private void SaveAs_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Запазване във... ";
+
+            dialogProcessor.FileDialogFilters(saveFileDialog, "Save");
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                dialogProcessor.SaveAs(saveFileDialog.FileName);
+            }
+            pickUpSpeedButton.Checked = true;
+            statusBar.Items[0].Text = "Запазване във " + saveFileDialog.FileName;
+            viewPort.Invalidate();
+        }
+        #endregion File Menu
     }
 }
 

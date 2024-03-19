@@ -16,3 +16,4 @@ D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\ob
 D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\obj\Debug\net7.0-windows\ref\FreeDraw.dll
 D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.GUI.DoubleBufferedPanel.resources
 D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.Properties.Resources.resources
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.GUI.SaveForm.resources

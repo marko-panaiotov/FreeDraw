@@ -4,9 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace FreeDraw.Processors
 {
@@ -39,14 +42,14 @@ namespace FreeDraw.Processors
             set { selection = value; }
         }
 
-        protected List<Shape> groupSelection = new List<Shape>();
+        protected List<Shape> selectionList = new List<Shape>();
         /// <summary>
         /// Списък на Shape примитиви за мулти селекция.
         /// </summary>
-        public List<Shape> GroupSelection
+        public List<Shape> SelectionList
         {
-            get { return groupSelection; }
-            set { groupSelection = value; }
+            get { return selectionList; }
+            set { selectionList = value; }
         }
 
         /// <summary>
@@ -259,9 +262,9 @@ namespace FreeDraw.Processors
         /// <param name="p">Вектор на транслация.</param>
         public void TranslateTo(PointF p)
         {
-            if (groupSelection != null)
+            if (selectionList != null)
             {
-                foreach (Shape item in GroupSelection)
+                foreach (Shape item in SelectionList)
                 {
                     item.Location = new PointF(item.Location.X + p.X - lastLocation.X, item.Location.Y + p.Y - lastLocation.Y);
                     lastLocation = p;
@@ -269,42 +272,190 @@ namespace FreeDraw.Processors
             }
         }
 
-        public bool ComparePoints(PointF old, PointF current)
+        #region Basic Operations
+
+        /// <summary>
+        /// Изчиства екрана, списъка със фигури, селекцията и прочие!
+        /// </summary>
+        public void New()
         {
-            var d = Math.Sqrt(Math.Pow(old.X - current.X, 2) + Math.Pow(old.Y - current.Y, 2));
-            if (d < 15) return true;
-            else
-                return false;
+            Selection = null;
+            ShapeList.Clear();
+            SelectionList.Clear();
         }
 
-        public List<PointF> GetHandlePoint(RectangleF shape)
+        /// <summary>
+        /// Операция за запазване във файл без диалог за избиране на директория.
+        /// </summary>
+        public void Save(string fileName)
         {
-            List<PointF> result = new List<PointF>();
-            // Горня лява
-            result.Add(new PointF(shape.Left, shape.Top));
-
-            //Долна лява
-            result.Add(new PointF(shape.Left,
-                                shape.Top + shape.Height));
-
-            //Дясна долна
-            result.Add(new PointF(shape.Left + shape.Width,
-                                shape.Top + shape.Height));
-
-            //Дясна горна
-            result.Add(new PointF(shape.Left + shape.Width,
-                                shape.Top));
-
-
-            return result;
+            using (FileStream filestream = new FileStream(fileName, FileMode.OpenOrCreate))
+            {
+                BinaryFormatter binaryFormater = new BinaryFormatter();
+                binaryFormater.Serialize(filestream, ShapeList);
+            }
+        }
+        /// <summary>
+        /// Операция за запазване във файл чрез диалог за избиране на директория.
+        /// </summary>
+        public void SaveAs(string fileName)
+        {
+            using (FileStream filestream = new FileStream(fileName, FileMode.Create))
+            {
+                BinaryFormatter binaryFormater = new BinaryFormatter();
+                binaryFormater.Serialize(filestream, ShapeList);
+            }
         }
 
-        public bool GroupSelectionContains(Shape item)
+        /// <summary>
+        /// Операция за отваряне от файл.
+        /// </summary>
+        public void Open(string fileName)
         {
-            if (groupSelection.Contains(item))
-                return true;
-            else
-                return false;
+            using (FileStream filestream = new FileStream(fileName, FileMode.Open))
+            {
+                BinaryFormatter binaryFormater = new BinaryFormatter();
+                ShapeList = (List<Shape>)binaryFormater.Deserialize(filestream);
+            }
         }
+
+        /// <summary>
+        /// Поставяне копирани или изрязани примитиви.
+        /// </summary>
+       /* public void Paste()
+        {
+            if (Clipboard.ContainsData("Draw"))
+            {
+                SelectionList.Clear();
+                using (MemoryStream memoryStream = Clipboard.GetData("Draw") as MemoryStream)
+                {
+                    List<Shape> copyList = new List<Shape>();
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    copyList = (List<Shape>)binaryFormatter.Deserialize(memoryStream);
+
+                    if (copyList.Count > 1)
+                    {
+                        foreach (Shape sh in copyList)
+                        {
+                            sh.Translate(Offset, Offset);
+                            sh.Name = sh.Name + Convert.ToInt32(Offset);
+                            SelectionList.Add(sh);
+                            ShapeList.Add(sh);
+                            Offset += 10;
+                        }
+                    }
+                    else
+                    {
+                        copyList.First().Translate(Offset, Offset);
+                        copyList.First().Name = copyList.First().Name + Convert.ToInt32(Offset);
+                        ShapeList.Add(copyList.First());
+                        Offset += 10;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Копиране на избрани примитиви.
+        /// </summary>
+        public void Copy()
+        {
+            if (selection != null)
+            {
+                Offset = 10;
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    if (GroupSelectionContains(Selection))
+                    {
+                        binaryFormatter.Serialize(memoryStream, SelectionList);
+                    }
+                    else
+                    {
+                        GroupSelection.Add(Selection);
+                        binaryFormatter.Serialize(memoryStream, GroupSelection);
+                    }
+                    Clipboard.SetData("Draw", memoryStream);
+                }
+            }
+        }*/
+
+        /// <summary>
+        /// Преместване на избран примитив на една позиция напред в списъка с примитиви.
+        /// </summary>
+        public void BringToFront(Shape item)
+        {
+            if (selection!=null)
+            {
+                for (int i = 0; i < ShapeList.Count; i++)
+                {
+                    if (ShapeList[i] == item)
+                    {
+                        ShapeList.RemoveAt(i);
+                        if (i != ShapeList.Count) i++;
+                        ShapeList.Insert(i, item);
+                    }
+                }
+                Selection = item;
+            }
+        }
+
+        /// <summary>
+        /// Преместване на избран примитив на една позиция назад в списъка с примитиви.
+        /// </summary>
+        public void SendToBack(Shape item)
+        {
+            if (selection!=null)
+            {
+                for (int i = 0; i < ShapeList.Count; i++)
+                {
+                    if (ShapeList[i] == item)
+                    {
+                        ShapeList.RemoveAt(i);
+                        if (i != 0) i--;
+                        ShapeList.Insert(i, item);
+                    }
+                }
+                Selection = item;
+            }
+        }
+
+        /// <summary>
+        /// Изтриване на селектиран примитив.
+        /// </summary>
+   
+
+        /// <summary>
+        /// Мултиселекция на всички съществуващи примитиви.
+        /// </summary>
+        public void SelectAll()
+        {
+            if (ShapeList.Count > 0)
+            {
+                SelectionList.Clear();
+                SelectionList.AddRange(ShapeList);
+                Selection = SelectionList.Last();
+            }
+        }
+
+        #endregion Basic Operations
+
+
+        public void FileDialogFilters(FileDialog fileDialog, string titleName)
+        {
+            fileDialog.InitialDirectory = @"C:\";
+            fileDialog.Title = titleName;
+            fileDialog.RestoreDirectory = true;
+            if (fileDialog.GetType() == typeof(OpenFileDialog))
+            {
+                fileDialog.CheckFileExists = true;
+            }
+            fileDialog.Filter = "CK (.ck)|*.ck";
+            fileDialog.DefaultExt = "ck";
+            fileDialog.CheckPathExists = true;
+        }
+
     }
+
+
 }
