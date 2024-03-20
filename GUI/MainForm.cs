@@ -313,17 +313,21 @@ namespace FreeDraw
                     {
 
                         dialogProcessor.SelectionList.Remove(sel);
+                        statusBar.Items[0].Text = "Последно действие: Премахване на примитив";
+                        dialogProcessor.IsDragging = true;
+                        dialogProcessor.LastLocation = e.Location;
                     }
                     else
                     {
                         dialogProcessor.SelectionList.Add(sel);
+                        statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
+                        dialogProcessor.IsDragging = true;
+                        dialogProcessor.LastLocation = e.Location;
                     }
-
+                    viewPort.Invalidate();
                 }
-                statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
-                dialogProcessor.IsDragging = true;
-                dialogProcessor.LastLocation = e.Location;
-                viewPort.Invalidate();
+               
+                
             }
         }
 

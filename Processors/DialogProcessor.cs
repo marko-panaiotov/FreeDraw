@@ -123,6 +123,40 @@ namespace FreeDraw.Processors
             set { lastLocation = value; }
         }
 
+        protected int lastBorderWidth;
+        /// <summary>
+        /// Запазва се последната зададена дебелина на рамката на дадена фигура.
+        /// </summary>
+        public int LastBorderWith
+        {
+            get { return lastBorderWidth; }
+            set { lastBorderWidth = value; }
+        }
+
+        protected int currentIndex;
+        /// <summary>
+        /// Отчитаме индекса на актуалния елемент в списъка за Undu.
+        /// В процеса на изпълнение тази променлива приема стоиности от 1 до 10.
+        /// Защо: Избрал съм потребителя да има право само на 10 връщания.
+        /// </summary>
+        public int CurrentIndex
+        {
+            get { return currentIndex; }
+            set { currentIndex = value; }
+        }
+
+        /// <summary>
+        /// Броя на фигурите.
+        /// Цел: уникално име.
+        /// </summary>
+        private int rectCount = 0;
+        private int ellipCount = 0;
+        private int lineCount = 0;
+        private int groupCount = 0;
+        private int pentaCount = 0;
+        private int polyCount = 0;
+        private int triCount = 0;
+
         #endregion
 
         #region Creating Shapes
@@ -172,10 +206,13 @@ namespace FreeDraw.Processors
             int x = rnd.Next(100, 1000);
             int y = rnd.Next(100, 600);
 
-            TriangleShape triangle = new TriangleShape(new Rectangle(x, y, 100, 200));
+            TriangleShape triangle = new TriangleShape(new RectangleF(x, y, 100, 200));
             triangle.FillColor = Color.White;
 
             ShapeList.Add(triangle);
+
+
+
         }
 
         public void AddRandomDot()
@@ -262,13 +299,14 @@ namespace FreeDraw.Processors
         /// <param name="p">Вектор на транслация.</param>
         public void TranslateTo(PointF p)
         {
-            if (selectionList != null)
+            if (selectionList.Count>0)
             {
                 foreach (Shape item in SelectionList)
                 {
                     item.Location = new PointF(item.Location.X + p.X - lastLocation.X, item.Location.Y + p.Y - lastLocation.Y);
-                    lastLocation = p;
+                    
                 }
+                lastLocation = p;
             }
         }
 
@@ -455,6 +493,35 @@ namespace FreeDraw.Processors
             fileDialog.CheckPathExists = true;
         }
 
+        private int CountShapes(Shape item)
+        {
+            int count = 0;
+            Type typeOfShape = item.GetType();
+            foreach (Shape rsg in ShapeList)
+            {
+                if (ItemTypeGroupShape(rsg))
+                {
+                    foreach (Shape sh in ((GroupShape)rsg).subShape)
+                    {
+                        if (sh.GetType() == typeOfShape)
+                            count++;
+                    }
+                }
+                if (rsg.GetType() == typeOfShape)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public bool ItemTypeGroupShape(Shape item)
+        {
+            if (item.GetType() == typeof(GroupShape))
+                return true;
+            else
+                return false;
+        }
     }
 
 
