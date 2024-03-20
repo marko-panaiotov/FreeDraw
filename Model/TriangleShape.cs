@@ -79,13 +79,13 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
             PointF point1 = new PointF(150, 100);
-PointF point2 = new PointF(100, 200);
-PointF point3 = new PointF(200, 200);
+            PointF point2 = new PointF(100, 200);
+            PointF point3 = new PointF(200, 200);
 
-PointF[] trianglePoints = { point1, point2, point3 };
+            PointF[] trianglePoints = { point1, point2, point3 };
 
             // Draw the triangle
-           grfx.FillPolygon(new SolidBrush(FillColor), trianglePoints);
+            grfx.FillPolygon(new SolidBrush(FillColor), trianglePoints);
             grfx.DrawPolygon(new Pen(BorderColor), trianglePoints);
 
             //grfx.FillPolygon(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);

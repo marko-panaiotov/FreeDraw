@@ -60,6 +60,15 @@
             pickUpSpeedButton = new ToolStripButton();
             viewPort = new GUI.DoubleBufferedPanel();
             colorPickerDialog = new ColorDialog();
+            Undo = new ToolStripMenuItem();
+            Redo = new ToolStripMenuItem();
+            toolStripSeparator3 = new ToolStripSeparator();
+            Cut = new ToolStripMenuItem();
+            Copy = new ToolStripMenuItem();
+            Paste = new ToolStripMenuItem();
+            Delete = new ToolStripMenuItem();
+            toolStripSeparator4 = new ToolStripSeparator();
+            SelectAll = new ToolStripMenuItem();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
@@ -128,6 +137,7 @@
             // 
             // editToolStripMenuItem
             // 
+            editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { Undo, Redo, toolStripSeparator3, Cut, Paste, Copy, Delete, toolStripSeparator4, SelectAll });
             editToolStripMenuItem.Name = "editToolStripMenuItem";
             editToolStripMenuItem.Size = new Size(39, 20);
             editToolStripMenuItem.Text = "Edit";
@@ -148,7 +158,7 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(116, 22);
+            aboutToolStripMenuItem.Size = new Size(180, 22);
             aboutToolStripMenuItem.Text = "About...";
             // 
             // statusBar
@@ -297,8 +307,8 @@
             viewPort.Size = new Size(808, 417);
             viewPort.TabIndex = 4;
             viewPort.Paint += ViewPortPaint;
-            viewPort.KeyDown += new System.Windows.Forms.KeyEventHandler(Key_Down);
-            viewPort.KeyUp += new System.Windows.Forms.KeyEventHandler(Key_Up);
+            viewPort.KeyDown += Key_Down;
+            viewPort.KeyUp += Key_Up;
             viewPort.MouseDown += ViewPortMouseDown;
             viewPort.MouseMove += ViewPortMouseMove;
             viewPort.MouseUp += ViewPortMouseUp;
@@ -306,6 +316,65 @@
             // colorPickerDialog
             // 
             colorPickerDialog.FullOpen = true;
+            // 
+            // Undo
+            // 
+            Undo.Name = "Undo";
+            Undo.ShortcutKeyDisplayString = "Ctrl+Z";
+            Undo.Size = new Size(164, 22);
+            Undo.Text = "Undo";
+            // 
+            // Redo
+            // 
+            Redo.Name = "Redo";
+            Redo.ShortcutKeyDisplayString = "Ctrl+Y";
+            Redo.Size = new Size(164, 22);
+            Redo.Text = "Redo";
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(161, 6);
+            // 
+            // Cut
+            // 
+            Cut.Name = "Cut";
+            Cut.ShortcutKeyDisplayString = "Ctrl+X";
+            Cut.Size = new Size(164, 22);
+            Cut.Text = "Cut";
+            // 
+            // Copy
+            // 
+            Copy.Name = "Copy";
+            Copy.ShortcutKeyDisplayString = "Ctrl+C";
+            Copy.Size = new Size(164, 22);
+            Copy.Text = "Copy";
+            // 
+            // Paste
+            // 
+            Paste.Name = "Paste";
+            Paste.ShortcutKeyDisplayString = "Ctrl+V";
+            Paste.Size = new Size(164, 22);
+            Paste.Text = "Paste";
+            // 
+            // Delete
+            // 
+            Delete.Name = "Delete";
+            Delete.ShortcutKeyDisplayString = "Del";
+            Delete.Size = new Size(164, 22);
+            Delete.Text = "Delete";
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(161, 6);
+            // 
+            // SelectAll
+            // 
+            SelectAll.Name = "SelectAll";
+            SelectAll.ShortcutKeyDisplayString = "Ctrl+A";
+            SelectAll.Size = new Size(164, 22);
+            SelectAll.Text = "Select All";
             // 
             // MainForm
             // 
@@ -351,7 +420,6 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSplitButton toolStripSplitButton1;
         private ToolStripButton drawTriangleSpeedButton;
-        private ToolStripMenuItem toolStripMenuItem1;
         private ToolStripSplitButton toolStripSplitButton2;
         private ToolStripMenuItem toolStripMenuItem2;
         private BindingSource ellipseShapeBindingSource;
@@ -368,5 +436,14 @@
         private ToolStripMenuItem Open;
         private ToolStripMenuItem Save;
         private ToolStripMenuItem SaveAs;
+        private ToolStripMenuItem Undo;
+        private ToolStripMenuItem Redo;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem Cut;
+        private ToolStripMenuItem Paste;
+        private ToolStripMenuItem Copy;
+        private ToolStripMenuItem Delete;
+        private ToolStripSeparator toolStripSeparator4;
+        private ToolStripMenuItem SelectAll;
     }
 }
