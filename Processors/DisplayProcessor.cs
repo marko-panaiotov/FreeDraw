@@ -59,6 +59,17 @@ namespace FreeDraw.Processors
             }
         }
 
+        public virtual void Draw(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            foreach (Shape item in ShapeList)
+            {
+                e.Graphics.Transform = item.Transform;
+                item.DrawSelf(e.Graphics);
+
+            }
+        }
+
         /// <summary>
         /// Визуализира даден елемент от изображението.
         /// </summary>

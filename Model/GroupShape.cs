@@ -10,47 +10,32 @@ namespace FreeDraw.Model
     [Serializable]
     public class GroupShape : Shape
     {
-        #region Constructor
-
-        public GroupShape(List<Shape> SubFigures)
+        #region Construct
+        public GroupShape()
         {
-            subShape.AddRange(SubFigures);
 
-            float minX = subShape[0].Gpath.GetBounds().Left;
-            float minY = subShape[0].Gpath.GetBounds().Top;
-            float maxX = subShape[0].Gpath.GetBounds().Right;
-            float maxY = subShape[0].Gpath.GetBounds().Bottom;
-
-            foreach (Shape sh in subShape)
-            {
-                minX = Math.Min(minX, sh.Gpath.GetBounds().Left);
-                minY = Math.Min(minY, sh.Gpath.GetBounds().Top);
-                maxX = Math.Max(maxX, sh.Gpath.GetBounds().Right);
-                maxY = Math.Max(maxY, sh.Gpath.GetBounds().Bottom);
-            }
-            PointF pinch = new PointF(minX, minY);
-            this.Location = pinch;
-            SizeF size = new SizeF(maxX - minX, maxY - minY);
-            this.Size = size;
-
-            this.Gpath.AddRectangle(new RectangleF(pinch, size));
         }
 
         public GroupShape(RectangleF rect)
             : base(rect)
         {
-            this.Location = rect.Location;
-            this.Size = rect.Size;
+
         }
 
-        public GroupShape(GroupShape rectangle)
-            : base(rectangle) { }
+        public GroupShape(Shape shape)
+            : base(shape)
+        {
 
+        }
         #endregion
 
         #region Properties
-
-        public List<Shape> subShape = new List<Shape>();
+        private List<Shape> subShape = new List<Shape>();
+        public List<Shape> SubShape
+        {
+            get { return subShape; }
+            set { subShape = value; }
+        }
 
         private Color fillColor;
         public override Color FillColor
@@ -59,20 +44,8 @@ namespace FreeDraw.Model
             set
             {
                 fillColor = value;
-                foreach (Shape sh in subShape)
-                    sh.FillColor = fillColor;
-            }
-        }
-
-        private float borderWidth;
-        public override float BorderWidth
-        {
-            get { return borderWidth; }
-            set
-            {
-                borderWidth = value;
-                foreach (Shape sh in subShape)
-                    sh.BorderWidth = borderWidth;
+                foreach (Shape subsh in subShape)
+                    subsh.FillColor = value;
             }
         }
 
@@ -83,59 +56,42 @@ namespace FreeDraw.Model
             set
             {
                 borderColor = value;
-                foreach (Shape sh in subShape)
-                    sh.BorderColor = borderColor;
+                foreach (Shape subsh in subShape)
+                    subsh.BorderColor = value;
             }
         }
 
-        private int transperancy;
-        public override int Transperancy
+        private float borderWidth;
+        public override float BorderWidth
         {
-            get { return transperancy; }
+            get { return borderWidth; }
             set
             {
-                transperancy = value;
-                foreach (Shape s in subShape)
-                    s.Transperancy = transperancy;
+                borderWidth = value;
+                foreach (Shape subsh in subShape)
+                    subsh.BorderWidth = value;
             }
         }
 
-        #endregion Properties
+        #endregion
 
-        #region Operations
-
-        public override bool Contains(PointF point)
+        public override void Translate(PointF vector)
         {
+            base.Translate(vector);
+
             foreach (Shape sh in subShape)
             {
-                if (sh.Contains(point)) return true;
+                sh.Translate(vector);
             }
-            return false;
         }
 
-        public override void Translate(float offsetX, float offsetY)
+        public override void Rotate(int gradus)
         {
-            base.Translate(offsetX, offsetY);
-
-            foreach (Shape sh in subShape)
-                sh.Translate(offsetX, offsetY);
-        }
-
-        public override void Rotate(float angle, PointF center)
-        {
-            base.Rotate(angle, center);
-
-            foreach (Shape sh in subShape)
-                sh.Rotate(angle, center);
-        }
-
-        public override void Scale(float offsetX, float offsetY, PointF center)
-        {
-            base.Scale(offsetX, offsetY, center);
+            base.Rotate(gradus);
 
             foreach (Shape sh in subShape)
             {
-                sh.Scale(offsetX, offsetY, center);
+                sh.Rotate(gradus);
             }
         }
 
@@ -143,16 +99,12 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
 
-            Gpath.Reset();
-            Gpath.AddRectangle(new RectangleF(this.Location, this.Size));
-            Gpath.Transform(this.Transform);
-
             foreach (Shape sh in subShape)
-            {
                 sh.DrawSelf(grfx);
-            }
+
+            // grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            // grfx.DrawRectangle(new Pen(BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
         }
 
-        #endregion Operations
     }
 }

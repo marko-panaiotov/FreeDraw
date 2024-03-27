@@ -293,6 +293,29 @@ namespace FreeDraw.Processors
             return null;
         }
 
+        public override void Draw(Graphics grfx)
+        {
+            base.Draw(grfx);
+
+            if (selectionList.Count > 0)
+            {
+                foreach (Shape sh in selectionList)
+                {
+                    RectangleF counture = sh.Rectangle;
+                    PointF location = new PointF(counture.Location.X - 4, counture.Location.Y - 4);
+                    counture.Location = location;
+                    counture.Width += 8;
+                    counture.Height += 8;
+
+                    Pen pen = new Pen(Color.Black, 1);
+                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+                    grfx.Transform = sh.Transform;
+                    grfx.DrawRectangle(pen, counture.Location.X, counture.Location.Y, counture.Width, counture.Height);
+                }
+            }
+        }
+
         /// <summary>
         /// Транслация на избраният елемент на вектор определен от <paramref name="p>p</paramref>
         /// </summary>
@@ -493,7 +516,7 @@ namespace FreeDraw.Processors
             fileDialog.CheckPathExists = true;
         }
 
-        private int CountShapes(Shape item)
+       /* private int CountShapes(Shape item)
         {
             int count = 0;
             Type typeOfShape = item.GetType();
@@ -513,7 +536,7 @@ namespace FreeDraw.Processors
                 }
             }
             return count;
-        }
+        }*/
 
         public bool ItemTypeGroupShape(Shape item)
         {

@@ -47,8 +47,8 @@ namespace FreeDraw.Model
             base.DrawSelf(grfx);
             
             
-            grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawEllipse(new Pen(BorderColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            grfx.FillEllipse(new SolidBrush(base.FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            grfx.DrawEllipse(new Pen(base.BorderColor), Rectangle.X, Rectangle.Y,Rectangle.Width, Rectangle.Height);
 
         }
     }

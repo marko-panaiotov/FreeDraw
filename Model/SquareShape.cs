@@ -46,8 +46,8 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
 
-            grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, 100, 100);
-            grfx.DrawRectangle(new Pen(BorderColor), Rectangle.X, Rectangle.Y, 100, 100);
+            grfx.FillRectangle(new SolidBrush(base.FillColor), Rectangle.X, Rectangle.Y, 100, 100);
+            grfx.DrawRectangle(new Pen(base.BorderColor), Rectangle.X, Rectangle.Y, 100, 100);
 
 
         }
