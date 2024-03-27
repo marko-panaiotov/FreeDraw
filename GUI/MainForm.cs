@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace FreeDraw
 {
@@ -63,27 +64,27 @@ namespace FreeDraw
                 switch (e.KeyCode)
                 {
                     case Keys.C:
-                       // Copy2.PerformClick();
+                        // Copy2.PerformClick();
                         break;
                     case Keys.X:
-                       // Cut2.PerformClick();
+                        // Cut2.PerformClick();
                         break;
                     case Keys.V:
                         //Paste2.PerformClick();
                         break;
                     case Keys.A:
-                       // SelectAll2.PerformClick();
+                        // SelectAll2.PerformClick();
                         viewPort.Invalidate();
                         break;
                     case Keys.G:
                         if (e.Alt)
                         {
-                           // Break.PerformClick();
+                            // Break.PerformClick();
                             break;
                         }
                         else
                         {
-                           // GroupSelection.PerformClick();
+                            // GroupSelection.PerformClick();
                             break;
                         }
                     case Keys.N:
@@ -115,13 +116,13 @@ namespace FreeDraw
                 switch (e.KeyCode)
                 {
                     case Keys.F:
-                       // bringToFrontToolStripMenuItem.PerformClick();
+                        // bringToFrontToolStripMenuItem.PerformClick();
                         break;
                     case Keys.B:
                         //sendToBackToolStripMenuItem.PerformClick();
                         break;
                     case Keys.R:
-                       // ChangeName.PerformClick();
+                        // ChangeName.PerformClick();
                         break;
                     default:
                         if (dialogProcessor.IsDrawing)
@@ -168,20 +169,20 @@ namespace FreeDraw
 
             #region Just Keys
 
-           /* if (e.KeyCode == Keys.Oemplus)
-            {
-                Expand.PerformClick();
-            }
+            /* if (e.KeyCode == Keys.Oemplus)
+             {
+                 Expand.PerformClick();
+             }
 
-            if (e.KeyCode == Keys.OemMinus)
-            {
-                Shrink.PerformClick();
-            }
+             if (e.KeyCode == Keys.OemMinus)
+             {
+                 Shrink.PerformClick();
+             }
 
-            if (e.Alt && e.KeyCode == Keys.F4)
-            {
-                Exit.PerformClick();
-            }*/
+             if (e.Alt && e.KeyCode == Keys.F4)
+             {
+                 Exit.PerformClick();
+             }*/
 
             #endregion Just Keys
         }
@@ -201,7 +202,7 @@ namespace FreeDraw
 
         #endregion Key Events
 
-       
+
 
         /// <summary>
         /// Изход от програмата. Затваря главната форма, а с това и програмата.
@@ -326,8 +327,8 @@ namespace FreeDraw
                     }
                     viewPort.Invalidate();
                 }
-               
-                
+
+
             }
         }
 
@@ -458,6 +459,25 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
         #endregion File Menu
+
+        private void groupButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Group();
+            statusBar.Items[0].Text = "Групиране.";
+            viewPort.Invalidate();
+        }
+
+        private void viewPort_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void unGroupButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Ungroup();
+            statusBar.Items[0].Text = "Разгрупиране.";
+            viewPort.Invalidate();
+        }
     }
 }
 

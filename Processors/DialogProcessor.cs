@@ -268,10 +268,64 @@ namespace FreeDraw.Processors
         }
         #endregion Creating Shapes
 
-        #region Shape Properties
-        #endregion Shape Properties  
+        internal void Group()
+        {
+            if (selectionList.Count > 0)
+            {
+                GroupShape group = new GroupShape();
+                RectangleF kontur = selectionList[0].Rectangle;
+                float minX = kontur.Left;
+                float minY = kontur.Top;
+                float maxRight = kontur.Right;
+                float maxBottom = kontur.Bottom;
 
-    
+                foreach (Shape sh in selectionList)
+                {
+                    minX = Math.Min(minX, sh.Rectangle.Left);
+                    minY = Math.Min(minY, sh.Rectangle.Top); ;
+                    maxRight = Math.Max(maxRight, sh.Rectangle.Right); ;
+                    maxBottom = Math.Max(maxBottom, sh.Rectangle.Bottom); ;
+
+                    group.SubShape.Add(sh);
+                    ShapeList.Remove(sh);
+                }
+
+                PointF location = new PointF(minX, minY);
+                kontur.Location = location;
+                kontur.Width = maxRight - minX;
+                kontur.Height = maxBottom - minY;
+
+                group.Rectangle = kontur;
+                ShapeList.Add(group);
+                selectionList.Clear();
+                selectionList.Add(group);
+
+            }
+        }
+
+        internal void Ungroup()
+        {
+            if (selectionList.Count > 0)
+            {
+                foreach (Shape sh in selectionList)
+                {
+                    if (sh.GetType() == typeof(GroupShape))
+                    {
+                        foreach (Shape gsh in ((GroupShape)sh).SubShape) 
+                        {
+                            ShapeList.Add(gsh);
+                        }
+
+                        ((GroupShape)sh).SubShape.Clear();
+                        ShapeList.Remove(sh);
+
+                    }
+                }
+
+                selectionList.Clear();
+            }
+        }
+
         /// <summary>
         /// Проверява дали дадена точка е в елемента.
         /// Обхожда в ред обратен на визуализацията с цел намиране на

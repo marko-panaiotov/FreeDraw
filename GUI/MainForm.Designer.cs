@@ -40,6 +40,15 @@
             toolStripSeparator2 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
             editToolStripMenuItem = new ToolStripMenuItem();
+            Undo = new ToolStripMenuItem();
+            Redo = new ToolStripMenuItem();
+            toolStripSeparator3 = new ToolStripSeparator();
+            Cut = new ToolStripMenuItem();
+            Paste = new ToolStripMenuItem();
+            Copy = new ToolStripMenuItem();
+            Delete = new ToolStripMenuItem();
+            toolStripSeparator4 = new ToolStripSeparator();
+            SelectAll = new ToolStripMenuItem();
             imageToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
@@ -58,17 +67,10 @@
             pickColorButton = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             pickUpSpeedButton = new ToolStripButton();
+            groupButton = new ToolStripButton();
             viewPort = new GUI.DoubleBufferedPanel();
             colorPickerDialog = new ColorDialog();
-            Undo = new ToolStripMenuItem();
-            Redo = new ToolStripMenuItem();
-            toolStripSeparator3 = new ToolStripSeparator();
-            Cut = new ToolStripMenuItem();
-            Copy = new ToolStripMenuItem();
-            Paste = new ToolStripMenuItem();
-            Delete = new ToolStripMenuItem();
-            toolStripSeparator4 = new ToolStripSeparator();
-            SelectAll = new ToolStripMenuItem();
+            unGroupButton = new ToolStripButton();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
@@ -95,7 +97,7 @@
             // 
             New.Name = "New";
             New.ShortcutKeyDisplayString = "Ctrl+N";
-            New.Size = new Size(180, 22);
+            New.Size = new Size(155, 22);
             New.Text = "New";
             New.Click += New_Click;
             // 
@@ -103,7 +105,7 @@
             // 
             Open.Name = "Open";
             Open.ShortcutKeyDisplayString = "Ctrl+O";
-            Open.Size = new Size(180, 22);
+            Open.Size = new Size(155, 22);
             Open.Text = "Open...";
             Open.Click += Open_Click;
             // 
@@ -111,27 +113,27 @@
             // 
             Save.Name = "Save";
             Save.ShortcutKeyDisplayString = "Ctrl+S";
-            Save.Size = new Size(180, 22);
+            Save.Size = new Size(155, 22);
             Save.Text = "Save";
             Save.Click += Save_Click;
             // 
             // SaveAs
             // 
             SaveAs.Name = "SaveAs";
-            SaveAs.Size = new Size(180, 22);
+            SaveAs.Size = new Size(155, 22);
             SaveAs.Text = "Save As...";
             SaveAs.Click += SaveAs_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(152, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.ShortcutKeyDisplayString = "Alt+F4";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(155, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItemClick;
             // 
@@ -141,6 +143,65 @@
             editToolStripMenuItem.Name = "editToolStripMenuItem";
             editToolStripMenuItem.Size = new Size(39, 20);
             editToolStripMenuItem.Text = "Edit";
+            // 
+            // Undo
+            // 
+            Undo.Name = "Undo";
+            Undo.ShortcutKeyDisplayString = "Ctrl+Z";
+            Undo.Size = new Size(164, 22);
+            Undo.Text = "Undo";
+            // 
+            // Redo
+            // 
+            Redo.Name = "Redo";
+            Redo.ShortcutKeyDisplayString = "Ctrl+Y";
+            Redo.Size = new Size(164, 22);
+            Redo.Text = "Redo";
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(161, 6);
+            // 
+            // Cut
+            // 
+            Cut.Name = "Cut";
+            Cut.ShortcutKeyDisplayString = "Ctrl+X";
+            Cut.Size = new Size(164, 22);
+            Cut.Text = "Cut";
+            // 
+            // Paste
+            // 
+            Paste.Name = "Paste";
+            Paste.ShortcutKeyDisplayString = "Ctrl+V";
+            Paste.Size = new Size(164, 22);
+            Paste.Text = "Paste";
+            // 
+            // Copy
+            // 
+            Copy.Name = "Copy";
+            Copy.ShortcutKeyDisplayString = "Ctrl+C";
+            Copy.Size = new Size(164, 22);
+            Copy.Text = "Copy";
+            // 
+            // Delete
+            // 
+            Delete.Name = "Delete";
+            Delete.ShortcutKeyDisplayString = "Del";
+            Delete.Size = new Size(164, 22);
+            Delete.Text = "Delete";
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(161, 6);
+            // 
+            // SelectAll
+            // 
+            SelectAll.Name = "SelectAll";
+            SelectAll.ShortcutKeyDisplayString = "Ctrl+A";
+            SelectAll.Size = new Size(164, 22);
+            SelectAll.Text = "Select All";
             // 
             // imageToolStripMenuItem
             // 
@@ -158,7 +219,7 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Size = new Size(116, 22);
             aboutToolStripMenuItem.Text = "About...";
             // 
             // statusBar
@@ -178,7 +239,7 @@
             // 
             // speedMenu
             // 
-            speedMenu.Items.AddRange(new ToolStripItem[] { drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator1, pickUpSpeedButton });
+            speedMenu.Items.AddRange(new ToolStripItem[] { drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator1, pickUpSpeedButton, groupButton, unGroupButton });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
             speedMenu.Size = new Size(808, 25);
@@ -298,6 +359,16 @@
             pickUpSpeedButton.Text = "toolStripButton1";
             pickUpSpeedButton.Click += pickUpSpeedButton_Click;
             // 
+            // groupButton
+            // 
+            groupButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            groupButton.Image = (Image)resources.GetObject("groupButton.Image");
+            groupButton.ImageTransparentColor = Color.Magenta;
+            groupButton.Name = "groupButton";
+            groupButton.Size = new Size(23, 22);
+            groupButton.Text = "GroupButton";
+            groupButton.Click += groupButton_Click;
+            // 
             // viewPort
             // 
             viewPort.Dock = DockStyle.Fill;
@@ -306,6 +377,7 @@
             viewPort.Name = "viewPort";
             viewPort.Size = new Size(808, 417);
             viewPort.TabIndex = 4;
+            viewPort.Load += viewPort_Load;
             viewPort.Paint += ViewPortPaint;
             viewPort.KeyDown += Key_Down;
             viewPort.KeyUp += Key_Up;
@@ -317,64 +389,16 @@
             // 
             colorPickerDialog.FullOpen = true;
             // 
-            // Undo
+            // unGroupButton
             // 
-            Undo.Name = "Undo";
-            Undo.ShortcutKeyDisplayString = "Ctrl+Z";
-            Undo.Size = new Size(164, 22);
-            Undo.Text = "Undo";
-            // 
-            // Redo
-            // 
-            Redo.Name = "Redo";
-            Redo.ShortcutKeyDisplayString = "Ctrl+Y";
-            Redo.Size = new Size(164, 22);
-            Redo.Text = "Redo";
-            // 
-            // toolStripSeparator3
-            // 
-            toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(161, 6);
-            // 
-            // Cut
-            // 
-            Cut.Name = "Cut";
-            Cut.ShortcutKeyDisplayString = "Ctrl+X";
-            Cut.Size = new Size(164, 22);
-            Cut.Text = "Cut";
-            // 
-            // Copy
-            // 
-            Copy.Name = "Copy";
-            Copy.ShortcutKeyDisplayString = "Ctrl+C";
-            Copy.Size = new Size(164, 22);
-            Copy.Text = "Copy";
-            // 
-            // Paste
-            // 
-            Paste.Name = "Paste";
-            Paste.ShortcutKeyDisplayString = "Ctrl+V";
-            Paste.Size = new Size(164, 22);
-            Paste.Text = "Paste";
-            // 
-            // Delete
-            // 
-            Delete.Name = "Delete";
-            Delete.ShortcutKeyDisplayString = "Del";
-            Delete.Size = new Size(164, 22);
-            Delete.Text = "Delete";
-            // 
-            // toolStripSeparator4
-            // 
-            toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(161, 6);
-            // 
-            // SelectAll
-            // 
-            SelectAll.Name = "SelectAll";
-            SelectAll.ShortcutKeyDisplayString = "Ctrl+A";
-            SelectAll.Size = new Size(164, 22);
-            SelectAll.Text = "Select All";
+            unGroupButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            unGroupButton.Image = (Image)resources.GetObject("unGroupButton.Image");
+            unGroupButton.ImageTransparentColor = Color.Magenta;
+            unGroupButton.Name = "unGroupButton";
+            unGroupButton.Size = new Size(23, 22);
+            unGroupButton.Text = "UnGroupButton";
+            unGroupButton.TextDirection = ToolStripTextDirection.Horizontal;
+            unGroupButton.Click += unGroupButton_Click;
             // 
             // MainForm
             // 
@@ -445,5 +469,7 @@
         private ToolStripMenuItem Delete;
         private ToolStripSeparator toolStripSeparator4;
         private ToolStripMenuItem SelectAll;
+        private ToolStripButton groupButton;
+        private ToolStripButton unGroupButton;
     }
 }
