@@ -71,7 +71,7 @@ namespace FreeDraw.Model
             set { fillColor = value; }
         }
 
-        private Color borderColor;
+        private Color borderColor=Color.Black;
         public virtual Color BorderColor
         {
             get { return borderColor; }

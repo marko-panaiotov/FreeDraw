@@ -268,6 +268,7 @@ namespace FreeDraw.Processors
         }
         #endregion Creating Shapes
 
+        #region Group and UnGroup
         internal void Group()
         {
             if (selectionList.Count > 0)
@@ -325,6 +326,7 @@ namespace FreeDraw.Processors
                 selectionList.Clear();
             }
         }
+        #endregion
 
         /// <summary>
         /// Проверява дали дадена точка е в елемента.
@@ -380,8 +382,10 @@ namespace FreeDraw.Processors
             {
                 foreach (Shape item in SelectionList)
                 {
-                    item.Location = new PointF(item.Location.X + p.X - lastLocation.X, item.Location.Y + p.Y - lastLocation.Y);
-                    
+                    //item.Location = new PointF(item.Location.X + p.X - lastLocation.X, item.Location.Y + p.Y - lastLocation.Y);
+                    PointF offset = new PointF(p.X - lastLocation.X, p.Y - lastLocation.Y);
+                    item.Translate(offset);
+
                 }
                 lastLocation = p;
             }
