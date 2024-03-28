@@ -64,13 +64,21 @@
             drawRoundedRectangleSpeedButton = new ToolStripMenuItem();
             drawSquareSpeedButton = new ToolStripMenuItem();
             drawTriangleSpeedButton = new ToolStripButton();
-            pickColorButton = new ToolStripButton();
+            pickColorButton = new ToolStripSplitButton();
+            fillingColorPickerButtonToolStripMenuItem = new ToolStripMenuItem();
+            BorderColorPickerButton = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             pickUpSpeedButton = new ToolStripButton();
+            toolStripSeparator5 = new ToolStripSeparator();
             groupButton = new ToolStripButton();
+            unGroupButton = new ToolStripButton();
+            Stroke = new ToolStripDropDownButton();
+            stroke1pt = new ToolStripMenuItem();
+            stroke3pt = new ToolStripMenuItem();
+            stroke5pt = new ToolStripMenuItem();
+            stroke10pt = new ToolStripMenuItem();
             viewPort = new GUI.DoubleBufferedPanel();
             colorPickerDialog = new ColorDialog();
-            unGroupButton = new ToolStripButton();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
@@ -239,7 +247,7 @@
             // 
             // speedMenu
             // 
-            speedMenu.Items.AddRange(new ToolStripItem[] { drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator1, pickUpSpeedButton, groupButton, unGroupButton });
+            speedMenu.Items.AddRange(new ToolStripItem[] { drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator1, pickUpSpeedButton, toolStripSeparator5, groupButton, unGroupButton, Stroke });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
             speedMenu.Size = new Size(808, 25);
@@ -335,13 +343,31 @@
             // pickColorButton
             // 
             pickColorButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            pickColorButton.DoubleClickEnabled = true;
+            pickColorButton.DropDownItems.AddRange(new ToolStripItem[] { fillingColorPickerButtonToolStripMenuItem, BorderColorPickerButton });
             pickColorButton.Image = (Image)resources.GetObject("pickColorButton.Image");
             pickColorButton.ImageTransparentColor = Color.Magenta;
             pickColorButton.Name = "pickColorButton";
             pickColorButton.RightToLeft = RightToLeft.No;
-            pickColorButton.Size = new Size(23, 22);
+            pickColorButton.Size = new Size(32, 22);
             pickColorButton.Text = "ColorPickerButton";
-            pickColorButton.Click += PickColorButton_Click;
+            // 
+            // fillingColorPickerButtonToolStripMenuItem
+            // 
+            fillingColorPickerButtonToolStripMenuItem.Image = (Image)resources.GetObject("fillingColorPickerButtonToolStripMenuItem.Image");
+            fillingColorPickerButtonToolStripMenuItem.Name = "fillingColorPickerButtonToolStripMenuItem";
+            fillingColorPickerButtonToolStripMenuItem.Size = new Size(138, 22);
+            fillingColorPickerButtonToolStripMenuItem.Text = "FillColor";
+            fillingColorPickerButtonToolStripMenuItem.Click += FillColorPickerButtonToolStripMenuItem_Click;
+            // 
+            // BorderColorPickerButton
+            // 
+            BorderColorPickerButton.Image = (Image)resources.GetObject("BorderColorPickerButton.Image");
+            BorderColorPickerButton.Name = "BorderColorPickerButton";
+            BorderColorPickerButton.Size = new Size(138, 22);
+            BorderColorPickerButton.Text = "BorderColor";
+            BorderColorPickerButton.TextDirection = ToolStripTextDirection.Horizontal;
+            BorderColorPickerButton.Click += BorderColorPickerButton_Click;
             // 
             // toolStripSeparator1
             // 
@@ -359,6 +385,11 @@
             pickUpSpeedButton.Text = "toolStripButton1";
             pickUpSpeedButton.Click += pickUpSpeedButton_Click;
             // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new Size(6, 25);
+            // 
             // groupButton
             // 
             groupButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -368,6 +399,60 @@
             groupButton.Size = new Size(23, 22);
             groupButton.Text = "GroupButton";
             groupButton.Click += groupButton_Click;
+            // 
+            // unGroupButton
+            // 
+            unGroupButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            unGroupButton.Image = (Image)resources.GetObject("unGroupButton.Image");
+            unGroupButton.ImageTransparentColor = Color.Magenta;
+            unGroupButton.Name = "unGroupButton";
+            unGroupButton.Size = new Size(23, 22);
+            unGroupButton.Text = "UnGroupButton";
+            unGroupButton.TextDirection = ToolStripTextDirection.Horizontal;
+            unGroupButton.Click += unGroupButton_Click;
+            // 
+            // Stroke
+            // 
+            Stroke.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            Stroke.DropDownItems.AddRange(new ToolStripItem[] { stroke1pt, stroke3pt, stroke5pt, stroke10pt });
+            Stroke.Image = (Image)resources.GetObject("Stroke.Image");
+            Stroke.ImageTransparentColor = Color.Magenta;
+            Stroke.Name = "Stroke";
+            Stroke.Size = new Size(29, 22);
+            Stroke.Text = "Stroke";
+            Stroke.Click += Stroke_Click;
+            // 
+            // stroke1pt
+            // 
+            stroke1pt.Image = (Image)resources.GetObject("stroke1pt.Image");
+            stroke1pt.Name = "stroke1pt";
+            stroke1pt.Size = new Size(180, 22);
+            stroke1pt.Text = "Width 1 pt";
+            stroke1pt.Click += stroke1pt_Click;
+            // 
+            // stroke3pt
+            // 
+            stroke3pt.Image = (Image)resources.GetObject("stroke3pt.Image");
+            stroke3pt.Name = "stroke3pt";
+            stroke3pt.Size = new Size(180, 22);
+            stroke3pt.Text = "Width 3 pt";
+            stroke3pt.Click += stroke3pt_Click;
+            // 
+            // stroke5pt
+            // 
+            stroke5pt.Image = (Image)resources.GetObject("stroke5pt.Image");
+            stroke5pt.Name = "stroke5pt";
+            stroke5pt.Size = new Size(180, 22);
+            stroke5pt.Text = "Width 5 pt";
+            stroke5pt.Click += stroke5pt_Click;
+            // 
+            // stroke10pt
+            // 
+            stroke10pt.Image = (Image)resources.GetObject("stroke10pt.Image");
+            stroke10pt.Name = "stroke10pt";
+            stroke10pt.Size = new Size(180, 22);
+            stroke10pt.Text = "Width 10 pt";
+            stroke10pt.Click += stroke10pt_Click;
             // 
             // viewPort
             // 
@@ -388,17 +473,6 @@
             // colorPickerDialog
             // 
             colorPickerDialog.FullOpen = true;
-            // 
-            // unGroupButton
-            // 
-            unGroupButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            unGroupButton.Image = (Image)resources.GetObject("unGroupButton.Image");
-            unGroupButton.ImageTransparentColor = Color.Magenta;
-            unGroupButton.Name = "unGroupButton";
-            unGroupButton.Size = new Size(23, 22);
-            unGroupButton.Text = "UnGroupButton";
-            unGroupButton.TextDirection = ToolStripTextDirection.Horizontal;
-            unGroupButton.Click += unGroupButton_Click;
             // 
             // MainForm
             // 
@@ -438,7 +512,6 @@
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.MenuStrip mainMenu;
         private ToolStripButton drawEllipseSpeedButton;
-        private ToolStripButton pickColorButton;
         private ColorDialog colorDialog1;
         private ColorDialog colorPickerDialog;
         private ToolStripSeparator toolStripSeparator1;
@@ -471,5 +544,14 @@
         private ToolStripMenuItem SelectAll;
         private ToolStripButton groupButton;
         private ToolStripButton unGroupButton;
+        private ToolStripSplitButton pickColorButton;
+        private ToolStripMenuItem BorderColorPickerButton;
+        private ToolStripMenuItem fillingColorPickerButtonToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator5;
+        private ToolStripDropDownButton Stroke;
+        private ToolStripMenuItem stroke1pt;
+        private ToolStripMenuItem stroke3pt;
+        private ToolStripMenuItem stroke5pt;
+        private ToolStripMenuItem stroke10pt;
     }
 }

@@ -328,6 +328,92 @@ namespace FreeDraw.Processors
         }
         #endregion
 
+        #region Shape Options
+
+        /// <summary>
+        /// Задаване на дебелина на линията.
+        /// </summary>
+        public void SetBorderWidth(int width)
+        {
+            if (IsSelectionNotNull())
+            {
+                if (GroupSelectionContains(selection))
+                {
+                    foreach (Shape sh in SelectionList)
+                    {
+                        sh.BorderWidth = width;
+                    }
+                }
+                else
+                    Selection.BorderWidth = width;
+            }
+        }
+
+        /* /// <summary>
+         /// Задаване на прозрачност на запълващия цвят.
+         /// </summary>
+         public void SetTransperancy(Int32 transperancy)
+         {
+             if (IsSelectionNotNull())
+             {
+                 if (GroupSelectionContains(selection))
+                 {
+                     foreach (Shape sh in GroupSelection)
+                     {
+                         sh.Transperancy = transperancy;
+                     }
+                 }
+                 else
+                     selection.Transperancy = transperancy;
+             }
+         }
+
+         /// <summary>
+         /// Задаване на запълващ цвят.
+         /// </summary>
+         public void SetFillColor(Color color)
+         {
+             if (IsSelectionNotNull())
+             {
+                 if (GroupSelectionContains(selection))
+                 {
+                     foreach (Shape sh in GroupSelection)
+                     {
+                         sh.FillColor = color;
+                         if (sh.Transperancy == 0)
+                             sh.Transperancy = 255;
+                     }
+                 }
+                 else
+                 {
+                     selection.FillColor = color;
+                     if (selection.Transperancy == 0)
+                         selection.Transperancy = 255;
+                 }
+             }
+         }
+
+         /// <summary>
+         /// Задаване на цвят на линията
+         /// </summary>
+         public void SetBorderColor(Color color)
+         {
+             if (IsSelectionNotNull())
+             {
+                 if (GroupSelectionContains(selection))
+                 {
+                     foreach (Shape sh in GroupSelection)
+                     {
+                         sh.BorderColor = color;
+                     }
+                 }
+                 else
+                     selection.BorderColor = color;
+             }
+         }*/
+
+        #endregion Shape Options      
+
         /// <summary>
         /// Проверява дали дадена точка е в елемента.
         /// Обхожда в ред обратен на визуализацията с цел намиране на
@@ -574,35 +660,44 @@ namespace FreeDraw.Processors
             fileDialog.CheckPathExists = true;
         }
 
-       /* private int CountShapes(Shape item)
-        {
-            int count = 0;
-            Type typeOfShape = item.GetType();
-            foreach (Shape rsg in ShapeList)
-            {
-                if (ItemTypeGroupShape(rsg))
-                {
-                    foreach (Shape sh in ((GroupShape)rsg).subShape)
-                    {
-                        if (sh.GetType() == typeOfShape)
-                            count++;
-                    }
-                }
-                if (rsg.GetType() == typeOfShape)
-                {
-                    count++;
-                }
-            }
-            return count;
-        }*/
+        /* private int CountShapes(Shape item)
+         {
+             int count = 0;
+             Type typeOfShape = item.GetType();
+             foreach (Shape rsg in ShapeList)
+             {
+                 if (ItemTypeGroupShape(rsg))
+                 {
+                     foreach (Shape sh in ((GroupShape)rsg).subShape)
+                     {
+                         if (sh.GetType() == typeOfShape)
+                             count++;
+                     }
+                 }
+                 if (rsg.GetType() == typeOfShape)
+                 {
+                     count++;
+                 }
+             }
+             return count;
+         }*/
 
-        public bool ItemTypeGroupShape(Shape item)
+        public bool IsSelectionNotNull()
         {
-            if (item.GetType() == typeof(GroupShape))
+            if (selection != null)
                 return true;
             else
                 return false;
         }
+
+        public bool GroupSelectionContains(Shape item)
+        {
+            if (SelectionList.Contains(item))
+                return true;
+            else
+                return false;
+        }
+
     }
 
 

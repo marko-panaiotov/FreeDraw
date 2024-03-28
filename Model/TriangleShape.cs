@@ -86,7 +86,7 @@ namespace FreeDraw.Model
 
             // Draw the triangle
             grfx.FillPolygon(new SolidBrush(FillColor), trianglePoints);
-            grfx.DrawPolygon(new Pen(BorderColor), trianglePoints);
+            grfx.DrawPolygon(new Pen(BorderColor, BorderWidth), trianglePoints);
 
             //grfx.FillPolygon(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
             //grfx.DrawEllipse(Pens.Black, Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);

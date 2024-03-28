@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace FreeDraw.Model
 {
+    [Serializable]
     public abstract class Shape
     {
         #region Construct

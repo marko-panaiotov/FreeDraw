@@ -356,13 +356,27 @@ namespace FreeDraw
             dialogProcessor.IsDragging = false;
         }
 
-        private void PickColorButton_Click(object sender, EventArgs e)
+
+
+        private void FillColorPickerButtonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (colorPickerDialog.ShowDialog() == DialogResult.OK)
             {
                 foreach (Shape item in dialogProcessor.SelectionList)
                 {
                     item.FillColor = colorPickerDialog.Color;
+                    viewPort.Invalidate();
+                }
+            }
+        }
+
+        private void BorderColorPickerButton_Click(object sender, EventArgs e)
+        {
+            if (colorPickerDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (Shape item in dialogProcessor.SelectionList)
+                {
+                    item.BorderColor = colorPickerDialog.Color;
                     viewPort.Invalidate();
                 }
             }
@@ -478,6 +492,73 @@ namespace FreeDraw
             statusBar.Items[0].Text = "Разгрупиране.";
             viewPort.Invalidate();
         }
+
+        private void fillingColorPickerButtonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (colorPickerDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (Shape item in dialogProcessor.SelectionList)
+                {
+                    item.FillColor = colorPickerDialog.Color;
+                    viewPort.Invalidate();
+                }
+            }
+        }
+
+        private void stroke1pt_Click(object sender, EventArgs e)
+        {
+            foreach (Shape item in dialogProcessor.SelectionList)
+            {
+                item.BorderWidth = 1;
+                statusBar.Items[0].Text = "Draw: Дебелина на рамката 1 pt.";
+                dialogProcessor.LastBorderWith = 1;
+                viewPort.Invalidate();
+            }
+
+        }
+
+        private void stroke3pt_Click(object sender, EventArgs e)
+        {
+            foreach (Shape item in dialogProcessor.SelectionList)
+            {
+                item.BorderWidth = 3;
+                statusBar.Items[0].Text = "Draw: Дебелина на рамката 3 pt.";
+                dialogProcessor.LastBorderWith = 3;
+                viewPort.Invalidate();
+            }
+        }
+
+        private void stroke5pt_Click(object sender, EventArgs e)
+        {
+            foreach (Shape item in dialogProcessor.SelectionList)
+            {
+                item.BorderWidth = 5;
+                statusBar.Items[0].Text = "Draw: Дебелина на рамката 5 pt.";
+                dialogProcessor.LastBorderWith = 5;
+                viewPort.Invalidate();
+            }
+        }
+
+        private void stroke10pt_Click(object sender, EventArgs e)
+        {
+            foreach (Shape item in dialogProcessor.SelectionList)
+            {
+                item.BorderWidth = 10;
+                statusBar.Items[0].Text = "Draw: Дебелина на рамката 10 pt.";
+                dialogProcessor.LastBorderWith = 10;
+                viewPort.Invalidate();
+            }
+
+
+
+        }
+
+        private void Stroke_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FreeDraw.Model
 {
+    [Serializable]
     public class CircleShape : Shape
     {
         #region Constructor
@@ -19,6 +20,8 @@ namespace FreeDraw.Model
         }
 
         #endregion
+
+
 
         /// <summary>
         /// Проверка за принадлежност на точка point към правоъгълника.
@@ -47,7 +50,7 @@ namespace FreeDraw.Model
 
             //DrawBorder(grfx);
             grfx.FillEllipse(new SolidBrush(base.FillColor), Rectangle.X, Rectangle.Y, 200, 200);
-            grfx.DrawEllipse(new Pen(base.BorderColor), Rectangle.X, Rectangle.Y, 200, 200);
+            grfx.DrawEllipse(new Pen(base.BorderColor,BorderWidth), Rectangle.X, Rectangle.Y, 200, 200);
             
         }
 

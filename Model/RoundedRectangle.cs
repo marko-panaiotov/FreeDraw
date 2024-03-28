@@ -64,7 +64,7 @@ namespace FreeDraw.Model
             path.CloseFigure();
 
             grfx.FillPath(new SolidBrush(FillColor), path);
-            grfx.DrawPath(new Pen(BorderColor), path);
+            grfx.DrawPath(new Pen(BorderColor,BorderWidth), path);
 
             //grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
             //grfx.DrawRectangle(new Pen(BorderColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
