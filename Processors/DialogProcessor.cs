@@ -330,24 +330,6 @@ namespace FreeDraw.Processors
 
         #region Shape Options
 
-        /// <summary>
-        /// Задаване на дебелина на линията.
-        /// </summary>
-        public void SetBorderWidth(int width)
-        {
-            if (IsSelectionNotNull())
-            {
-                if (GroupSelectionContains(selection))
-                {
-                    foreach (Shape sh in SelectionList)
-                    {
-                        sh.BorderWidth = width;
-                    }
-                }
-                else
-                    Selection.BorderWidth = width;
-            }
-        }
 
         /* /// <summary>
          /// Задаване на прозрачност на запълващия цвят.
@@ -427,7 +409,7 @@ namespace FreeDraw.Processors
             {
                 if (ShapeList[i].Contains(point))
                 {
-                    ShapeList[i].FillColor = Color.Red;
+                   // ShapeList[i].FillColor = Color.Red;
 
                     return ShapeList[i];
                 }

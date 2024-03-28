@@ -204,6 +204,26 @@ namespace FreeDraw
 
 
 
+        private void MainForm_Exit(object sender, FormClosingEventArgs e)
+        {
+            if (dialogProcessor.ShapeList.Count > 0)
+            {
+                if (statusBar.Items[0].Text != "Запазване във " + saveFileDialog.FileName
+                    && statusBar.Items[0].Text != "Запазване във " + openFileDialog.FileName)
+                {
+                    SaveForm decisiondialog = new SaveForm("Не запазихте работата си. \n Наистина ли желаете да излезете?");
+
+                    if (decisiondialog.ShowDialog() == DialogResult.OK)
+                    {
+                        e.Cancel = false;
+                    }
+                    else
+                        e.Cancel = true;
+                }
+
+            }
+        }
+
         /// <summary>
         /// Изход от програмата. Затваря главната форма, а с това и програмата.
         /// </summary>
@@ -481,11 +501,6 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
 
-        private void viewPort_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void unGroupButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.Ungroup();
@@ -510,7 +525,7 @@ namespace FreeDraw
             foreach (Shape item in dialogProcessor.SelectionList)
             {
                 item.BorderWidth = 1;
-                statusBar.Items[0].Text = "Draw: Дебелина на рамката 1 pt.";
+                statusBar.Items[0].Text = "Дебелина на рамката 1 pt.";
                 dialogProcessor.LastBorderWith = 1;
                 viewPort.Invalidate();
             }
@@ -522,7 +537,7 @@ namespace FreeDraw
             foreach (Shape item in dialogProcessor.SelectionList)
             {
                 item.BorderWidth = 3;
-                statusBar.Items[0].Text = "Draw: Дебелина на рамката 3 pt.";
+                statusBar.Items[0].Text = "Дебелина на рамката 3 pt.";
                 dialogProcessor.LastBorderWith = 3;
                 viewPort.Invalidate();
             }
@@ -533,7 +548,7 @@ namespace FreeDraw
             foreach (Shape item in dialogProcessor.SelectionList)
             {
                 item.BorderWidth = 5;
-                statusBar.Items[0].Text = "Draw: Дебелина на рамката 5 pt.";
+                statusBar.Items[0].Text = "Дебелина на рамката 5 pt.";
                 dialogProcessor.LastBorderWith = 5;
                 viewPort.Invalidate();
             }
@@ -544,21 +559,27 @@ namespace FreeDraw
             foreach (Shape item in dialogProcessor.SelectionList)
             {
                 item.BorderWidth = 10;
-                statusBar.Items[0].Text = "Draw: Дебелина на рамката 10 pt.";
+                statusBar.Items[0].Text = "Дебелина на рамката 10 pt.";
                 dialogProcessor.LastBorderWith = 10;
                 viewPort.Invalidate();
             }
-
-
-
         }
 
-        private void Stroke_Click(object sender, EventArgs e)
+        private void transperancyTrackBar_Scroll(object sender, EventArgs e)
         {
 
+            foreach (Shape item in dialogProcessor.SelectionList)
+            {
+
+                item.FillColor = Color.FromArgb(transperancyTrackBar.Value, item.FillColor);
+                statusBar.Items[0].Text = "Промяна на прозрачността...";
+                item.Transperancy = transperancyTrackBar.Value;
+                viewPort.Invalidate();
+
+            }
         }
 
-       
+        
     }
 }
 

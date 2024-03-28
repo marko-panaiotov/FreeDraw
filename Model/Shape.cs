@@ -79,6 +79,16 @@ namespace FreeDraw.Model
             set { borderColor = value; }
         }
 
+        private int transperancy;
+        /// <summary>
+        /// Прозрачност на цвета на елемента.
+        /// </summary>
+        public virtual int Transperancy
+        {
+            get { return transperancy; }
+            set { transperancy = value; }
+        }
+
         private float borderWidth;
         public virtual float BorderWidth
         {

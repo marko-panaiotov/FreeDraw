@@ -79,9 +79,12 @@
             stroke10pt = new ToolStripMenuItem();
             viewPort = new GUI.DoubleBufferedPanel();
             colorPickerDialog = new ColorDialog();
+            transperancyTrackBar = new TrackBar();
+            label1 = new Label();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)transperancyTrackBar).BeginInit();
             SuspendLayout();
             // 
             // mainMenu
@@ -247,10 +250,11 @@
             // 
             // speedMenu
             // 
+            speedMenu.AutoSize = false;
             speedMenu.Items.AddRange(new ToolStripItem[] { drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator1, pickUpSpeedButton, toolStripSeparator5, groupButton, unGroupButton, Stroke });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
-            speedMenu.Size = new Size(808, 25);
+            speedMenu.Size = new Size(808, 45);
             speedMenu.Stretch = true;
             speedMenu.TabIndex = 3;
             speedMenu.Text = "toolStrip1";
@@ -261,7 +265,7 @@
             drawDotSpeedButton.Image = (Image)resources.GetObject("drawDotSpeedButton.Image");
             drawDotSpeedButton.ImageTransparentColor = Color.Magenta;
             drawDotSpeedButton.Name = "drawDotSpeedButton";
-            drawDotSpeedButton.Size = new Size(23, 22);
+            drawDotSpeedButton.Size = new Size(23, 42);
             drawDotSpeedButton.Text = "DrawDotButton";
             drawDotSpeedButton.Click += DrawDotSpeedButton_Click;
             // 
@@ -272,7 +276,7 @@
             drawLineSpeedButton.Image = (Image)resources.GetObject("drawLineSpeedButton.Image");
             drawLineSpeedButton.ImageTransparentColor = Color.Magenta;
             drawLineSpeedButton.Name = "drawLineSpeedButton";
-            drawLineSpeedButton.Size = new Size(29, 22);
+            drawLineSpeedButton.Size = new Size(29, 42);
             drawLineSpeedButton.Text = "DrawLineButton";
             drawLineSpeedButton.Click += DrawLineSpeedButton_Click;
             // 
@@ -289,7 +293,7 @@
             drawCircleSpeedButton.Image = (Image)resources.GetObject("drawCircleSpeedButton.Image");
             drawCircleSpeedButton.ImageTransparentColor = Color.Magenta;
             drawCircleSpeedButton.Name = "drawCircleSpeedButton";
-            drawCircleSpeedButton.Size = new Size(32, 22);
+            drawCircleSpeedButton.Size = new Size(32, 42);
             drawCircleSpeedButton.Text = "DrawCircleButton";
             drawCircleSpeedButton.ButtonClick += DrawCirclesSpeedButton_Click;
             // 
@@ -308,7 +312,7 @@
             drawRectangleSpeedButton.Image = (Image)resources.GetObject("drawRectangleSpeedButton.Image");
             drawRectangleSpeedButton.ImageTransparentColor = Color.Magenta;
             drawRectangleSpeedButton.Name = "drawRectangleSpeedButton";
-            drawRectangleSpeedButton.Size = new Size(32, 22);
+            drawRectangleSpeedButton.Size = new Size(32, 42);
             drawRectangleSpeedButton.Text = "DrawRectangleButton";
             drawRectangleSpeedButton.ButtonClick += DrawRectangleSpeedButton_Click;
             // 
@@ -335,7 +339,7 @@
             drawTriangleSpeedButton.Image = (Image)resources.GetObject("drawTriangleSpeedButton.Image");
             drawTriangleSpeedButton.ImageTransparentColor = Color.Magenta;
             drawTriangleSpeedButton.Name = "drawTriangleSpeedButton";
-            drawTriangleSpeedButton.Size = new Size(23, 22);
+            drawTriangleSpeedButton.Size = new Size(23, 42);
             drawTriangleSpeedButton.Text = "DrawTriangleButton";
             drawTriangleSpeedButton.TextAlign = ContentAlignment.MiddleRight;
             drawTriangleSpeedButton.Click += DrawTriangleSpeedButton_Click;
@@ -349,7 +353,7 @@
             pickColorButton.ImageTransparentColor = Color.Magenta;
             pickColorButton.Name = "pickColorButton";
             pickColorButton.RightToLeft = RightToLeft.No;
-            pickColorButton.Size = new Size(32, 22);
+            pickColorButton.Size = new Size(32, 42);
             pickColorButton.Text = "ColorPickerButton";
             // 
             // fillingColorPickerButtonToolStripMenuItem
@@ -372,7 +376,7 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 25);
+            toolStripSeparator1.Size = new Size(6, 45);
             // 
             // pickUpSpeedButton
             // 
@@ -381,14 +385,14 @@
             pickUpSpeedButton.Image = (Image)resources.GetObject("pickUpSpeedButton.Image");
             pickUpSpeedButton.ImageTransparentColor = Color.Magenta;
             pickUpSpeedButton.Name = "pickUpSpeedButton";
-            pickUpSpeedButton.Size = new Size(23, 22);
+            pickUpSpeedButton.Size = new Size(23, 42);
             pickUpSpeedButton.Text = "toolStripButton1";
             pickUpSpeedButton.Click += pickUpSpeedButton_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(6, 25);
+            toolStripSeparator5.Size = new Size(6, 45);
             // 
             // groupButton
             // 
@@ -396,7 +400,7 @@
             groupButton.Image = (Image)resources.GetObject("groupButton.Image");
             groupButton.ImageTransparentColor = Color.Magenta;
             groupButton.Name = "groupButton";
-            groupButton.Size = new Size(23, 22);
+            groupButton.Size = new Size(23, 42);
             groupButton.Text = "GroupButton";
             groupButton.Click += groupButton_Click;
             // 
@@ -406,7 +410,7 @@
             unGroupButton.Image = (Image)resources.GetObject("unGroupButton.Image");
             unGroupButton.ImageTransparentColor = Color.Magenta;
             unGroupButton.Name = "unGroupButton";
-            unGroupButton.Size = new Size(23, 22);
+            unGroupButton.Size = new Size(23, 42);
             unGroupButton.Text = "UnGroupButton";
             unGroupButton.TextDirection = ToolStripTextDirection.Horizontal;
             unGroupButton.Click += unGroupButton_Click;
@@ -418,15 +422,14 @@
             Stroke.Image = (Image)resources.GetObject("Stroke.Image");
             Stroke.ImageTransparentColor = Color.Magenta;
             Stroke.Name = "Stroke";
-            Stroke.Size = new Size(29, 22);
+            Stroke.Size = new Size(29, 42);
             Stroke.Text = "Stroke";
-            Stroke.Click += Stroke_Click;
             // 
             // stroke1pt
             // 
             stroke1pt.Image = (Image)resources.GetObject("stroke1pt.Image");
             stroke1pt.Name = "stroke1pt";
-            stroke1pt.Size = new Size(180, 22);
+            stroke1pt.Size = new Size(135, 22);
             stroke1pt.Text = "Width 1 pt";
             stroke1pt.Click += stroke1pt_Click;
             // 
@@ -434,7 +437,7 @@
             // 
             stroke3pt.Image = (Image)resources.GetObject("stroke3pt.Image");
             stroke3pt.Name = "stroke3pt";
-            stroke3pt.Size = new Size(180, 22);
+            stroke3pt.Size = new Size(135, 22);
             stroke3pt.Text = "Width 3 pt";
             stroke3pt.Click += stroke3pt_Click;
             // 
@@ -442,7 +445,7 @@
             // 
             stroke5pt.Image = (Image)resources.GetObject("stroke5pt.Image");
             stroke5pt.Name = "stroke5pt";
-            stroke5pt.Size = new Size(180, 22);
+            stroke5pt.Size = new Size(135, 22);
             stroke5pt.Text = "Width 5 pt";
             stroke5pt.Click += stroke5pt_Click;
             // 
@@ -450,19 +453,18 @@
             // 
             stroke10pt.Image = (Image)resources.GetObject("stroke10pt.Image");
             stroke10pt.Name = "stroke10pt";
-            stroke10pt.Size = new Size(180, 22);
+            stroke10pt.Size = new Size(135, 22);
             stroke10pt.Text = "Width 10 pt";
             stroke10pt.Click += stroke10pt_Click;
             // 
             // viewPort
             // 
             viewPort.Dock = DockStyle.Fill;
-            viewPort.Location = new Point(0, 49);
+            viewPort.Location = new Point(0, 69);
             viewPort.Margin = new Padding(5, 3, 5, 3);
             viewPort.Name = "viewPort";
-            viewPort.Size = new Size(808, 417);
+            viewPort.Size = new Size(808, 397);
             viewPort.TabIndex = 4;
-            viewPort.Load += viewPort_Load;
             viewPort.Paint += ViewPortPaint;
             viewPort.KeyDown += Key_Down;
             viewPort.KeyUp += Key_Up;
@@ -474,11 +476,33 @@
             // 
             colorPickerDialog.FullOpen = true;
             // 
+            // transperancyTrackBar
+            // 
+            transperancyTrackBar.AutoSize = false;
+            transperancyTrackBar.Location = new Point(645, 42);
+            transperancyTrackBar.Maximum = 255;
+            transperancyTrackBar.Name = "transperancyTrackBar";
+            transperancyTrackBar.Size = new Size(98, 27);
+            transperancyTrackBar.TabIndex = 5;
+            transperancyTrackBar.Value = 255;
+            transperancyTrackBar.Scroll += transperancyTrackBar_Scroll;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(657, 24);
+            label1.Name = "label1";
+            label1.Size = new Size(76, 15);
+            label1.TabIndex = 6;
+            label1.Text = "Transperancy";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(808, 488);
+            Controls.Add(transperancyTrackBar);
+            Controls.Add(label1);
             Controls.Add(viewPort);
             Controls.Add(speedMenu);
             Controls.Add(statusBar);
@@ -489,12 +513,14 @@
             Name = "MainForm";
             Text = "FreeDraw";
             WindowState = FormWindowState.Maximized;
+            FormClosing += new System.Windows.Forms.FormClosingEventHandler(MainForm_Exit);
             mainMenu.ResumeLayout(false);
             mainMenu.PerformLayout();
             statusBar.ResumeLayout(false);
             statusBar.PerformLayout();
             speedMenu.ResumeLayout(false);
             speedMenu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)transperancyTrackBar).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -553,5 +579,7 @@
         private ToolStripMenuItem stroke3pt;
         private ToolStripMenuItem stroke5pt;
         private ToolStripMenuItem stroke10pt;
+        private TrackBar transperancyTrackBar;
+        private Label label1;
     }
 }

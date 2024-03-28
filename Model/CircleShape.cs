@@ -47,9 +47,9 @@ namespace FreeDraw.Model
         public override void DrawSelf(Graphics grfx)
         {
             base.DrawSelf(grfx);
-
+            
             //DrawBorder(grfx);
-            grfx.FillEllipse(new SolidBrush(base.FillColor), Rectangle.X, Rectangle.Y, 200, 200);
+            grfx.FillEllipse(new SolidBrush(Color.FromArgb(Transperancy, FillColor)), Rectangle.X, Rectangle.Y, 200, 200);
             grfx.DrawEllipse(new Pen(base.BorderColor,BorderWidth), Rectangle.X, Rectangle.Y, 200, 200);
             
         }
