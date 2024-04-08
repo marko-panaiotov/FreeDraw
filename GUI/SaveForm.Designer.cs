@@ -36,7 +36,7 @@
             // OK
             // 
             OK.DialogResult = DialogResult.OK;
-            OK.Location = new Point(114, 63);
+            OK.Location = new Point(147, 63);
             OK.Name = "OK";
             OK.Size = new Size(75, 23);
             OK.TabIndex = 2;
@@ -57,7 +57,7 @@
             // 
             strLabel.Location = new Point(12, 9);
             strLabel.Name = "strLabel";
-            strLabel.Size = new Size(190, 47);
+            strLabel.Size = new Size(210, 47);
             strLabel.TabIndex = 2;
             strLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -66,7 +66,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.EnablePreventFocusChange;
-            ClientSize = new Size(214, 114);
+            ClientSize = new Size(234, 114);
             Controls.Add(strLabel);
             Controls.Add(Cancel);
             Controls.Add(OK);

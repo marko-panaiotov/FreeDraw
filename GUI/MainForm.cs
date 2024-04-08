@@ -36,6 +36,7 @@ namespace FreeDraw
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
             InitializeComponent();
+            dialogProcessor.UpdateUdnoList();
 
             //
             // TODO: Add constructor code after the InitializeComponent() call.
@@ -64,16 +65,16 @@ namespace FreeDraw
                 switch (e.KeyCode)
                 {
                     case Keys.C:
-                        // Copy2.PerformClick();
+                        Copy.PerformClick();
                         break;
                     case Keys.X:
-                        // Cut2.PerformClick();
+                        Cut.PerformClick();
                         break;
                     case Keys.V:
-                        //Paste2.PerformClick();
+                        Paste.PerformClick();
                         break;
                     case Keys.A:
-                        // SelectAll2.PerformClick();
+                        SelectAll.PerformClick();
                         viewPort.Invalidate();
                         break;
                     case Keys.G:
@@ -97,7 +98,7 @@ namespace FreeDraw
                         Open.PerformClick();
                         break;
                     case Keys.Z:
-                        //undo.PerformClick();
+                        Undo.PerformClick();
                         break;
 
                     default:
@@ -140,7 +141,7 @@ namespace FreeDraw
             #region Delete Key
             if (e.KeyCode == Keys.Delete)
             {
-                //Delete2.PerformClick();
+                Delete.PerformClick();
             }
             #endregion Delete Key
 
@@ -579,7 +580,100 @@ namespace FreeDraw
             }
         }
 
-        
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CutButton_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Изрязване...";
+            dialogProcessor.Copy();
+            dialogProcessor.Delete();
+            dialogProcessor.SelectionList.Clear();
+
+            viewPort.Invalidate();
+        }
+
+        private void Cut_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Изрязване...";
+            dialogProcessor.Copy();
+            dialogProcessor.Delete();
+            dialogProcessor.SelectionList.Clear();
+
+            viewPort.Invalidate();
+        }
+
+        private void CopyButton_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Копиране на селекция";
+            dialogProcessor.Copy();
+            //viewPort.Invalidate();
+        }
+        private void Copy_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Копиране на селекция";
+            dialogProcessor.Copy();
+        }
+
+        private void PasteButton_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Draw: Поставяне...";
+            dialogProcessor.Paste();
+
+            viewPort.Invalidate();
+        }
+
+        private void Paste_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Draw: Поставяне...";
+            dialogProcessor.Paste();
+
+            viewPort.Invalidate();
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Изтриване...";
+            dialogProcessor.Delete();
+            viewPort.Invalidate();
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Изтриване...";
+            dialogProcessor.Delete();
+            viewPort.Invalidate();
+        }
+
+        private void SelectAll_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Масова селекция";
+            dialogProcessor.SelectAll();
+            viewPort.Invalidate();
+        }
+
+        private void Undo_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Undo();
+            //dialogProcessor.ComboboxUpdate(comboBox1);
+
+            if (dialogProcessor.UndoRedoList.Count < 1) 
+
+            // Redo.Enabled = true;
+
+            viewPort.Invalidate();
+        }
+
+        private void Redo_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Redo();
+           // dialogProcessor.ComboboxUpdate(comboBox1);
+            if (dialogProcessor.CurrentIndex > 9)
+
+            viewPort.Invalidate();
+        }
     }
 }
 

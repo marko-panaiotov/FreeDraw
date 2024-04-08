@@ -106,5 +106,18 @@ namespace FreeDraw.Model
             // grfx.DrawRectangle(new Pen(BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
         }
 
+        public override Shape Clone(int offset)
+        {
+            GroupShape newGroup = new GroupShape(this);
+
+            foreach (Shape sh in SubShape)
+                newGroup.SubShape.Add(sh.Clone(offset));
+
+            newGroup.Location = new PointF(newGroup.Location.X + offset, newGroup.Location.Y + offset);
+            newGroup.FillColor = this.FillColor;
+            newGroup.BorderColor = this.BorderColor;
+            newGroup.BorderWidth = this.BorderWidth;
+            return newGroup;
+        }
     }
 }

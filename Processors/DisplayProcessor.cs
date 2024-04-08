@@ -22,6 +22,17 @@ namespace FreeDraw.Processors
 
         #region Properties
 
+        private List<List<Shape>> undoRedoList = new List<List<Shape>>();
+        /// <summary>
+        /// Този налудничев списък представлява списък състоящ се от списъци на всички елементи.
+        /// Идеята му е да се използва за Undu/ Redo функции...
+        /// </summary>	
+        public List<List<Shape>> UndoRedoList
+        {
+            get { return undoRedoList; }
+            set { undoRedoList = value; }
+        }
+
         /// <summary>
         /// Списък с всички елементи формиращи изображението.
         /// </summary>
@@ -30,6 +41,20 @@ namespace FreeDraw.Processors
         {
             get { return shapeList; }
             set { shapeList = value; }
+        }
+
+        private int offset;
+        public int Offset
+        {
+            get { return offset; }
+            set { offset = value; }
+        }
+
+        private List<Shape> copyList = new List<Shape>();
+        public List<Shape> CopyList
+        {
+            get { return copyList; }
+            set { copyList = value; }
         }
 
         #endregion
@@ -80,8 +105,32 @@ namespace FreeDraw.Processors
             item.DrawSelf(grfx);
         }
 
-        
+
 
         #endregion
+
+        public static List<Shape> Clone(List<Shape> source)
+        {
+            if (!typeof(List<Shape>).IsSerializable)
+            {
+                throw new ArgumentException("The type must be serializable.", "source");
+            }
+
+            // Don't serialize a null object, simply return the default for that object
+            if (Object.ReferenceEquals(source, null))
+            {
+                return default(List<Shape>);
+            }
+
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new MemoryStream();
+            using (stream)
+            {
+                formatter.Serialize(stream, source);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (List<Shape>)formatter.Deserialize(stream);
+            }
+        }
+
     }
 }

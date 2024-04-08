@@ -22,6 +22,11 @@ namespace FreeDraw.Model
         {
         }
 
+        public override Shape Clone(int offset)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         /// <summary>

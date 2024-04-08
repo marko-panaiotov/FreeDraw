@@ -19,6 +19,14 @@ namespace FreeDraw.Model
         {
         }
 
+        public override Shape Clone(int offset)
+        {
+            LineShape newLine = new LineShape(this);
+            newLine.Location = new PointF(newLine.Location.X + offset, newLine.Location.Y);
+            //newLine.EndLocation = new PointF(newLine.EndLocation.X + offset, newLine.EndLocation.Y);
+            return newLine;
+        }
+
         #endregion
 
         /// <summary>

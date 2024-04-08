@@ -20,6 +20,16 @@ namespace FreeDraw.Model
         {
         }
 
+        public override Shape Clone(int offset)
+        {
+            EllipseShape newEllipse = new EllipseShape(this);
+            newEllipse.Location = new PointF(newEllipse.Location.X + offset, newEllipse.Location.Y + offset);
+            newEllipse.FillColor = this.FillColor;
+            newEllipse.BorderColor = this.BorderColor;
+            newEllipse.BorderWidth = this.BorderWidth;
+            return newEllipse;
+        }
+
         #endregion
 
         /// <summary>

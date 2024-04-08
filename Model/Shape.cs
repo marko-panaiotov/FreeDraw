@@ -103,6 +103,14 @@ namespace FreeDraw.Model
             set { transform.matrix = value; }
         }
 
+        private AppGraphicPath gpath = new AppGraphicPath();
+        public virtual GraphicsPath Gpath
+        {
+            get { return gpath.path; }
+            set { gpath.path = value; }
+        }
+
+
         private int rotation = 0;
         public int Rotation
         {
@@ -122,6 +130,7 @@ namespace FreeDraw.Model
 
         public virtual bool Contains(PointF point)
         {
+            Matrix reverse = this.Transform.Clone();
             return Rectangle.Contains(point.X, point.Y);
         }
 
@@ -135,6 +144,11 @@ namespace FreeDraw.Model
 
             Rotate(backRotation);
             rotation = backRotation;
+        }
+
+        public virtual void Translate(float offsetX, float offsetY)
+        {
+            this.Transform.Translate(offsetX, offsetY, MatrixOrder.Append);
         }
 
         public virtual void Rotate(int gradus)
@@ -160,6 +174,7 @@ namespace FreeDraw.Model
 
 
         }
+        public abstract Shape Clone(int offset);
 
     }
 }

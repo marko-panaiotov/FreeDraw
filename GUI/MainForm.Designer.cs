@@ -55,6 +55,8 @@
             statusBar = new StatusStrip();
             currentStatusLabel = new ToolStripStatusLabel();
             speedMenu = new ToolStrip();
+            pickUpSpeedButton = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
             drawDotSpeedButton = new ToolStripButton();
             drawLineSpeedButton = new ToolStripDropDownButton();
             toolStripMenuItem4 = new ToolStripMenuItem();
@@ -67,16 +69,20 @@
             pickColorButton = new ToolStripSplitButton();
             fillingColorPickerButtonToolStripMenuItem = new ToolStripMenuItem();
             BorderColorPickerButton = new ToolStripMenuItem();
-            toolStripSeparator1 = new ToolStripSeparator();
-            pickUpSpeedButton = new ToolStripButton();
             toolStripSeparator5 = new ToolStripSeparator();
             groupButton = new ToolStripButton();
             unGroupButton = new ToolStripButton();
+            toolStripSeparator7 = new ToolStripSeparator();
             Stroke = new ToolStripDropDownButton();
             stroke1pt = new ToolStripMenuItem();
             stroke3pt = new ToolStripMenuItem();
             stroke5pt = new ToolStripMenuItem();
             stroke10pt = new ToolStripMenuItem();
+            toolStripSeparator6 = new ToolStripSeparator();
+            CutButton = new ToolStripButton();
+            CopyButton = new ToolStripButton();
+            PasteButton = new ToolStripButton();
+            DeleteButton = new ToolStripButton();
             viewPort = new GUI.DoubleBufferedPanel();
             colorPickerDialog = new ColorDialog();
             transperancyTrackBar = new TrackBar();
@@ -154,65 +160,73 @@
             editToolStripMenuItem.Name = "editToolStripMenuItem";
             editToolStripMenuItem.Size = new Size(39, 20);
             editToolStripMenuItem.Text = "Edit";
+            editToolStripMenuItem.Click += editToolStripMenuItem_Click;
             // 
             // Undo
             // 
             Undo.Name = "Undo";
             Undo.ShortcutKeyDisplayString = "Ctrl+Z";
-            Undo.Size = new Size(164, 22);
+            Undo.Size = new Size(180, 22);
             Undo.Text = "Undo";
+            Undo.Click += Undo_Click;
             // 
             // Redo
             // 
             Redo.Name = "Redo";
             Redo.ShortcutKeyDisplayString = "Ctrl+Y";
-            Redo.Size = new Size(164, 22);
+            Redo.Size = new Size(180, 22);
             Redo.Text = "Redo";
+            Redo.Click += Redo_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(161, 6);
+            toolStripSeparator3.Size = new Size(177, 6);
             // 
             // Cut
             // 
             Cut.Name = "Cut";
             Cut.ShortcutKeyDisplayString = "Ctrl+X";
-            Cut.Size = new Size(164, 22);
+            Cut.Size = new Size(180, 22);
             Cut.Text = "Cut";
+            Cut.Click += Cut_Click;
             // 
             // Paste
             // 
             Paste.Name = "Paste";
             Paste.ShortcutKeyDisplayString = "Ctrl+V";
-            Paste.Size = new Size(164, 22);
+            Paste.Size = new Size(180, 22);
             Paste.Text = "Paste";
+            Paste.Click += Paste_Click;
             // 
             // Copy
             // 
             Copy.Name = "Copy";
             Copy.ShortcutKeyDisplayString = "Ctrl+C";
-            Copy.Size = new Size(164, 22);
+            Copy.Size = new Size(180, 22);
             Copy.Text = "Copy";
+            Copy.Click += Copy_Click;
             // 
             // Delete
             // 
             Delete.Name = "Delete";
             Delete.ShortcutKeyDisplayString = "Del";
-            Delete.Size = new Size(164, 22);
+            Delete.Size = new Size(180, 22);
             Delete.Text = "Delete";
+            Delete.Click += Delete_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(161, 6);
+            toolStripSeparator4.Size = new Size(177, 6);
             // 
             // SelectAll
             // 
             SelectAll.Name = "SelectAll";
             SelectAll.ShortcutKeyDisplayString = "Ctrl+A";
-            SelectAll.Size = new Size(164, 22);
+            SelectAll.Size = new Size(180, 22);
             SelectAll.Text = "Select All";
+            SelectAll.Click += SelectAll_Click;
             // 
             // imageToolStripMenuItem
             // 
@@ -251,13 +265,29 @@
             // speedMenu
             // 
             speedMenu.AutoSize = false;
-            speedMenu.Items.AddRange(new ToolStripItem[] { drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator1, pickUpSpeedButton, toolStripSeparator5, groupButton, unGroupButton, Stroke });
+            speedMenu.Items.AddRange(new ToolStripItem[] { pickUpSpeedButton, toolStripSeparator1, drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator5, groupButton, unGroupButton, toolStripSeparator7, Stroke, toolStripSeparator6, CutButton, CopyButton, PasteButton, DeleteButton });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
             speedMenu.Size = new Size(808, 45);
             speedMenu.Stretch = true;
             speedMenu.TabIndex = 3;
             speedMenu.Text = "toolStrip1";
+            // 
+            // pickUpSpeedButton
+            // 
+            pickUpSpeedButton.CheckOnClick = true;
+            pickUpSpeedButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            pickUpSpeedButton.Image = (Image)resources.GetObject("pickUpSpeedButton.Image");
+            pickUpSpeedButton.ImageTransparentColor = Color.Magenta;
+            pickUpSpeedButton.Name = "pickUpSpeedButton";
+            pickUpSpeedButton.Size = new Size(23, 42);
+            pickUpSpeedButton.Text = "toolStripButton1";
+            pickUpSpeedButton.Click += pickUpSpeedButton_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 45);
             // 
             // drawDotSpeedButton
             // 
@@ -373,22 +403,6 @@
             BorderColorPickerButton.TextDirection = ToolStripTextDirection.Horizontal;
             BorderColorPickerButton.Click += BorderColorPickerButton_Click;
             // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 45);
-            // 
-            // pickUpSpeedButton
-            // 
-            pickUpSpeedButton.CheckOnClick = true;
-            pickUpSpeedButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            pickUpSpeedButton.Image = (Image)resources.GetObject("pickUpSpeedButton.Image");
-            pickUpSpeedButton.ImageTransparentColor = Color.Magenta;
-            pickUpSpeedButton.Name = "pickUpSpeedButton";
-            pickUpSpeedButton.Size = new Size(23, 42);
-            pickUpSpeedButton.Text = "toolStripButton1";
-            pickUpSpeedButton.Click += pickUpSpeedButton_Click;
-            // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
@@ -414,6 +428,11 @@
             unGroupButton.Text = "UnGroupButton";
             unGroupButton.TextDirection = ToolStripTextDirection.Horizontal;
             unGroupButton.Click += unGroupButton_Click;
+            // 
+            // toolStripSeparator7
+            // 
+            toolStripSeparator7.Name = "toolStripSeparator7";
+            toolStripSeparator7.Size = new Size(6, 45);
             // 
             // Stroke
             // 
@@ -456,6 +475,53 @@
             stroke10pt.Size = new Size(135, 22);
             stroke10pt.Text = "Width 10 pt";
             stroke10pt.Click += stroke10pt_Click;
+            // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new Size(6, 45);
+            // 
+            // CutButton
+            // 
+            CutButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            CutButton.Image = (Image)resources.GetObject("CutButton.Image");
+            CutButton.ImageTransparentColor = Color.Magenta;
+            CutButton.Name = "CutButton";
+            CutButton.Size = new Size(23, 42);
+            CutButton.Text = "Cut";
+            CutButton.TextDirection = ToolStripTextDirection.Horizontal;
+            CutButton.Click += CutButton_Click;
+            // 
+            // CopyButton
+            // 
+            CopyButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            CopyButton.Image = (Image)resources.GetObject("CopyButton.Image");
+            CopyButton.ImageTransparentColor = Color.Magenta;
+            CopyButton.Name = "CopyButton";
+            CopyButton.Size = new Size(23, 42);
+            CopyButton.Text = "Copy";
+            CopyButton.Click += CopyButton_Click;
+            // 
+            // PasteButton
+            // 
+            PasteButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            PasteButton.Image = (Image)resources.GetObject("PasteButton.Image");
+            PasteButton.ImageTransparentColor = Color.Magenta;
+            PasteButton.Name = "PasteButton";
+            PasteButton.Size = new Size(23, 42);
+            PasteButton.Text = "Paste";
+            PasteButton.ToolTipText = "Paste";
+            PasteButton.Click += PasteButton_Click;
+            // 
+            // DeleteButton
+            // 
+            DeleteButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            DeleteButton.Image = (Image)resources.GetObject("DeleteButton.Image");
+            DeleteButton.ImageTransparentColor = Color.Magenta;
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(23, 42);
+            DeleteButton.Text = "Delete";
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // viewPort
             // 
@@ -513,7 +579,7 @@
             Name = "MainForm";
             Text = "FreeDraw";
             WindowState = FormWindowState.Maximized;
-            FormClosing += new System.Windows.Forms.FormClosingEventHandler(MainForm_Exit);
+            FormClosing += MainForm_Exit;
             mainMenu.ResumeLayout(false);
             mainMenu.PerformLayout();
             statusBar.ResumeLayout(false);
@@ -581,5 +647,11 @@
         private ToolStripMenuItem stroke10pt;
         private TrackBar transperancyTrackBar;
         private Label label1;
+        private ToolStripButton CutButton;
+        private ToolStripButton CopyButton;
+        private ToolStripButton PasteButton;
+        private ToolStripButton DeleteButton;
+        private ToolStripSeparator toolStripSeparator7;
+        private ToolStripSeparator toolStripSeparator6;
     }
 }

@@ -19,6 +19,15 @@ namespace FreeDraw.Model
         {
         }
 
+        public override Shape Clone(int offset)
+        {
+            SquareShape newRect = new SquareShape(this);
+            newRect.Location = new PointF(newRect.Location.X + offset, newRect.Location.Y + offset);
+            newRect.FillColor = this.FillColor;
+            newRect.BorderColor = this.BorderColor;
+            newRect.BorderWidth = this.BorderWidth;
+            return newRect;
+        }
         #endregion
 
         /// <summary>

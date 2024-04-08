@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,16 @@ namespace FreeDraw.Model
 
         public RectangleShape(RectangleShape rectangle) : base(rectangle)
         {
+        }
+
+        public override Shape Clone(int offset)
+        {
+            RectangleShape newRect = new RectangleShape(this);
+            newRect.Location = new PointF(newRect.Location.X + offset, newRect.Location.Y + offset);
+            newRect.FillColor = this.FillColor;
+            newRect.BorderColor = this.BorderColor;
+            newRect.BorderWidth = this.BorderWidth;
+            return newRect;
         }
 
         #endregion
@@ -47,8 +58,8 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
             
-            grfx.FillRectangle(new SolidBrush(base.FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawRectangle(new Pen(base.BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            grfx.DrawRectangle(new Pen(BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
            
         }
     }

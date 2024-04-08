@@ -106,5 +106,10 @@ namespace FreeDraw.Model
             //grfx.DrawPolygon(new Pen(BorderColor), trianglePoints);
 
         }
+
+        public override Shape Clone(int offset)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

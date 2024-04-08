@@ -438,6 +438,30 @@ namespace FreeDraw.Processors
                     grfx.DrawRectangle(pen, counture.Location.X, counture.Location.Y, counture.Width, counture.Height);
                 }
             }
+
+
+        }
+
+        public List<PointF> GetHandlePoint(RectangleF shape)
+        {
+            List<PointF> result = new List<PointF>();
+            // Горня лява
+            result.Add(new PointF(shape.Left, shape.Top));
+
+            //Долна лява
+            result.Add(new PointF(shape.Left,
+                                shape.Top + shape.Height));
+
+            //Дясна долна
+            result.Add(new PointF(shape.Left + shape.Width,
+                                shape.Top + shape.Height));
+
+            //Дясна горна
+            result.Add(new PointF(shape.Left + shape.Width,
+                                shape.Top));
+
+
+            return result;
         }
 
         /// <summary>
@@ -457,6 +481,10 @@ namespace FreeDraw.Processors
                 }
                 lastLocation = p;
             }
+
+
+
+
         }
 
         #region Basic Operations
@@ -509,12 +537,12 @@ namespace FreeDraw.Processors
         /// <summary>
         /// Поставяне копирани или изрязани примитиви.
         /// </summary>
-       /* public void Paste()
+        /*public void Paste()
         {
-            if (Clipboard.ContainsData("Draw"))
+            if (Clipboard.ContainsData("FreeDraw"))
             {
                 SelectionList.Clear();
-                using (MemoryStream memoryStream = Clipboard.GetData("Draw") as MemoryStream)
+                using (MemoryStream memoryStream = Clipboard.GetData("FreeDraw") as MemoryStream)
                 {
                     List<Shape> copyList = new List<Shape>();
                     BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -524,8 +552,8 @@ namespace FreeDraw.Processors
                     {
                         foreach (Shape sh in copyList)
                         {
-                            sh.Translate(Offset, Offset);
-                            sh.Name = sh.Name + Convert.ToInt32(Offset);
+                           sh.Translate(Offset, Offset);
+                           // sh.Name = sh.Name + Convert.ToInt32(Offset);
                             SelectionList.Add(sh);
                             ShapeList.Add(sh);
                             Offset += 10;
@@ -534,38 +562,48 @@ namespace FreeDraw.Processors
                     else
                     {
                         copyList.First().Translate(Offset, Offset);
-                        copyList.First().Name = copyList.First().Name + Convert.ToInt32(Offset);
+                        //copyList.First().Name = copyList.First().Name + Convert.ToInt32(Offset);
                         ShapeList.Add(copyList.First());
                         Offset += 10;
                     }
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// Копиране на избрани примитиви.
         /// </summary>
         public void Copy()
         {
-            if (selection != null)
+            CopyList.Clear();
+            Offset = 10;
+            foreach (Shape item in SelectionList)
+                CopyList.Add(item);
+        }
+
+        public void Paste()
+        {
+            if (CopyList.Count > 0)
             {
-                Offset = 10;
-                using (MemoryStream memoryStream = new MemoryStream())
+                SelectionList.Clear();
+                foreach (Shape item in CopyList)
                 {
-                    BinaryFormatter binaryFormatter = new BinaryFormatter();
-                    if (GroupSelectionContains(Selection))
-                    {
-                        binaryFormatter.Serialize(memoryStream, SelectionList);
-                    }
-                    else
-                    {
-                        GroupSelection.Add(Selection);
-                        binaryFormatter.Serialize(memoryStream, GroupSelection);
-                    }
-                    Clipboard.SetData("Draw", memoryStream);
+                    ShapeList.Add(item.Clone(Offset));
                 }
+                Offset += 10;
             }
-        }*/
+
+        }
+
+        public void Delete()
+        {
+            if (SelectionList.Count > 0)
+                foreach (Shape sh in SelectionList)
+                    ShapeList.Remove(sh);
+            SelectionList.Clear();
+        }
+
+
 
         /// <summary>
         /// Преместване на избран примитив на една позиция напред в списъка с примитиви.
@@ -627,6 +665,54 @@ namespace FreeDraw.Processors
 
         #endregion Basic Operations
 
+        #region Undo/Redo
+
+        /// <summary>
+        /// С това ние пълним списъка за Undu/Redo.
+        /// </summary>
+        public void UpdateUdnoList()
+        {
+            //UnduRedoList.Insert(CurrentIndex, Clone(ShapeList));
+            UndoRedoList.Add(Clone(ShapeList));
+
+            if (UndoRedoList.Count > 10) UndoRedoList.Remove(UndoRedoList.First());
+
+            CurrentIndex = UndoRedoList.Count;
+        }
+
+        /// <summary>
+        /// Името си казва: Функция за връщане на последното действие.
+        /// </summary>
+        public void Undo()
+        {
+            if (UndoRedoList.Count > 0)
+            {
+                if (CurrentIndex > 1) CurrentIndex--;
+
+                ShapeList.Clear();
+                ShapeList.AddRange(UndoRedoList[CurrentIndex - 1]);
+
+                Selection = null;
+            }
+        }
+
+        /// <summary>
+        /// Точно противоположно на Undu.
+        /// </summary>
+        public void Redo()
+        {
+            if (CurrentIndex < UndoRedoList.Count)
+            {
+                ShapeList.Clear();
+                ShapeList.AddRange(UndoRedoList[CurrentIndex]);
+
+                if (CurrentIndex < 9) CurrentIndex++;
+
+                Selection = null;
+            }
+        }
+
+        #endregion Undo/Redo
 
         public void FileDialogFilters(FileDialog fileDialog, string titleName)
         {
