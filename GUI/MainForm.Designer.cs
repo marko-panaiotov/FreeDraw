@@ -37,6 +37,7 @@
             Open = new ToolStripMenuItem();
             Save = new ToolStripMenuItem();
             SaveAs = new ToolStripMenuItem();
+            saveAsImage = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
             editToolStripMenuItem = new ToolStripMenuItem();
@@ -91,11 +92,12 @@
             rotateLeft45 = new ToolStripMenuItem();
             rotateLeft90 = new ToolStripMenuItem();
             rotate180 = new ToolStripMenuItem();
+            ExpandButton = new ToolStripButton();
+            ShrinkButton = new ToolStripButton();
             viewPort = new GUI.DoubleBufferedPanel();
             colorPickerDialog = new ColorDialog();
             transperancyTrackBar = new TrackBar();
             label1 = new Label();
-            saveAsImage = new ToolStripMenuItem();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
@@ -124,7 +126,7 @@
             // 
             New.Name = "New";
             New.ShortcutKeyDisplayString = "Ctrl+N";
-            New.Size = new Size(180, 22);
+            New.Size = new Size(155, 22);
             New.Text = "New";
             New.Click += New_Click;
             // 
@@ -132,7 +134,7 @@
             // 
             Open.Name = "Open";
             Open.ShortcutKeyDisplayString = "Ctrl+O";
-            Open.Size = new Size(180, 22);
+            Open.Size = new Size(155, 22);
             Open.Text = "Open...";
             Open.Click += Open_Click;
             // 
@@ -140,27 +142,34 @@
             // 
             Save.Name = "Save";
             Save.ShortcutKeyDisplayString = "Ctrl+S";
-            Save.Size = new Size(180, 22);
+            Save.Size = new Size(155, 22);
             Save.Text = "Save";
             Save.Click += Save_Click;
             // 
             // SaveAs
             // 
             SaveAs.Name = "SaveAs";
-            SaveAs.Size = new Size(180, 22);
+            SaveAs.Size = new Size(155, 22);
             SaveAs.Text = "Save As...";
             SaveAs.Click += SaveAs_Click;
+            // 
+            // saveAsImage
+            // 
+            saveAsImage.Name = "saveAsImage";
+            saveAsImage.Size = new Size(155, 22);
+            saveAsImage.Text = "Save As Image";
+            saveAsImage.Click += saveAsImage_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(152, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.ShortcutKeyDisplayString = "Alt+F4";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(155, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItemClick;
             // 
@@ -293,7 +302,7 @@
             // speedMenu
             // 
             speedMenu.AutoSize = false;
-            speedMenu.Items.AddRange(new ToolStripItem[] { pickUpSpeedButton, toolStripSeparator1, drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator5, groupButton, unGroupButton, toolStripSeparator7, Stroke, toolStripSeparator6, CutButton, CopyButton, PasteButton, DeleteButton, Rotation });
+            speedMenu.Items.AddRange(new ToolStripItem[] { pickUpSpeedButton, toolStripSeparator1, drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator5, groupButton, unGroupButton, toolStripSeparator7, Stroke, toolStripSeparator6, CutButton, CopyButton, PasteButton, DeleteButton, Rotation, ExpandButton, ShrinkButton });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
             speedMenu.Size = new Size(808, 45);
@@ -592,6 +601,26 @@
             rotate180.Size = new Size(156, 22);
             rotate180.Text = "Rotate 180°";
             // 
+            // ExpandButton
+            // 
+            ExpandButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            ExpandButton.Image = (Image)resources.GetObject("ExpandButton.Image");
+            ExpandButton.ImageTransparentColor = Color.Magenta;
+            ExpandButton.Name = "ExpandButton";
+            ExpandButton.Size = new Size(23, 42);
+            ExpandButton.Text = "Expand";
+            ExpandButton.Click += ExpandButton_Click;
+            // 
+            // ShrinkButton
+            // 
+            ShrinkButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            ShrinkButton.Image = (Image)resources.GetObject("ShrinkButton.Image");
+            ShrinkButton.ImageTransparentColor = Color.Magenta;
+            ShrinkButton.Name = "ShrinkButton";
+            ShrinkButton.Size = new Size(23, 42);
+            ShrinkButton.Text = "Shrink";
+            ShrinkButton.Click += ShrinkButton_Click;
+            // 
             // viewPort
             // 
             viewPort.Dock = DockStyle.Fill;
@@ -630,13 +659,6 @@
             label1.Size = new Size(76, 15);
             label1.TabIndex = 6;
             label1.Text = "Transperancy";
-            // 
-            // saveAsImage
-            // 
-            saveAsImage.Name = "saveAsImage";
-            saveAsImage.Size = new Size(180, 22);
-            saveAsImage.Text = "Save As Image";
-            saveAsImage.Click += saveAsImage_Click;
             // 
             // MainForm
             // 
@@ -738,5 +760,7 @@
         private ToolStripMenuItem rotateLeft90;
         private ToolStripMenuItem rotate180;
         private ToolStripMenuItem saveAsImage;
+        private ToolStripButton ExpandButton;
+        private ToolStripButton ShrinkButton;
     }
 }

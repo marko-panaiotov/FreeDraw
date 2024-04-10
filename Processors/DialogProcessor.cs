@@ -819,7 +819,43 @@ namespace FreeDraw.Processors
 
             }
         }*/
+        public void Expand()
+        {
+            
+                if (SelectionList != null)
+                {
+                    foreach (Shape sh in SelectionList)
+                    {
+                        PointF center = new PointF(sh.Location.X + sh.Size.Width / 2, sh.Location.Y + sh.Size.Height / 2);
+                        sh.Scale(1.1f, 1.1f, center);
+                    }
+                }
+                else
+                {
+                    PointF center = new PointF(selection.Location.X + selection.Size.Width / 2, selection.Location.Y + selection.Size.Height / 2);
+                    Selection.Scale(1.1f, 1.1f, center);
+                }
+            
 
+        }
+        public void Shrink()
+        {
+           
+                if (SelectionList!=null)
+                {
+                    foreach (Shape sh in SelectionList)
+                    {
+                        PointF center = new PointF(sh.Location.X + sh.Size.Width / 2, sh.Location.Y + sh.Size.Height / 2);
+                        sh.Scale(0.9f, 0.9f, center);
+                    }
+                }
+                else
+                {
+                    PointF center = new PointF(selection.Location.X + selection.Size.Width / 2, selection.Location.Y + selection.Size.Height / 2);
+                    Selection.Scale(0.9f, 0.9f, center);
+                }
+            
+        }
         public bool IsSelectionNotNull()
         {
             if (selection != null)

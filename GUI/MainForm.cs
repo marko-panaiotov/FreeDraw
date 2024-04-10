@@ -763,9 +763,9 @@ namespace FreeDraw
 
         private void saveAsImage_Click(object sender, EventArgs e)
         {
-            statusBar.Items[0].Text = "Запазване във... ";
+            /*statusBar.Items[0].Text = "Запазване във... ";
 
-           dialogProcessor.FileDialogFilters(saveFileDialog, "Save");
+            dialogProcessor.FileDialogFilters(saveFileDialog, "Save");
             //.SaveAsImage();
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -774,8 +774,25 @@ namespace FreeDraw
             }
             pickUpSpeedButton.Checked = true;
             statusBar.Items[0].Text = "Запазване във " + saveFileDialog.FileName;
+            viewPort.Invalidate();*/
+        }
+        #region Scaling
+        private void ExpandButton_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Разширяване...";
+            dialogProcessor.Expand();
+            statusBar.Items[0].Text = "Обектът е разширен";
             viewPort.Invalidate();
         }
+
+        private void ShrinkButton_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Свиване...";
+            dialogProcessor.Shrink();
+            statusBar.Items[0].Text = "Обектът е свит";
+            viewPort.Invalidate();
+        }
+        #endregion Scaling
     }
 }
 

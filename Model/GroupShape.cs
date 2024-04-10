@@ -94,6 +94,15 @@ namespace FreeDraw.Model
                 sh.Rotate(gradus);
             }
         }
+        public override void Scale(float offsetX, float offsetY, PointF center)
+        {
+            base.Scale(offsetX, offsetY, center);
+
+            foreach (Shape sh in subShape)
+            {
+                sh.Scale(offsetX, offsetY, center);
+            }
+        }
 
         public override void DrawSelf(Graphics grfx)
         {
