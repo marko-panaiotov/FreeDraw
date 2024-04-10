@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace FreeDraw.Model
 {
@@ -126,6 +128,13 @@ namespace FreeDraw.Model
             set { cornerRadius = value; }
         }
 
+        private SizeF size;
+        public virtual SizeF Size
+        {
+            get { return size; }
+            set { size = value; }
+        }
+
         #endregion
 
         public virtual bool Contains(PointF point)
@@ -169,12 +178,19 @@ namespace FreeDraw.Model
             rotation = backRotation;
         }
 
-        public virtual void DrawSelf(Graphics grfx)
-        {
+        public virtual void DrawSelf(Graphics grfx){}
 
-
-        }
         public abstract Shape Clone(int offset);
+        public virtual void Rotate(float angle, PointF center)
+        {
+            this.Transform.RotateAt(angle, center, MatrixOrder.Append);
+        }
 
+        public virtual void Scale(float offsetX, float offsetY, PointF center)
+        {
+            this.Transform.Translate(center.X, center.Y);
+            this.Transform.Scale(offsetX, offsetY);
+            this.Transform.Translate(-center.X, -center.Y);
+        }
     }
 }

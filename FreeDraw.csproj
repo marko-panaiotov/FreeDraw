@@ -31,4 +31,9 @@
     <Folder Include="Resources\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+	</ItemGroup>
+
+
 </Project>

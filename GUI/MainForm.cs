@@ -128,7 +128,7 @@ namespace FreeDraw
                     default:
                         if (dialogProcessor.IsDrawing)
                         {
-                            statusBar.Items[1].Text = "Draw: Чертаене на правилна фигура";
+                            statusBar.Items[1].Text = "Чертаене на правилна фигура";
                             dialogProcessor.ShiftKey = true;
                         }
                         break;
@@ -197,7 +197,7 @@ namespace FreeDraw
             if (dialogProcessor.ShiftKey)
             {
                 dialogProcessor.ShiftKey = false;
-                statusBar.Items[1].Text = "Draw: Чертаене на неправилна фигура";
+                statusBar.Items[1].Text = "Чертаене на неправилна фигура";
             }
         }
 
@@ -658,20 +658,122 @@ namespace FreeDraw
         {
             dialogProcessor.Undo();
             //dialogProcessor.ComboboxUpdate(comboBox1);
-
-            if (dialogProcessor.UndoRedoList.Count < 1) 
-
-            // Redo.Enabled = true;
-
             viewPort.Invalidate();
+            if (dialogProcessor.UndoRedoList.Count < 1)
+
+                // Redo.Enabled = true;
+
+                viewPort.Invalidate();
         }
 
         private void Redo_Click(object sender, EventArgs e)
         {
             dialogProcessor.Redo();
-           // dialogProcessor.ComboboxUpdate(comboBox1);
+            // dialogProcessor.ComboboxUpdate(comboBox1);
             if (dialogProcessor.CurrentIndex > 9)
 
+                viewPort.Invalidate();
+        }
+
+        void currentStatusLabel_textChange(object sender, EventArgs e)
+        {
+            foreach (string str in IgnoreString())
+            {
+                if (statusBar.Items[0].Text == str)
+                {
+                    if (dialogProcessor.UndoRedoList.Count > dialogProcessor.CurrentIndex)
+                    {
+                        dialogProcessor.UndoRedoList.RemoveRange(dialogProcessor.CurrentIndex,
+                            dialogProcessor.UndoRedoList.Count - dialogProcessor.CurrentIndex);
+
+                    }
+
+                    dialogProcessor.UpdateUdnoList();
+                    viewPort.Invalidate();
+                }
+            }
+        }
+
+        private List<string> IgnoreString()
+        {
+            List<string> ignore = new List<string>();
+
+            //Цялата тази дивотия е с цел да определяме при кои събития можем да изпълняваме Undu/Redo.
+
+            ignore.Add("Последно действие: Рисуване на правоъгълник");
+            ignore.Add("Изчертана елипса");
+            ignore.Add("Изчертана линия");
+            ignore.Add("Изчертан пентагон");
+            ignore.Add("Изчертан триъгълник");
+            ignore.Add("Изчетан полигон");
+            ignore.Add("Създаване на група.");
+            ignore.Add("Разгрупиране.");
+            ignore.Add("Поставяне на селекция");
+            ignore.Add("Оразмеряването приключено");
+            ignore.Add("Влачене приключено");
+            ignore.Add("Ротацията приключена");
+            ignore.Add("Избран цвят: " + colorDialog.Color.Name);
+            ignore.Add("Изрязване на селекция");
+            ignore.Add("Изтриване на фигура.");
+            ignore.Add("Преместване на фигурата една позиция напред.");
+            ignore.Add("Дебелина на рамката 1 pt.");
+            ignore.Add("Дебелина на рамката 3 pt.");
+            ignore.Add("Дебелина на рамката 5 pt.");
+            ignore.Add("Дебелина на рамката 10 pt.");
+            ignore.Add("Завъртане на дясно 90 градуса.");
+            ignore.Add("Завъртане на ляво 270 градуса.");
+            ignore.Add("Завъртане 180 градуса.");
+            ignore.Add("Завъртане на дясно 45 градуса.");
+            ignore.Add("Завъртане на дясно 225 градуса.");
+            ignore.Add("Обектът е разширен");
+            ignore.Add("Обектът е свит");
+            ignore.Add("Фигурата е завъртяна");
+            ignore.Add("Промяна на прозрачността...");
+            ignore.Add("Прозрачността променена");
+
+            return ignore;
+        }
+
+        private void bringToFrontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.BringToFront(dialogProcessor.Selection);
+            statusBar.Items[0].Text = "Преместване на фигурата една позиция напред.";
+            viewPort.Invalidate();
+        }
+
+        private void sendToBackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.SendToBack(dialogProcessor.Selection);
+            statusBar.Items[0].Text = "Преместване на фигурата една позиция назад.";
+            viewPort.Invalidate();
+        }
+
+        private void rotateRight45_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Завъртане...";
+            dialogProcessor.Rotate(45);
+            statusBar.Items[0].Text = "Завъртане на дясно 45 градуса.";
+            viewPort.Invalidate();
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveAsImage_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Запазване във... ";
+
+           dialogProcessor.FileDialogFilters(saveFileDialog, "Save");
+            //.SaveAsImage();
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                dialogProcessor.SaveAsImage();
+            }
+            pickUpSpeedButton.Checked = true;
+            statusBar.Items[0].Text = "Запазване във " + saveFileDialog.FileName;
             viewPort.Invalidate();
         }
     }

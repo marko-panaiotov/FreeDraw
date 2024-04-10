@@ -10,6 +10,14 @@ using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows;
+using FreeDraw.Entities;
+using System.Drawing.Imaging;
+using System.Windows.Media.Media3D;
+using System.Windows.Forms;
 
 namespace FreeDraw.Processors
 {
@@ -171,7 +179,7 @@ namespace FreeDraw.Processors
             int y = rnd.Next(100, 600);
 
             RectangleShape rect = new RectangleShape(new Rectangle(x, y, 100, 200));
-            rect.FillColor = Color.White;
+            rect.FillColor = System.Drawing.Color.White;
 
             ShapeList.Add(rect);
         }
@@ -183,7 +191,7 @@ namespace FreeDraw.Processors
             int y = rnd.Next(100, 600);
 
             EllipseShape ellipse = new EllipseShape(new Rectangle(x, y, 100, 200));
-            ellipse.FillColor = Color.White;
+            ellipse.FillColor = System.Drawing.Color.White;
 
             ShapeList.Add(ellipse);
         }
@@ -195,7 +203,7 @@ namespace FreeDraw.Processors
             int y = rnd.Next(100, 600);
 
             CircleShape circle = new CircleShape(new Rectangle(x, y, 100, 200));
-            circle.FillColor = Color.White;
+            circle.FillColor = System.Drawing.Color.White;
 
             ShapeList.Add(circle);
         }
@@ -207,7 +215,7 @@ namespace FreeDraw.Processors
             int y = rnd.Next(100, 600);
 
             TriangleShape triangle = new TriangleShape(new RectangleF(x, y, 100, 200));
-            triangle.FillColor = Color.White;
+            triangle.FillColor = System.Drawing.Color.White;
 
             ShapeList.Add(triangle);
 
@@ -223,7 +231,7 @@ namespace FreeDraw.Processors
 
             DotShape dot = new DotShape(new Rectangle(x, y, 100, 200));
            
-            dot.FillColor = Color.Black;
+            dot.FillColor = System.Drawing.Color.Black;
 
             ShapeList.Add(dot);
         }
@@ -236,7 +244,7 @@ namespace FreeDraw.Processors
 
             RoundedRectangleShape roundedRectangle = new RoundedRectangleShape(new Rectangle(x, y, 100, 200));
             
-            roundedRectangle.FillColor = Color.White;
+            roundedRectangle.FillColor = System.Drawing.Color.White;
 
             ShapeList.Add(roundedRectangle);
         }
@@ -249,7 +257,7 @@ namespace FreeDraw.Processors
 
             SquareShape square = new SquareShape(new Rectangle(x, y, 100, 200));
 
-            square.FillColor = Color.White;
+            square.FillColor = System.Drawing.Color.White;
 
             ShapeList.Add(square);
         }
@@ -262,7 +270,7 @@ namespace FreeDraw.Processors
 
             LineShape line = new LineShape(new Rectangle(x, y, 100, 200));
 
-            line.FillColor = Color.White;
+            line.FillColor = System.Drawing.Color.White;
 
             ShapeList.Add(line);
         }
@@ -431,11 +439,12 @@ namespace FreeDraw.Processors
                     counture.Width += 8;
                     counture.Height += 8;
 
-                    Pen pen = new Pen(Color.Black, 1);
+                    System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Black, 1);
                     pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
 
                     grfx.Transform = sh.Transform;
                     grfx.DrawRectangle(pen, counture.Location.X, counture.Location.Y, counture.Width, counture.Height);
+                    ShapeList.Add(sh);
                 }
             }
 
@@ -535,42 +544,6 @@ namespace FreeDraw.Processors
         }
 
         /// <summary>
-        /// Поставяне копирани или изрязани примитиви.
-        /// </summary>
-        /*public void Paste()
-        {
-            if (Clipboard.ContainsData("FreeDraw"))
-            {
-                SelectionList.Clear();
-                using (MemoryStream memoryStream = Clipboard.GetData("FreeDraw") as MemoryStream)
-                {
-                    List<Shape> copyList = new List<Shape>();
-                    BinaryFormatter binaryFormatter = new BinaryFormatter();
-                    copyList = (List<Shape>)binaryFormatter.Deserialize(memoryStream);
-
-                    if (copyList.Count > 1)
-                    {
-                        foreach (Shape sh in copyList)
-                        {
-                           sh.Translate(Offset, Offset);
-                           // sh.Name = sh.Name + Convert.ToInt32(Offset);
-                            SelectionList.Add(sh);
-                            ShapeList.Add(sh);
-                            Offset += 10;
-                        }
-                    }
-                    else
-                    {
-                        copyList.First().Translate(Offset, Offset);
-                        //copyList.First().Name = copyList.First().Name + Convert.ToInt32(Offset);
-                        ShapeList.Add(copyList.First());
-                        Offset += 10;
-                    }
-                }
-            }
-        }*/
-
-        /// <summary>
         /// Копиране на избрани примитиви.
         /// </summary>
         public void Copy()
@@ -603,8 +576,6 @@ namespace FreeDraw.Processors
             SelectionList.Clear();
         }
 
-
-
         /// <summary>
         /// Преместване на избран примитив на една позиция напред в списъка с примитиви.
         /// </summary>
@@ -632,13 +603,13 @@ namespace FreeDraw.Processors
         {
             if (selection!=null)
             {
-                for (int i = 0; i < ShapeList.Count; i++)
+                for (int i = 0; i < SelectionList.Count; i++)
                 {
-                    if (ShapeList[i] == item)
+                    if (SelectionList[i] == item)
                     {
-                        ShapeList.RemoveAt(i);
+                        SelectionList.RemoveAt(i);
                         if (i != 0) i--;
-                        ShapeList.Insert(i, item);
+                        SelectionList.Insert(i, item);
                     }
                 }
                 Selection = item;
@@ -673,7 +644,7 @@ namespace FreeDraw.Processors
         public void UpdateUdnoList()
         {
             //UnduRedoList.Insert(CurrentIndex, Clone(ShapeList));
-            UndoRedoList.Add(Clone(ShapeList));
+            UndoRedoList.Add(Clone(SelectionList));
 
             if (UndoRedoList.Count > 10) UndoRedoList.Remove(UndoRedoList.First());
 
@@ -690,7 +661,7 @@ namespace FreeDraw.Processors
                 if (CurrentIndex > 1) CurrentIndex--;
 
                 ShapeList.Clear();
-                ShapeList.AddRange(UndoRedoList[CurrentIndex - 1]);
+                ShapeList.AddRange(UndoRedoList[currentIndex - 1]);
 
                 Selection = null;
             }
@@ -714,6 +685,76 @@ namespace FreeDraw.Processors
 
         #endregion Undo/Redo
 
+        /* public void Rotate(float angle)
+         {
+             if (IsSelectionNotNull())
+             {
+                 if (GroupSelectionContains(Selection))
+                 {
+                     foreach (Shape sh in SelectionList)
+                     {
+                         //Ако е триъгълник въртим околко медицентъра
+                         if (sh is TriangleShape)
+                         {
+                             PointF C = sh.Gpath.PathPoints[0];
+                             PointF A = sh.Gpath.PathPoints[1];
+                             PointF B = sh.Gpath.PathPoints[2];
+
+                             float centerX = (A.X + B.X + C.X) / 3;
+                             float centerY = (A.Y + B.Y + C.Y) / 3;
+
+                             PointF center = new PointF(centerX, centerY);
+                             sh.Rotate(angle, center);
+                         }
+                         else
+                         {
+                             PointF center = new PointF(sh.Location.X + sh.Width / 2, sh.Location.Y + sh.Height / 2);
+                             PointF[] points = { center };
+                             sh.Transform.TransformPoints(points);
+                             sh.Rotate(angle, points[0]);
+                         }
+                     }
+                 }
+                 else
+                 {
+                     //Ако е триъгълник въртим околко медицентъра
+                     if (Selection is TriangleShape)
+                     {
+                         PointF C = Selection.Gpath.PathPoints[0];
+                         PointF A = Selection.Gpath.PathPoints[1];
+                         PointF B = Selection.Gpath.PathPoints[2];
+
+                         float centerX = (A.X + B.X + C.X) / 3;
+                         float centerY = (A.Y + B.Y + C.Y) / 3;
+
+                         PointF center = new PointF(centerX, centerY);
+                         Selection.Rotate(angle, center);
+                     }
+                     else
+                     {
+                         PointF center = new PointF(selection.Location.X + selection.Width / 2, selection.Location.Y + selection.Height / 2);
+                         PointF[] points = { center };
+                         Selection.Transform.TransformPoints(points);
+                         Selection.Rotate(angle, points[0]);
+                     }
+                 }
+             }
+         }*/
+
+        public void Rotate(int angle)
+        {
+            foreach (Shape sh in SelectionList)
+            {
+                PointF center = new PointF(sh.Location.X + sh.Width / 2, sh.Location.Y + sh.Height / 2);
+                PointF[] points = { center };
+                //Selection.Translate(center);
+                sh.Rotate(angle, points[0]);
+                TranslateTo(center);
+               
+            }
+
+        }
+        
         public void FileDialogFilters(FileDialog fileDialog, string titleName)
         {
             fileDialog.InitialDirectory = @"C:\";
@@ -723,32 +764,61 @@ namespace FreeDraw.Processors
             {
                 fileDialog.CheckFileExists = true;
             }
-            fileDialog.Filter = "CK (.ck)|*.ck";
-            fileDialog.DefaultExt = "ck";
+            fileDialog.Filter = "FD (.fd)|*.fd";
+            fileDialog.DefaultExt = "fd";
             fileDialog.CheckPathExists = true;
-        }
 
-        /* private int CountShapes(Shape item)
-         {
-             int count = 0;
-             Type typeOfShape = item.GetType();
-             foreach (Shape rsg in ShapeList)
-             {
-                 if (ItemTypeGroupShape(rsg))
-                 {
-                     foreach (Shape sh in ((GroupShape)rsg).subShape)
-                     {
-                         if (sh.GetType() == typeOfShape)
-                             count++;
-                     }
-                 }
-                 if (rsg.GetType() == typeOfShape)
-                 {
-                     count++;
-                 }
-             }
-             return count;
-         }*/
+            /*ImageFormat format;
+            switch (fileDialog.FilterIndex)
+            {
+                case 1:
+                    format = ImageFormat.Png;
+                    break;
+                case 2:
+                    format = ImageFormat.Jpeg;
+                    break;
+                default:
+                    format = ImageFormat.Jpeg;
+                    break;
+            }
+            DoubleBufferedPanel panel = new DoubleBufferedPanel();
+            panel.GetImageFromPanel();
+            panel.SaveImage(fileDialog, format);*/
+        }
+        /*public void SaveAsImage()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.ValidateNames = true;
+            dlg.Filter = "Png Image (.png)|*.png|JPEG Image (.jpg)|*.jpg";
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                // Зареждане на изображението, което искате да запазите (този код може да бъде заменен със зареждане на вашето изображение)
+                //Bitmap bitmap = new Bitmap() ;
+                DoubleBufferedPanel panel=new DoubleBufferedPanel();
+                panel.GetImageFromPanel();
+                // Създаване на кодера за запазване в зависимост от избрания тип на файл
+                ImageFormat format;
+                switch (dlg.FilterIndex)
+                {
+                    case 1:
+                        format = ImageFormat.Png;
+                        break;
+                    case 2:
+                        format = ImageFormat.Jpeg;
+                        break;
+                    default:
+                        format = ImageFormat.Jpeg;
+                        break;
+                }
+
+                // Запазване на изображението
+               // panel.SaveImage(dlg.FileName, format);
+                //tmap.Save(dlg.FileName, format);
+
+
+            }
+        }*/
 
         public bool IsSelectionNotNull()
         {
