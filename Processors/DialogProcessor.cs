@@ -431,7 +431,7 @@ namespace FreeDraw.Processors
 
             if (selectionList.Count > 0)
             {
-                foreach (Shape sh in selectionList)
+                foreach (Shape sh in SelectionList)
                 {
                     RectangleF counture = sh.Rectangle;
                     PointF location = new PointF(counture.Location.X - 4, counture.Location.Y - 4);
@@ -441,14 +441,11 @@ namespace FreeDraw.Processors
 
                     System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Black, 1);
                     pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-
                     grfx.Transform = sh.Transform;
                     grfx.DrawRectangle(pen, counture.Location.X, counture.Location.Y, counture.Width, counture.Height);
-                    ShapeList.Add(sh);
+                    sh.DrawSelf(grfx);
                 }
             }
-
-
         }
 
         public List<PointF> GetHandlePoint(RectangleF shape)

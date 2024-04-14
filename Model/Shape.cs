@@ -19,8 +19,10 @@ namespace FreeDraw.Model
         }
 
         public Shape(RectangleF rect)
-        {
-            rectangle = rect;
+        { 
+            this.Location = rect.Location;
+            this.Size = rect.Size;  
+            this.rectangle = rect;
         }
 
         public Shape(Shape shape)
@@ -29,6 +31,16 @@ namespace FreeDraw.Model
             this.Width = shape.Width;
             this.Location = shape.Location;
             this.rectangle = shape.rectangle;
+            this.Size = shape.Size;
+            this.Location = shape.Location;
+
+            this.Transperancy = shape.Transperancy;
+            this.FillColor = shape.FillColor;
+            this.BorderColor = shape.BorderColor;
+            this.BorderWidth = shape.BorderWidth;
+
+            this.Transform = shape.Transform.Clone();
+
 
         }
         #endregion

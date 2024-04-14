@@ -98,6 +98,8 @@
             colorPickerDialog = new ColorDialog();
             transperancyTrackBar = new TrackBar();
             label1 = new Label();
+            toolStripSeparator8 = new ToolStripSeparator();
+            toolStripSeparator9 = new ToolStripSeparator();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
@@ -302,7 +304,7 @@
             // speedMenu
             // 
             speedMenu.AutoSize = false;
-            speedMenu.Items.AddRange(new ToolStripItem[] { pickUpSpeedButton, toolStripSeparator1, drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator5, groupButton, unGroupButton, toolStripSeparator7, Stroke, toolStripSeparator6, CutButton, CopyButton, PasteButton, DeleteButton, Rotation, ExpandButton, ShrinkButton });
+            speedMenu.Items.AddRange(new ToolStripItem[] { pickUpSpeedButton, toolStripSeparator1, drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator5, groupButton, unGroupButton, toolStripSeparator7, Stroke, toolStripSeparator6, CutButton, CopyButton, PasteButton, DeleteButton, toolStripSeparator9, Rotation, toolStripSeparator8, ExpandButton, ShrinkButton });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
             speedMenu.Size = new Size(808, 45);
@@ -635,6 +637,7 @@
             viewPort.MouseDown += ViewPortMouseDown;
             viewPort.MouseMove += ViewPortMouseMove;
             viewPort.MouseUp += ViewPortMouseUp;
+            viewPort.MouseWheel += new System.Windows.Forms.MouseEventHandler(ViewPortMouseWheel);
             // 
             // colorPickerDialog
             // 
@@ -643,7 +646,7 @@
             // transperancyTrackBar
             // 
             transperancyTrackBar.AutoSize = false;
-            transperancyTrackBar.Location = new Point(645, 42);
+            transperancyTrackBar.Location = new Point(507, 42);
             transperancyTrackBar.Maximum = 255;
             transperancyTrackBar.Name = "transperancyTrackBar";
             transperancyTrackBar.Size = new Size(98, 27);
@@ -653,12 +656,21 @@
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(657, 24);
+            label1.Location = new Point(516, 24);
             label1.Name = "label1";
             label1.Size = new Size(76, 15);
             label1.TabIndex = 6;
             label1.Text = "Transperancy";
+            // 
+            // toolStripSeparator8
+            // 
+            toolStripSeparator8.Name = "toolStripSeparator8";
+            toolStripSeparator8.Size = new Size(6, 45);
+            // 
+            // toolStripSeparator9
+            // 
+            toolStripSeparator9.Name = "toolStripSeparator9";
+            toolStripSeparator9.Size = new Size(6, 45);
             // 
             // MainForm
             // 
@@ -762,5 +774,7 @@
         private ToolStripMenuItem saveAsImage;
         private ToolStripButton ExpandButton;
         private ToolStripButton ShrinkButton;
+        private ToolStripSeparator toolStripSeparator9;
+        private ToolStripSeparator toolStripSeparator8;
     }
 }

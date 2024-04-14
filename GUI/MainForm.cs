@@ -361,12 +361,10 @@ namespace FreeDraw
         {
             if (dialogProcessor.IsDragging)
             {
-                if (dialogProcessor.Selection != null) statusBar.Items[0].Text = "Последно действие: Влачене";
+                if (dialogProcessor.SelectionList != null) statusBar.Items[0].Text = "Последно действие: Влачене";
                 dialogProcessor.TranslateTo(e.Location);
                 viewPort.Invalidate();
             }
-
-
         }
         /// <summary>
         /// Прихващане на отпускането на бутона на мишката.
@@ -377,7 +375,23 @@ namespace FreeDraw
             dialogProcessor.IsDragging = false;
         }
 
+        void ViewPortMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            #region Expand and Shrink
 
+            if (dialogProcessor.SelectionList != null)
+            {
+                if (e.Delta > 0)
+                {
+                    dialogProcessor.Expand();
+                }
+                else
+                    dialogProcessor.Shrink();
+                viewPort.Invalidate();
+            }
+
+            #endregion Expand and Shrink
+        }
 
         private void FillColorPickerButtonToolStripMenuItem_Click(object sender, EventArgs e)
         {
