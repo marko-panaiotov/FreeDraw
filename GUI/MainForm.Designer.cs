@@ -86,24 +86,28 @@
             CopyButton = new ToolStripButton();
             PasteButton = new ToolStripButton();
             DeleteButton = new ToolStripButton();
+            toolStripSeparator9 = new ToolStripSeparator();
             Rotation = new ToolStripDropDownButton();
             rotateRight45 = new ToolStripMenuItem();
             rotateRight90 = new ToolStripMenuItem();
             rotateLeft45 = new ToolStripMenuItem();
             rotateLeft90 = new ToolStripMenuItem();
             rotate180 = new ToolStripMenuItem();
+            toolStripSeparator8 = new ToolStripSeparator();
             ExpandButton = new ToolStripButton();
             ShrinkButton = new ToolStripButton();
             viewPort = new GUI.DoubleBufferedPanel();
             colorPickerDialog = new ColorDialog();
             transperancyTrackBar = new TrackBar();
             label1 = new Label();
-            toolStripSeparator8 = new ToolStripSeparator();
-            toolStripSeparator9 = new ToolStripSeparator();
+            shapeBox = new ListBox();
+            label2 = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)transperancyTrackBar).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // mainMenu
@@ -112,7 +116,7 @@
             mainMenu.Location = new Point(0, 0);
             mainMenu.Name = "mainMenu";
             mainMenu.Padding = new Padding(7, 2, 0, 2);
-            mainMenu.Size = new Size(808, 24);
+            mainMenu.Size = new Size(780, 24);
             mainMenu.TabIndex = 1;
             mainMenu.Text = "menuStrip1";
             // 
@@ -291,7 +295,7 @@
             statusBar.Location = new Point(0, 466);
             statusBar.Name = "statusBar";
             statusBar.Padding = new Padding(1, 0, 16, 0);
-            statusBar.Size = new Size(808, 22);
+            statusBar.Size = new Size(780, 22);
             statusBar.TabIndex = 2;
             statusBar.Text = "statusStrip1";
             // 
@@ -307,7 +311,7 @@
             speedMenu.Items.AddRange(new ToolStripItem[] { pickUpSpeedButton, toolStripSeparator1, drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator5, groupButton, unGroupButton, toolStripSeparator7, Stroke, toolStripSeparator6, CutButton, CopyButton, PasteButton, DeleteButton, toolStripSeparator9, Rotation, toolStripSeparator8, ExpandButton, ShrinkButton });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
-            speedMenu.Size = new Size(808, 45);
+            speedMenu.Size = new Size(780, 45);
             speedMenu.Stretch = true;
             speedMenu.TabIndex = 3;
             speedMenu.Text = "toolStrip1";
@@ -562,6 +566,11 @@
             DeleteButton.Text = "Delete";
             DeleteButton.Click += DeleteButton_Click;
             // 
+            // toolStripSeparator9
+            // 
+            toolStripSeparator9.Name = "toolStripSeparator9";
+            toolStripSeparator9.Size = new Size(6, 45);
+            // 
             // Rotation
             // 
             Rotation.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -584,24 +593,33 @@
             rotateRight90.Name = "rotateRight90";
             rotateRight90.Size = new Size(156, 22);
             rotateRight90.Text = "Rotate right 90°";
+            rotateRight90.Click += rotateRight90_Click;
             // 
             // rotateLeft45
             // 
             rotateLeft45.Name = "rotateLeft45";
             rotateLeft45.Size = new Size(156, 22);
             rotateLeft45.Text = "Rotate left 45°";
+            rotateLeft45.Click += rotateLeft45_Click;
             // 
             // rotateLeft90
             // 
             rotateLeft90.Name = "rotateLeft90";
             rotateLeft90.Size = new Size(156, 22);
             rotateLeft90.Text = "Rotate left 90°";
+            rotateLeft90.Click += rotateLeft90_Click;
             // 
             // rotate180
             // 
             rotate180.Name = "rotate180";
             rotate180.Size = new Size(156, 22);
             rotate180.Text = "Rotate 180°";
+            rotate180.Click += rotate180_Click;
+            // 
+            // toolStripSeparator8
+            // 
+            toolStripSeparator8.Name = "toolStripSeparator8";
+            toolStripSeparator8.Size = new Size(6, 45);
             // 
             // ExpandButton
             // 
@@ -626,18 +644,19 @@
             // viewPort
             // 
             viewPort.Dock = DockStyle.Fill;
-            viewPort.Location = new Point(0, 69);
+            viewPort.Location = new Point(5, 14);
             viewPort.Margin = new Padding(5, 3, 5, 3);
             viewPort.Name = "viewPort";
-            viewPort.Size = new Size(808, 397);
+            viewPort.Size = new Size(624, 380);
             viewPort.TabIndex = 4;
+            viewPort.Load += viewPort_Load;
             viewPort.Paint += ViewPortPaint;
             viewPort.KeyDown += Key_Down;
             viewPort.KeyUp += Key_Up;
             viewPort.MouseDown += ViewPortMouseDown;
             viewPort.MouseMove += ViewPortMouseMove;
             viewPort.MouseUp += ViewPortMouseUp;
-            viewPort.MouseWheel += new System.Windows.Forms.MouseEventHandler(ViewPortMouseWheel);
+            viewPort.MouseWheel += ViewPortMouseWheel;
             // 
             // colorPickerDialog
             // 
@@ -656,30 +675,60 @@
             // 
             // label1
             // 
+            label1.BackColor = SystemColors.Control;
             label1.Location = new Point(516, 24);
             label1.Name = "label1";
             label1.Size = new Size(76, 15);
             label1.TabIndex = 6;
             label1.Text = "Transperancy";
             // 
-            // toolStripSeparator8
+            // shapeBox
             // 
-            toolStripSeparator8.Name = "toolStripSeparator8";
-            toolStripSeparator8.Size = new Size(6, 45);
+            shapeBox.BorderStyle = BorderStyle.FixedSingle;
+            shapeBox.Dock = DockStyle.Right;
+            shapeBox.FormattingEnabled = true;
+            shapeBox.ItemHeight = 15;
+            shapeBox.Location = new Point(637, 14);
+            shapeBox.Name = "shapeBox";
+            shapeBox.Size = new Size(140, 380);
+            shapeBox.TabIndex = 7;
+            shapeBox.SelectedIndexChanged += shapeBox_SelectedIndexChanged;
             // 
-            // toolStripSeparator9
+            // label2
             // 
-            toolStripSeparator9.Name = "toolStripSeparator9";
-            toolStripSeparator9.Size = new Size(6, 45);
+            label2.Dock = DockStyle.Right;
+            label2.Location = new Point(662, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(115, 11);
+            label2.TabIndex = 8;
+            label2.Text = "Shape Box";
+            label2.Click += label2_Click;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 81.28205F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.7179489F));
+            tableLayoutPanel1.Controls.Add(shapeBox, 1, 1);
+            tableLayoutPanel1.Controls.Add(label2, 1, 0);
+            tableLayoutPanel1.Controls.Add(viewPort, 0, 1);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 69);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 2.7707808F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 97.22922F));
+            tableLayoutPanel1.Size = new Size(780, 397);
+            tableLayoutPanel1.TabIndex = 9;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(808, 488);
+            ClientSize = new Size(780, 488);
+            Controls.Add(tableLayoutPanel1);
             Controls.Add(transperancyTrackBar);
             Controls.Add(label1);
-            Controls.Add(viewPort);
             Controls.Add(speedMenu);
             Controls.Add(statusBar);
             Controls.Add(mainMenu);
@@ -697,6 +746,7 @@
             speedMenu.ResumeLayout(false);
             speedMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)transperancyTrackBar).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -776,5 +826,8 @@
         private ToolStripButton ShrinkButton;
         private ToolStripSeparator toolStripSeparator9;
         private ToolStripSeparator toolStripSeparator8;
+        private ListBox shapeBox;
+        private Label label2;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

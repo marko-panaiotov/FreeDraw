@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -251,6 +252,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomDot();
 
+            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на точка";
 
             viewPort.Invalidate();
@@ -260,6 +262,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomCircle();
 
+            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на кръг";
 
             viewPort.Invalidate();
@@ -268,6 +271,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomEllipse();
 
+            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
 
             viewPort.Invalidate();
@@ -277,6 +281,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomRectangle();
 
+            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
 
             viewPort.Invalidate();
@@ -286,6 +291,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomRoundedRectangle();
 
+            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на заоблен правоъгълник";
 
             viewPort.Invalidate();
@@ -295,6 +301,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomSquare();
 
+            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат";
 
             viewPort.Invalidate();
@@ -304,6 +311,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomTriangle();
 
+            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
 
             viewPort.Invalidate();
@@ -313,6 +321,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomLine();
 
+            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на права";
 
             viewPort.Invalidate();
@@ -683,6 +692,7 @@ namespace FreeDraw
         private void Redo_Click(object sender, EventArgs e)
         {
             dialogProcessor.Redo();
+            viewPort.Invalidate();
             // dialogProcessor.ComboboxUpdate(comboBox1);
             if (dialogProcessor.CurrentIndex > 9)
 
@@ -770,6 +780,38 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
 
+        private void rotateRight90_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Завъртане...";
+            dialogProcessor.Rotate(90);
+            statusBar.Items[0].Text = "Завъртане на дясно 90 градуса.";
+            viewPort.Invalidate();
+        }
+
+        private void rotateLeft45_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Завъртане...";
+            dialogProcessor.Rotate(-45);
+            statusBar.Items[0].Text = "Завъртане на ляво 45 градуса.";
+            viewPort.Invalidate();
+        }
+
+        private void rotateLeft90_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Завъртане...";
+            dialogProcessor.Rotate(-90);
+            statusBar.Items[0].Text = "Завъртане на ляво 90 градуса.";
+            viewPort.Invalidate();
+        }
+
+        private void rotate180_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Завъртане...";
+            dialogProcessor.Rotate(180);
+            statusBar.Items[0].Text = "Завъртане на 180 градуса.";
+            viewPort.Invalidate();
+        }
+
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -807,6 +849,35 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
         #endregion Scaling
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void shapeBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty((System.String)shapeBox.SelectedValue))
+            {
+                var str = shapeBox.SelectedValue;
+
+                var res = from s in dialogProcessor.ShapeList
+                          where s.Name == (System.String)str
+                          select s;
+
+                if (res.Count() > 0)
+                {
+                    dialogProcessor.Selection = res.First();
+                    viewPort.Invalidate();
+                }
+            }
+            statusBar.Items[0].Text = "Draw: Селектиране на " + shapeBox.SelectedValue;
+        }
+
+        private void viewPort_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

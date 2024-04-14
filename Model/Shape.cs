@@ -103,6 +103,16 @@ namespace FreeDraw.Model
             set { transperancy = value; }
         }
 
+        private string name;
+        /// <summary>
+        /// Име на елемента.
+        /// </summary>
+        public virtual string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
         private float borderWidth;
         public virtual float BorderWidth
         {

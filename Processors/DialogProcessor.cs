@@ -158,12 +158,17 @@ namespace FreeDraw.Processors
         /// Цел: уникално име.
         /// </summary>
         private int rectCount = 0;
-        private int ellipCount = 0;
+        private int ellipseCount = 0;
+        private int circleCount = 0;
+        private int triCount = 0;
+        private int dotCount = 0;
+        private int roundedRectCount = 0;
+        private int squareCount = 0;
         private int lineCount = 0;
         private int groupCount = 0;
         private int pentaCount = 0;
         private int polyCount = 0;
-        private int triCount = 0;
+        
 
         #endregion
 
@@ -181,6 +186,17 @@ namespace FreeDraw.Processors
             RectangleShape rect = new RectangleShape(new Rectangle(x, y, 100, 200));
             rect.FillColor = System.Drawing.Color.White;
 
+            if (CountShapes(rect) <= rectCount)
+            {
+                rect.Name = "Rectangle " + (rectCount + 1);
+                rectCount++;
+            }
+            else
+            {
+                rect.Name = "Rectangle " + CountShapes(rect);
+                rectCount = CountShapes(rect);
+            }
+
             ShapeList.Add(rect);
         }
 
@@ -192,6 +208,17 @@ namespace FreeDraw.Processors
 
             EllipseShape ellipse = new EllipseShape(new Rectangle(x, y, 100, 200));
             ellipse.FillColor = System.Drawing.Color.White;
+
+            if (CountShapes(ellipse) <= ellipseCount)
+            {
+                ellipse.Name = "Ellipse " + (ellipseCount + 1);
+                ellipseCount++;
+            }
+            else
+            {
+                ellipse.Name = "Ellipse " + CountShapes(ellipse);
+                ellipseCount = CountShapes(ellipse);
+            }
 
             ShapeList.Add(ellipse);
         }
@@ -205,6 +232,17 @@ namespace FreeDraw.Processors
             CircleShape circle = new CircleShape(new Rectangle(x, y, 100, 200));
             circle.FillColor = System.Drawing.Color.White;
 
+            if (CountShapes(circle) <= circleCount)
+            {
+                circle.Name = "Circle " + (circleCount + 1);
+                circleCount++;
+            }
+            else
+            {
+                circle.Name = "Circle " + CountShapes(circle);
+                circleCount = CountShapes(circle);
+            }
+
             ShapeList.Add(circle);
         }
 
@@ -216,6 +254,17 @@ namespace FreeDraw.Processors
 
             TriangleShape triangle = new TriangleShape(new RectangleF(x, y, 100, 200));
             triangle.FillColor = System.Drawing.Color.White;
+
+            if (CountShapes(triangle) <= triCount)
+            {
+                triangle.Name = "Triangle " + (triCount + 1);
+                triCount++;
+            }
+            else
+            {
+                triangle.Name = "Triangle " + CountShapes(triangle);
+                triCount = CountShapes(triangle);
+            }
 
             ShapeList.Add(triangle);
 
@@ -233,6 +282,17 @@ namespace FreeDraw.Processors
            
             dot.FillColor = System.Drawing.Color.Black;
 
+            if (CountShapes(dot) <= dotCount)
+            {
+                dot.Name = "Dot " + (dotCount + 1);
+                dotCount++;
+            }
+            else
+            {
+                dot.Name = "Dot " + CountShapes(dot);
+                dotCount = CountShapes(dot);
+            }
+
             ShapeList.Add(dot);
         }
 
@@ -245,6 +305,17 @@ namespace FreeDraw.Processors
             RoundedRectangleShape roundedRectangle = new RoundedRectangleShape(new Rectangle(x, y, 100, 200));
             
             roundedRectangle.FillColor = System.Drawing.Color.White;
+
+            if (CountShapes(roundedRectangle) <= roundedRectCount)
+            {
+                roundedRectangle.Name = "Rounded Rectangle " + (roundedRectCount + 1);
+                roundedRectCount++;
+            }
+            else
+            {
+                roundedRectangle.Name = "Rounded Rectangle " + CountShapes(roundedRectangle);
+                roundedRectCount = CountShapes(roundedRectangle);
+            }
 
             ShapeList.Add(roundedRectangle);
         }
@@ -259,6 +330,17 @@ namespace FreeDraw.Processors
 
             square.FillColor = System.Drawing.Color.White;
 
+            if (CountShapes(square) <= squareCount)
+            {
+                square.Name = "Square" + (squareCount + 1);
+                squareCount++;
+            }
+            else
+            {
+                square.Name = "Square " + CountShapes(square);
+                roundedRectCount = CountShapes(square);
+            }
+
             ShapeList.Add(square);
         }
 
@@ -271,6 +353,17 @@ namespace FreeDraw.Processors
             LineShape line = new LineShape(new Rectangle(x, y, 100, 200));
 
             line.FillColor = System.Drawing.Color.White;
+
+            if (CountShapes(line) <= lineCount)
+            {
+                line.Name = "Line " + (lineCount + 1);
+                lineCount++;
+            }
+            else
+            {
+                line.Name = "Line " + CountShapes(line);
+                lineCount = CountShapes(line);
+            }
 
             ShapeList.Add(line);
         }
@@ -864,6 +957,36 @@ namespace FreeDraw.Processors
         public bool GroupSelectionContains(Shape item)
         {
             if (SelectionList.Contains(item))
+                return true;
+            else
+                return false;
+        }
+
+        private int CountShapes(Shape item)
+        {
+            int count = 0;
+            Type typeOfShape = item.GetType();
+            foreach (Shape rsg in ShapeList)
+            {
+                if (ItemTypeGroupShape(rsg))
+                {
+                    foreach (Shape sh in ((GroupShape)rsg).SubShape)
+                    {
+                        if (sh.GetType() == typeOfShape)
+                            count++;
+                    }
+                }
+                if (rsg.GetType() == typeOfShape)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public bool ItemTypeGroupShape(Shape item)
+        {
+            if (item.GetType() == typeof(GroupShape))
                 return true;
             else
                 return false;
