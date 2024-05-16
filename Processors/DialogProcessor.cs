@@ -398,9 +398,23 @@ namespace FreeDraw.Processors
                 kontur.Height = maxBottom - minY;
 
                 group.Rectangle = kontur;
+                if (CountShapes(group) <= groupCount)
+                {
+                    group.Name = "Group " + (groupCount + 1);
+                    groupCount++;
+                }
+                else
+                {
+                    group.Name = "Group " + CountShapes(group);
+                    groupCount = CountShapes(group);
+                }
+
+
                 ShapeList.Add(group);
                 selectionList.Clear();
                 selectionList.Add(group);
+
+                Selection = group;
 
             }
         }
@@ -992,6 +1006,13 @@ namespace FreeDraw.Processors
                 return false;
         }
 
+        public void ListBoxUpdate(System.Windows.Forms.ListBox listBox)
+        {
+            listBox.DataSource = null;
+            listBox.DisplayMember = "Name";
+            listBox.ValueMember = "Name";
+            listBox.DataSource = ShapeList;
+        }
     }
 
 

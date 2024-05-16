@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace FreeDraw.Processors
 {
@@ -131,6 +132,8 @@ namespace FreeDraw.Processors
                 return (List<Shape>)formatter.Deserialize(stream);
             }
         }
+
+        
 
     }
 }

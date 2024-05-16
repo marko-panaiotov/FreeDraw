@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SaveForm));
             OK = new Button();
             Cancel = new Button();
             strLabel = new Label();
@@ -40,7 +41,7 @@
             OK.Name = "OK";
             OK.Size = new Size(75, 23);
             OK.TabIndex = 2;
-            OK.Text = "OK";
+            OK.Text = "Излез";
             OK.UseVisualStyleBackColor = true;
             // 
             // Cancel
@@ -50,7 +51,7 @@
             Cancel.Name = "Cancel";
             Cancel.Size = new Size(75, 23);
             Cancel.TabIndex = 1;
-            Cancel.Text = "Cancel";
+            Cancel.Text = "Отказ";
             Cancel.UseVisualStyleBackColor = true;
             // 
             // strLabel
@@ -71,9 +72,11 @@
             Controls.Add(Cancel);
             Controls.Add(OK);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SaveForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FreeDraw";
+            Load += SaveForm_Load;
             ResumeLayout(false);
         }
 

@@ -252,7 +252,7 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomDot();
 
-            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
+            //shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на точка";
 
             viewPort.Invalidate();
@@ -262,8 +262,9 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomCircle();
 
-            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
+            // shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на кръг";
+            dialogProcessor.ListBoxUpdate(shapeBox);
 
             viewPort.Invalidate();
         }
@@ -271,8 +272,9 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomEllipse();
 
-            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
+            //shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на елипса";
+            dialogProcessor.ListBoxUpdate(shapeBox);
 
             viewPort.Invalidate();
         }
@@ -281,9 +283,10 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomRectangle();
 
-            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
-            statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+            // shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
 
+            // statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+            dialogProcessor.ListBoxUpdate(shapeBox);
             viewPort.Invalidate();
         }
 
@@ -291,8 +294,9 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomRoundedRectangle();
 
-            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
+            // shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на заоблен правоъгълник";
+            dialogProcessor.ListBoxUpdate(shapeBox);
 
             viewPort.Invalidate();
         }
@@ -301,8 +305,9 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomSquare();
 
-            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
+            //shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат";
+            dialogProcessor.ListBoxUpdate(shapeBox);
 
             viewPort.Invalidate();
         }
@@ -311,8 +316,9 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomTriangle();
 
-            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
+            //shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
+            dialogProcessor.ListBoxUpdate(shapeBox);
 
             viewPort.Invalidate();
         }
@@ -321,8 +327,9 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomLine();
 
-            shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
+            //shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на права";
+            dialogProcessor.ListBoxUpdate(shapeBox);
 
             viewPort.Invalidate();
         }
@@ -521,6 +528,10 @@ namespace FreeDraw
         private void groupButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.Group();
+
+            dialogProcessor.ListBoxUpdate(shapeBox);
+            shapeBox.SelectedItem = dialogProcessor.ShapeList.Last();
+
             statusBar.Items[0].Text = "Групиране.";
             viewPort.Invalidate();
         }
@@ -528,6 +539,10 @@ namespace FreeDraw
         private void unGroupButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.Ungroup();
+
+            dialogProcessor.ListBoxUpdate(shapeBox);
+            shapeBox.SelectedItem = dialogProcessor.Selection;
+
             statusBar.Items[0].Text = "Разгрупиране.";
             viewPort.Invalidate();
         }
@@ -642,7 +657,7 @@ namespace FreeDraw
 
         private void PasteButton_Click(object sender, EventArgs e)
         {
-            statusBar.Items[0].Text = "Draw: Поставяне...";
+            statusBar.Items[0].Text = "Поставяне...";
             dialogProcessor.Paste();
 
             viewPort.Invalidate();
@@ -650,7 +665,7 @@ namespace FreeDraw
 
         private void Paste_Click(object sender, EventArgs e)
         {
-            statusBar.Items[0].Text = "Draw: Поставяне...";
+            statusBar.Items[0].Text = "Поставяне...";
             dialogProcessor.Paste();
 
             viewPort.Invalidate();
@@ -850,10 +865,6 @@ namespace FreeDraw
         }
         #endregion Scaling
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void shapeBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -877,6 +888,43 @@ namespace FreeDraw
         private void viewPort_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm about = new AboutForm();
+            about.Show();
+        }
+
+        private void changeNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.IsSelectionNotNull())
+            {
+                ChangeNameForm ch = new ChangeNameForm("Въведете ново име");
+                var oldName = dialogProcessor.Selection.Name;
+
+                statusBar.Items[0].Text = "Изберете ново име...";
+
+                if (ch.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ch.NewName))
+                {
+                    foreach (Shape sh in dialogProcessor.ShapeList)
+                    {
+                        if (ch.NewName != sh.Name)
+                        {
+                            dialogProcessor.Selection.Name = ch.NewName;
+                            
+                            statusBar.Items[0].Text = "" + oldName + " е с ново име: " + ch.NewName;
+                            dialogProcessor.ListBoxUpdate(shapeBox);
+                            viewPort.Invalidate();
+                        }
+                        else
+                        {
+                            statusBar.Items[0].Text = "Името '" + ch.NewName + "' вече съществува.";
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 }

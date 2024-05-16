@@ -10,6 +10,7 @@
 
     <PropertyGroup>
       <NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
+      <Copyright>Marko Panaiotov</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -33,6 +34,10 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="EntityFramework" Version="6.4.4" />
 	</ItemGroup>
 
 

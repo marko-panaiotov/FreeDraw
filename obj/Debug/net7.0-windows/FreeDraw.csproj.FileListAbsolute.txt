@@ -37,3 +37,15 @@ D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\FreeDraw\obj\Deb
 D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.pdb
 D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.genruntimeconfig.cache
 D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\FreeDraw\obj\Debug\net7.0-windows\ref\FreeDraw.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.GUI.AboutForm.resources
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\bin\Debug\net7.0-windows\EntityFramework.SqlServer.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\bin\Debug\net7.0-windows\EntityFramework.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\bin\Debug\net7.0-windows\System.Data.SqlClient.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\bin\Debug\net7.0-windows\runtimes\win-arm64\native\sni.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\bin\Debug\net7.0-windows\runtimes\win-x64\native\sni.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\bin\Debug\net7.0-windows\runtimes\win-x86\native\sni.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\bin\Debug\net7.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\bin\Debug\net7.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.csproj.AssemblyReference.cache
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.csproj.CopyComplete
+D:\bat Marko\University\Thirth year 2023-2024\Computer Graphics\test\FreeDraw\obj\Debug\net7.0-windows\FreeDraw.GUI.ChangeNameForm.resources

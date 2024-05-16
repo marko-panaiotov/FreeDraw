@@ -103,6 +103,8 @@
             shapeBox = new ListBox();
             label2 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
+            changeNameToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator10 = new ToolStripSeparator();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
@@ -255,7 +257,7 @@
             // 
             // imageToolStripMenuItem
             // 
-            imageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { bringToFrontToolStripMenuItem, sendToBackToolStripMenuItem });
+            imageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { changeNameToolStripMenuItem, toolStripSeparator10, bringToFrontToolStripMenuItem, sendToBackToolStripMenuItem });
             imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             imageToolStripMenuItem.Size = new Size(52, 20);
             imageToolStripMenuItem.Text = "Image";
@@ -264,7 +266,7 @@
             // 
             bringToFrontToolStripMenuItem.Name = "bringToFrontToolStripMenuItem";
             bringToFrontToolStripMenuItem.ShortcutKeyDisplayString = "Shift+F";
-            bringToFrontToolStripMenuItem.Size = new Size(193, 22);
+            bringToFrontToolStripMenuItem.Size = new Size(205, 22);
             bringToFrontToolStripMenuItem.Text = "Bring To Front";
             bringToFrontToolStripMenuItem.Click += bringToFrontToolStripMenuItem_Click;
             // 
@@ -272,7 +274,7 @@
             // 
             sendToBackToolStripMenuItem.Name = "sendToBackToolStripMenuItem";
             sendToBackToolStripMenuItem.ShortcutKeyDisplayString = "Shift+B";
-            sendToBackToolStripMenuItem.Size = new Size(193, 22);
+            sendToBackToolStripMenuItem.Size = new Size(205, 22);
             sendToBackToolStripMenuItem.Text = "Send To Back";
             sendToBackToolStripMenuItem.Click += sendToBackToolStripMenuItem_Click;
             // 
@@ -288,6 +290,7 @@
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             aboutToolStripMenuItem.Size = new Size(116, 22);
             aboutToolStripMenuItem.Text = "About...";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // statusBar
             // 
@@ -647,7 +650,7 @@
             viewPort.Location = new Point(5, 14);
             viewPort.Margin = new Padding(5, 3, 5, 3);
             viewPort.Name = "viewPort";
-            viewPort.Size = new Size(624, 380);
+            viewPort.Size = new Size(626, 380);
             viewPort.TabIndex = 4;
             viewPort.Load += viewPort_Load;
             viewPort.Paint += ViewPortPaint;
@@ -688,9 +691,9 @@
             shapeBox.Dock = DockStyle.Right;
             shapeBox.FormattingEnabled = true;
             shapeBox.ItemHeight = 15;
-            shapeBox.Location = new Point(637, 14);
+            shapeBox.Location = new Point(639, 14);
             shapeBox.Name = "shapeBox";
-            shapeBox.Size = new Size(140, 380);
+            shapeBox.Size = new Size(138, 380);
             shapeBox.TabIndex = 7;
             shapeBox.SelectedIndexChanged += shapeBox_SelectedIndexChanged;
             // 
@@ -702,13 +705,12 @@
             label2.Size = new Size(115, 11);
             label2.TabIndex = 8;
             label2.Text = "Shape Box";
-            label2.Click += label2_Click;
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 81.28205F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.7179489F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 81.53846F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.4615383F));
             tableLayoutPanel1.Controls.Add(shapeBox, 1, 1);
             tableLayoutPanel1.Controls.Add(label2, 1, 0);
             tableLayoutPanel1.Controls.Add(viewPort, 0, 1);
@@ -720,6 +722,19 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 97.22922F));
             tableLayoutPanel1.Size = new Size(780, 397);
             tableLayoutPanel1.TabIndex = 9;
+            // 
+            // changeNameToolStripMenuItem
+            // 
+            changeNameToolStripMenuItem.Name = "changeNameToolStripMenuItem";
+            changeNameToolStripMenuItem.ShortcutKeyDisplayString = "Shift+R";
+            changeNameToolStripMenuItem.Size = new Size(205, 22);
+            changeNameToolStripMenuItem.Text = "Change Name...";
+            changeNameToolStripMenuItem.Click += changeNameToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator10
+            // 
+            toolStripSeparator10.Name = "toolStripSeparator10";
+            toolStripSeparator10.Size = new Size(202, 6);
             // 
             // MainForm
             // 
@@ -829,5 +844,7 @@
         private ListBox shapeBox;
         private Label label2;
         private TableLayoutPanel tableLayoutPanel1;
+        private ToolStripMenuItem changeNameToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator10;
     }
 }

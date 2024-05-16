@@ -17,5 +17,10 @@ namespace FreeDraw.GUI
             InitializeComponent();
             this.strLabel.Text = str;
         }
+
+        private void SaveForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
