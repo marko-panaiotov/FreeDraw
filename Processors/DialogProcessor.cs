@@ -548,33 +548,14 @@ namespace FreeDraw.Processors
 
                     System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Black, 1);
                     pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
                     grfx.Transform = sh.Transform;
                     grfx.DrawRectangle(pen, counture.Location.X, counture.Location.Y, counture.Width, counture.Height);
+
                     sh.DrawSelf(grfx);
+
                 }
             }
-        }
-
-        public List<PointF> GetHandlePoint(RectangleF shape)
-        {
-            List<PointF> result = new List<PointF>();
-            // Горня лява
-            result.Add(new PointF(shape.Left, shape.Top));
-
-            //Долна лява
-            result.Add(new PointF(shape.Left,
-                                shape.Top + shape.Height));
-
-            //Дясна долна
-            result.Add(new PointF(shape.Left + shape.Width,
-                                shape.Top + shape.Height));
-
-            //Дясна горна
-            result.Add(new PointF(shape.Left + shape.Width,
-                                shape.Top));
-
-
-            return result;
         }
 
         /// <summary>
@@ -594,10 +575,6 @@ namespace FreeDraw.Processors
                 }
                 lastLocation = p;
             }
-
-
-
-
         }
 
         #region Basic Operations
@@ -788,62 +765,6 @@ namespace FreeDraw.Processors
         }
 
         #endregion Undo/Redo
-
-        /* public void Rotate(float angle)
-         {
-             if (IsSelectionNotNull())
-             {
-                 if (GroupSelectionContains(Selection))
-                 {
-                     foreach (Shape sh in SelectionList)
-                     {
-                         //Ако е триъгълник въртим околко медицентъра
-                         if (sh is TriangleShape)
-                         {
-                             PointF C = sh.Gpath.PathPoints[0];
-                             PointF A = sh.Gpath.PathPoints[1];
-                             PointF B = sh.Gpath.PathPoints[2];
-
-                             float centerX = (A.X + B.X + C.X) / 3;
-                             float centerY = (A.Y + B.Y + C.Y) / 3;
-
-                             PointF center = new PointF(centerX, centerY);
-                             sh.Rotate(angle, center);
-                         }
-                         else
-                         {
-                             PointF center = new PointF(sh.Location.X + sh.Width / 2, sh.Location.Y + sh.Height / 2);
-                             PointF[] points = { center };
-                             sh.Transform.TransformPoints(points);
-                             sh.Rotate(angle, points[0]);
-                         }
-                     }
-                 }
-                 else
-                 {
-                     //Ако е триъгълник въртим околко медицентъра
-                     if (Selection is TriangleShape)
-                     {
-                         PointF C = Selection.Gpath.PathPoints[0];
-                         PointF A = Selection.Gpath.PathPoints[1];
-                         PointF B = Selection.Gpath.PathPoints[2];
-
-                         float centerX = (A.X + B.X + C.X) / 3;
-                         float centerY = (A.Y + B.Y + C.Y) / 3;
-
-                         PointF center = new PointF(centerX, centerY);
-                         Selection.Rotate(angle, center);
-                     }
-                     else
-                     {
-                         PointF center = new PointF(selection.Location.X + selection.Width / 2, selection.Location.Y + selection.Height / 2);
-                         PointF[] points = { center };
-                         Selection.Transform.TransformPoints(points);
-                         Selection.Rotate(angle, points[0]);
-                     }
-                 }
-             }
-         }*/
 
         public void Rotate(int angle)
         {

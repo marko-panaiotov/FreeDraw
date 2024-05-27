@@ -60,9 +60,10 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
 
-            Point[] p = { new Point((int)Rectangle.X + ((int)Rectangle.Width / 2), (int)Rectangle.Y),
-                          new Point((int)Rectangle.X, (int)(Rectangle.Y + Rectangle.Height)),
-                          new Point((int)(Rectangle.X + Rectangle.Width), (int)(Rectangle.Y + Rectangle.Height)) };
+            Point[] p = { new Point((int)Rectangle.X + 75, (int)Rectangle.Y),
+                          new Point((int)Rectangle.X, (int)(Rectangle.Y + 100)),
+                          new Point((int)(Rectangle.X + 150), (int)(Rectangle.Y + 100)) };
+
             grfx.FillPolygon(new SolidBrush(FillColor), p);
             grfx.DrawPolygon(new Pen(BorderColor, BorderWidth), p);
 
