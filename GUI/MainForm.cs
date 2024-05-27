@@ -874,12 +874,12 @@ namespace FreeDraw
 
         private void shapeBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty((System.String)shapeBox.SelectedValue))
+            if (!string.IsNullOrEmpty((string)shapeBox.SelectedValue))
             {
                 var str = shapeBox.SelectedValue;
 
                 var res = from s in dialogProcessor.ShapeList
-                          where s.Name == (System.String)str
+                          where s.Name == (string)str
                           select s;
 
                 if (res.Count() > 0)
@@ -888,7 +888,7 @@ namespace FreeDraw
                     viewPort.Invalidate();
                 }
             }
-            statusBar.Items[0].Text = "Draw: Селектиране на " + shapeBox.SelectedValue;
+            statusBar.Items[0].Text = "Селектиране на " + shapeBox.SelectedValue;
         }
 
         private void viewPort_Load(object sender, EventArgs e)
@@ -969,6 +969,37 @@ namespace FreeDraw
 
             statusBar.Items[0].Text = "Разгрупиране.";
             viewPort.Invalidate();
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.IsSelectionNotNull())
+            {
+                ChangeNameForm ch = new ChangeNameForm("Въведете ново име");
+                var oldName = dialogProcessor.Selection.Name;
+
+                statusBar.Items[0].Text = "Изберете ново име...";
+
+                if (ch.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ch.NewName))
+                {
+                    foreach (Shape sh in dialogProcessor.ShapeList)
+                    {
+                        if (ch.NewName != sh.Name)
+                        {
+                            dialogProcessor.Selection.Name = ch.NewName;
+
+                            statusBar.Items[0].Text = "" + oldName + " е с ново име: " + ch.NewName;
+                            dialogProcessor.ListBoxUpdate(shapeBox);
+                            viewPort.Invalidate();
+                        }
+                        else
+                        {
+                            statusBar.Items[0].Text = "Името '" + ch.NewName + "' вече съществува.";
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 }

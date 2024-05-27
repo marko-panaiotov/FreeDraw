@@ -111,6 +111,7 @@
             shapeBox = new ListBox();
             label2 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
+            renameToolStripMenuItem = new ToolStripMenuItem();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
@@ -684,35 +685,35 @@
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { deleteToolStripMenuItem, rotateToolStripMenuItem, groupToolStripMenuItem, unGroupToolStripMenuItem });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { deleteToolStripMenuItem, rotateToolStripMenuItem, groupToolStripMenuItem, unGroupToolStripMenuItem, renameToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(123, 92);
+            contextMenuStrip1.Size = new Size(181, 136);
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(122, 22);
+            deleteToolStripMenuItem.Size = new Size(180, 22);
             deleteToolStripMenuItem.Text = "Delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
             // rotateToolStripMenuItem
             // 
             rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
-            rotateToolStripMenuItem.Size = new Size(122, 22);
+            rotateToolStripMenuItem.Size = new Size(180, 22);
             rotateToolStripMenuItem.Text = "Rotate";
             rotateToolStripMenuItem.Click += rotateToolStripMenuItem_Click;
             // 
             // groupToolStripMenuItem
             // 
             groupToolStripMenuItem.Name = "groupToolStripMenuItem";
-            groupToolStripMenuItem.Size = new Size(122, 22);
+            groupToolStripMenuItem.Size = new Size(180, 22);
             groupToolStripMenuItem.Text = "Group";
             groupToolStripMenuItem.Click += groupToolStripMenuItem_Click;
             // 
             // unGroupToolStripMenuItem
             // 
             unGroupToolStripMenuItem.Name = "unGroupToolStripMenuItem";
-            unGroupToolStripMenuItem.Size = new Size(122, 22);
+            unGroupToolStripMenuItem.Size = new Size(180, 22);
             unGroupToolStripMenuItem.Text = "UnGroup";
             unGroupToolStripMenuItem.Click += unGroupToolStripMenuItem_Click;
             // 
@@ -777,6 +778,13 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 97.22922F));
             tableLayoutPanel1.Size = new Size(780, 397);
             tableLayoutPanel1.TabIndex = 9;
+            // 
+            // renameToolStripMenuItem
+            // 
+            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            renameToolStripMenuItem.Size = new Size(180, 22);
+            renameToolStripMenuItem.Text = "Rename";
+            renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -894,5 +902,6 @@
         private ToolStripMenuItem rotateToolStripMenuItem;
         private ToolStripMenuItem groupToolStripMenuItem;
         private ToolStripMenuItem unGroupToolStripMenuItem;
+        private ToolStripMenuItem renameToolStripMenuItem;
     }
 }
