@@ -24,7 +24,13 @@ namespace FreeDraw.Model
 
         public override Shape Clone(int offset)
         {
-            throw new NotImplementedException();
+            DotShape newDot = new DotShape(this);
+            newDot.Location = new PointF(newDot.Location.X + offset, newDot.Location.Y + offset);
+            newDot.FillColor = this.FillColor;
+            newDot.BorderColor = this.BorderColor;
+            newDot.BorderWidth = this.BorderWidth;
+            newDot.Name = this.Name+"Copy";
+            return newDot;
         }
 
         #endregion

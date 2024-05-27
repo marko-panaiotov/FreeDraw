@@ -27,6 +27,7 @@ namespace FreeDraw.Model
             newEllipse.FillColor = this.FillColor;
             newEllipse.BorderColor = this.BorderColor;
             newEllipse.BorderWidth = this.BorderWidth;
+            newEllipse.Name = this.Name+" Copy";
             return newEllipse;
         }
 

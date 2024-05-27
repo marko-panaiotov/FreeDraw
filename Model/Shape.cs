@@ -188,17 +188,6 @@ namespace FreeDraw.Model
             rotation += gradus;
         }
 
-        public virtual void Resize(float atX, float atY)
-        {
-            int backRotation = rotation;
-            Rotate(-backRotation);
-            rotation = backRotation;
-
-            Width += atX; Height += atY;
-
-            Rotate(backRotation);
-            rotation = backRotation;
-        }
 
         public virtual void DrawSelf(Graphics grfx){}
 
@@ -214,5 +203,7 @@ namespace FreeDraw.Model
             this.Transform.Scale(offsetX, offsetY);
             this.Transform.Translate(-center.X, -center.Y);
         }
+
+        
     }
 }

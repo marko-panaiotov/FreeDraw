@@ -126,6 +126,7 @@ namespace FreeDraw.Model
             newGroup.FillColor = this.FillColor;
             newGroup.BorderColor = this.BorderColor;
             newGroup.BorderWidth = this.BorderWidth;
+            newGroup.Name = this.Name+" Copy";
             return newGroup;
         }
     }

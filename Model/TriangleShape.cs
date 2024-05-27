@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 
 namespace FreeDraw.Model
 {
@@ -21,39 +23,18 @@ namespace FreeDraw.Model
 
         #endregion
 
-        private List<PointF> TriangleConstructor(PointF location, SizeF size)
+        public override Shape Clone(int offset)
         {
-            float triX, triY;
-
-            List<PointF> triPoints = new List<PointF>();
-            RectangleF r = new RectangleF(location, size);
-
-            // Най-горна точка на триъгълника.
-            triX = r.Left + (r.Width / 2);
-            triY = r.Top;
-
-            triPoints.Add(new PointF(triX, triY));
-
-            // Най-лява точка на триъгълника.
-            triX = r.Left;
-            triY = r.Top + r.Height;
-
-            triPoints.Add(new PointF(triX, triY));
-
-            // Най-дясна точка на триъгълника.
-            triX = r.Left + r.Width;
-            triY = r.Top + r.Height;
-
-            triPoints.Add(new PointF(triX, triY));
-
-            // Последната точка на триъгълник има същите
-            // координати със вървата.
-            triX = r.Left + (r.Width / 2);
-            triY = r.Top;
-            triPoints.Add(new PointF(triX, triY));
-
-            return triPoints;
+            TriangleShape newTriangle = new TriangleShape(this);
+            newTriangle.Location = new PointF(newTriangle.Location.X + offset, newTriangle.Location.Y + offset);
+            newTriangle.FillColor = this.FillColor;
+            newTriangle.BorderColor = this.BorderColor;
+            newTriangle.BorderWidth = this.BorderWidth;
+            newTriangle.Name = this.Name+" Copy";
+            return newTriangle;
+            
         }
+
         /// <summary>
         /// Проверка за принадлежност на точка point към правоъгълника.
         /// В случая на правоъгълник този метод може да не бъде пренаписван, защото
@@ -78,38 +59,17 @@ namespace FreeDraw.Model
         public override void DrawSelf(Graphics grfx)
         {
             base.DrawSelf(grfx);
-            PointF point1 = new PointF(150, 100);
-            PointF point2 = new PointF(100, 200);
-            PointF point3 = new PointF(200, 200);
 
-            PointF[] trianglePoints = { point1, point2, point3 };
+            Point[] p = { new Point((int)Rectangle.X + ((int)Rectangle.Width / 2), (int)Rectangle.Y),
+                          new Point((int)Rectangle.X, (int)(Rectangle.Y + Rectangle.Height)),
+                          new Point((int)(Rectangle.X + Rectangle.Width), (int)(Rectangle.Y + Rectangle.Height)) };
+            grfx.FillPolygon(new SolidBrush(FillColor), p);
+            grfx.DrawPolygon(new Pen(BorderColor, BorderWidth), p);
 
-            // Draw the triangle
-            grfx.FillPolygon(new SolidBrush(FillColor), trianglePoints);
-            grfx.DrawPolygon(new Pen(BorderColor, BorderWidth), trianglePoints);
-
-            //grfx.FillPolygon(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            //grfx.DrawEllipse(Pens.Black, Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-
-           /* Pen pencil = new Pen(BorderColor, BorderWidth);
-            SolidBrush brush = new SolidBrush(Color.FromArgb(Transperancy, FillColor));
-
-            PointF[] trianglePoints = TriangleConstructor(Location, Size).ToArray();
-
-            Gpath.Reset();
-            Gpath.AddLines(trianglePoints);
-            Gpath.Transform(this.Transform);
-
-            grfx.DrawPath(pencil, Gpath);
-            grfx.FillPath(brush, Gpath);*/
-//grfx.FillPolygon(new SolidBrush(FillColor), trianglePoints);
-            //grfx.DrawPolygon(new Pen(BorderColor), trianglePoints);
+           
 
         }
 
-        public override Shape Clone(int offset)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

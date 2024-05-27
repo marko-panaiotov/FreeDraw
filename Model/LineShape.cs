@@ -23,6 +23,7 @@ namespace FreeDraw.Model
         {
             LineShape newLine = new LineShape(this);
             newLine.Location = new PointF(newLine.Location.X + offset, newLine.Location.Y);
+            newLine.Name = this.Name+" Copy";
             //newLine.EndLocation = new PointF(newLine.EndLocation.X + offset, newLine.EndLocation.Y);
             return newLine;
         }
@@ -53,12 +54,14 @@ namespace FreeDraw.Model
         public override void DrawSelf(Graphics grfx)
         {
             base.DrawSelf(grfx);
-            // Pen p = new Pen(BorderColor, BorderWidth);
-            //grfx.FillPath(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawLine(new Pen(base.BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            
+            Pen blackPen = new Pen(base.BorderColor, BorderWidth);
 
-           // grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            //grfx.DrawEllipse(new Pen(BorderColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            PointF P1 = new PointF(Rectangle.X, Rectangle.Y);
+            PointF P2 = new PointF(Rectangle.X + Rectangle.Width, Rectangle.Y + Rectangle.Width);
+
+            grfx.DrawLine(blackPen, P1, P2);
+            grfx.ResetTransform();
 
         }
     }

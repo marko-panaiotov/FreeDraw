@@ -629,6 +629,7 @@ namespace FreeDraw
             dialogProcessor.Copy();
             dialogProcessor.Delete();
             dialogProcessor.SelectionList.Clear();
+            dialogProcessor.ListBoxUpdate(shapeBox);
 
             viewPort.Invalidate();
         }
@@ -639,6 +640,7 @@ namespace FreeDraw
             dialogProcessor.Copy();
             dialogProcessor.Delete();
             dialogProcessor.SelectionList.Clear();
+            dialogProcessor.ListBoxUpdate(shapeBox);
 
             viewPort.Invalidate();
         }
@@ -647,19 +649,21 @@ namespace FreeDraw
         {
             statusBar.Items[0].Text = "Копиране на селекция";
             dialogProcessor.Copy();
+            dialogProcessor.ListBoxUpdate(shapeBox);
             //viewPort.Invalidate();
         }
         private void Copy_Click(object sender, EventArgs e)
         {
             statusBar.Items[0].Text = "Копиране на селекция";
             dialogProcessor.Copy();
+            dialogProcessor.ListBoxUpdate(shapeBox);
         }
 
         private void PasteButton_Click(object sender, EventArgs e)
         {
             statusBar.Items[0].Text = "Поставяне...";
             dialogProcessor.Paste();
-
+            dialogProcessor.ListBoxUpdate(shapeBox);
             viewPort.Invalidate();
         }
 
@@ -667,7 +671,7 @@ namespace FreeDraw
         {
             statusBar.Items[0].Text = "Поставяне...";
             dialogProcessor.Paste();
-
+            dialogProcessor.ListBoxUpdate(shapeBox);
             viewPort.Invalidate();
         }
 
@@ -675,6 +679,7 @@ namespace FreeDraw
         {
             statusBar.Items[0].Text = "Изтриване...";
             dialogProcessor.Delete();
+            dialogProcessor.ListBoxUpdate(shapeBox);
             viewPort.Invalidate();
         }
 
@@ -682,6 +687,7 @@ namespace FreeDraw
         {
             statusBar.Items[0].Text = "Изтриване...";
             dialogProcessor.Delete();
+            dialogProcessor.ListBoxUpdate(shapeBox);
             viewPort.Invalidate();
         }
 

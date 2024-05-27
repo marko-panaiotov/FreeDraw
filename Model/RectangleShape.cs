@@ -28,6 +28,7 @@ namespace FreeDraw.Model
             newRect.FillColor = this.FillColor;
             newRect.BorderColor = this.BorderColor;
             newRect.BorderWidth = this.BorderWidth;
+            newRect.Name = this.Name+" Copy";
             return newRect;
         }
 

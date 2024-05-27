@@ -21,7 +21,13 @@ namespace FreeDraw.Model
 
         public override Shape Clone(int offset)
         {
-            throw new NotImplementedException();
+            CircleShape newCircle = new CircleShape(this);
+            newCircle.Location = new PointF(newCircle.Location.X + offset, newCircle.Location.Y + offset);
+            newCircle.FillColor = this.FillColor;
+            newCircle.BorderColor = this.BorderColor;
+            newCircle.BorderWidth = this.BorderWidth;
+            newCircle.Name = this.Name+" Copy";
+            return newCircle;
         }
 
         #endregion
@@ -52,13 +58,11 @@ namespace FreeDraw.Model
         public override void DrawSelf(Graphics grfx)
         {
             base.DrawSelf(grfx);
-            
-            //DrawBorder(grfx);
-            grfx.FillEllipse(new SolidBrush(Color.FromArgb(Transperancy, FillColor)), Rectangle.X, Rectangle.Y, 200, 200);
-            grfx.DrawEllipse(new Pen(base.BorderColor,BorderWidth), Rectangle.X, Rectangle.Y, 200, 200);
-            
+
+            grfx.FillEllipse(new SolidBrush(base.FillColor), Rectangle.X, Rectangle.Y, 200, 200);
+            grfx.DrawEllipse(new Pen(base.BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, 200, 200);
+
         }
 
-       
     }
 }
