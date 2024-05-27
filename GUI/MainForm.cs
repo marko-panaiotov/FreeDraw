@@ -912,7 +912,7 @@ namespace FreeDraw
                         if (ch.NewName != sh.Name)
                         {
                             dialogProcessor.Selection.Name = ch.NewName;
-                            
+
                             statusBar.Items[0].Text = "" + oldName + " е с ново име: " + ch.NewName;
                             dialogProcessor.ListBoxUpdate(shapeBox);
                             viewPort.Invalidate();
@@ -925,6 +925,43 @@ namespace FreeDraw
                     }
                 }
             }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Изтриване...";
+            dialogProcessor.Delete();
+            viewPort.Invalidate();
+        }
+
+        private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            statusBar.Items[0].Text = "Завъртане...";
+            dialogProcessor.Rotate(90);
+            statusBar.Items[0].Text = "Завъртане на дясно 90 градуса.";
+            viewPort.Invalidate();
+        }
+
+        private void groupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Group();
+
+            dialogProcessor.ListBoxUpdate(shapeBox);
+            shapeBox.SelectedItem = dialogProcessor.ShapeList.Last();
+
+            statusBar.Items[0].Text = "Групиране.";
+            viewPort.Invalidate();
+        }
+
+        private void unGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Ungroup();
+
+            dialogProcessor.ListBoxUpdate(shapeBox);
+            shapeBox.SelectedItem = dialogProcessor.Selection;
+
+            statusBar.Items[0].Text = "Разгрупиране.";
+            viewPort.Invalidate();
         }
     }
 }

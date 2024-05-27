@@ -30,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             mainMenu = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
@@ -51,6 +52,8 @@
             toolStripSeparator4 = new ToolStripSeparator();
             SelectAll = new ToolStripMenuItem();
             imageToolStripMenuItem = new ToolStripMenuItem();
+            changeNameToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator10 = new ToolStripSeparator();
             bringToFrontToolStripMenuItem = new ToolStripMenuItem();
             sendToBackToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
@@ -97,17 +100,21 @@
             ExpandButton = new ToolStripButton();
             ShrinkButton = new ToolStripButton();
             viewPort = new GUI.DoubleBufferedPanel();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            deleteToolStripMenuItem = new ToolStripMenuItem();
+            rotateToolStripMenuItem = new ToolStripMenuItem();
+            groupToolStripMenuItem = new ToolStripMenuItem();
+            unGroupToolStripMenuItem = new ToolStripMenuItem();
             colorPickerDialog = new ColorDialog();
             transperancyTrackBar = new TrackBar();
             label1 = new Label();
             shapeBox = new ListBox();
             label2 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
-            changeNameToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator10 = new ToolStripSeparator();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)transperancyTrackBar).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -261,6 +268,19 @@
             imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             imageToolStripMenuItem.Size = new Size(52, 20);
             imageToolStripMenuItem.Text = "Image";
+            // 
+            // changeNameToolStripMenuItem
+            // 
+            changeNameToolStripMenuItem.Name = "changeNameToolStripMenuItem";
+            changeNameToolStripMenuItem.ShortcutKeyDisplayString = "Shift+R";
+            changeNameToolStripMenuItem.Size = new Size(205, 22);
+            changeNameToolStripMenuItem.Text = "Change Name...";
+            changeNameToolStripMenuItem.Click += changeNameToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator10
+            // 
+            toolStripSeparator10.Name = "toolStripSeparator10";
+            toolStripSeparator10.Size = new Size(202, 6);
             // 
             // bringToFrontToolStripMenuItem
             // 
@@ -646,6 +666,7 @@
             // 
             // viewPort
             // 
+            viewPort.ContextMenuStrip = contextMenuStrip1;
             viewPort.Dock = DockStyle.Fill;
             viewPort.Location = new Point(5, 14);
             viewPort.Margin = new Padding(5, 3, 5, 3);
@@ -660,6 +681,40 @@
             viewPort.MouseMove += ViewPortMouseMove;
             viewPort.MouseUp += ViewPortMouseUp;
             viewPort.MouseWheel += ViewPortMouseWheel;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { deleteToolStripMenuItem, rotateToolStripMenuItem, groupToolStripMenuItem, unGroupToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(123, 92);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            deleteToolStripMenuItem.Size = new Size(122, 22);
+            deleteToolStripMenuItem.Text = "Delete";
+            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
+            // 
+            // rotateToolStripMenuItem
+            // 
+            rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
+            rotateToolStripMenuItem.Size = new Size(122, 22);
+            rotateToolStripMenuItem.Text = "Rotate";
+            rotateToolStripMenuItem.Click += rotateToolStripMenuItem_Click;
+            // 
+            // groupToolStripMenuItem
+            // 
+            groupToolStripMenuItem.Name = "groupToolStripMenuItem";
+            groupToolStripMenuItem.Size = new Size(122, 22);
+            groupToolStripMenuItem.Text = "Group";
+            groupToolStripMenuItem.Click += groupToolStripMenuItem_Click;
+            // 
+            // unGroupToolStripMenuItem
+            // 
+            unGroupToolStripMenuItem.Name = "unGroupToolStripMenuItem";
+            unGroupToolStripMenuItem.Size = new Size(122, 22);
+            unGroupToolStripMenuItem.Text = "UnGroup";
+            unGroupToolStripMenuItem.Click += unGroupToolStripMenuItem_Click;
             // 
             // colorPickerDialog
             // 
@@ -723,19 +778,6 @@
             tableLayoutPanel1.Size = new Size(780, 397);
             tableLayoutPanel1.TabIndex = 9;
             // 
-            // changeNameToolStripMenuItem
-            // 
-            changeNameToolStripMenuItem.Name = "changeNameToolStripMenuItem";
-            changeNameToolStripMenuItem.ShortcutKeyDisplayString = "Shift+R";
-            changeNameToolStripMenuItem.Size = new Size(205, 22);
-            changeNameToolStripMenuItem.Text = "Change Name...";
-            changeNameToolStripMenuItem.Click += changeNameToolStripMenuItem_Click;
-            // 
-            // toolStripSeparator10
-            // 
-            toolStripSeparator10.Name = "toolStripSeparator10";
-            toolStripSeparator10.Size = new Size(202, 6);
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -760,6 +802,7 @@
             statusBar.PerformLayout();
             speedMenu.ResumeLayout(false);
             speedMenu.PerformLayout();
+            contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)transperancyTrackBar).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
@@ -846,5 +889,10 @@
         private TableLayoutPanel tableLayoutPanel1;
         private ToolStripMenuItem changeNameToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator10;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem rotateToolStripMenuItem;
+        private ToolStripMenuItem groupToolStripMenuItem;
+        private ToolStripMenuItem unGroupToolStripMenuItem;
     }
 }
