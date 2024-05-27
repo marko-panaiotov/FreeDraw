@@ -33,13 +33,6 @@ namespace FreeDraw.Processors
 
         #region Properties
 
-        /* private List<Shape> selection = new List<Shape>();
-         public List<Shape> Selection
-         {
-             get { return selection; }
-             set { selection = value; }
-         }*/
-
         protected Shape selection;
         /// <summary>
         /// Shape елемент използвам при селекция.
@@ -166,9 +159,6 @@ namespace FreeDraw.Processors
         private int squareCount = 0;
         private int lineCount = 0;
         private int groupCount = 0;
-        private int pentaCount = 0;
-        private int polyCount = 0;
-        
 
         #endregion
 
@@ -442,74 +432,6 @@ namespace FreeDraw.Processors
             }
         }
         #endregion
-
-        #region Shape Options
-
-
-        /* /// <summary>
-         /// Задаване на прозрачност на запълващия цвят.
-         /// </summary>
-         public void SetTransperancy(Int32 transperancy)
-         {
-             if (IsSelectionNotNull())
-             {
-                 if (GroupSelectionContains(selection))
-                 {
-                     foreach (Shape sh in GroupSelection)
-                     {
-                         sh.Transperancy = transperancy;
-                     }
-                 }
-                 else
-                     selection.Transperancy = transperancy;
-             }
-         }
-
-         /// <summary>
-         /// Задаване на запълващ цвят.
-         /// </summary>
-         public void SetFillColor(Color color)
-         {
-             if (IsSelectionNotNull())
-             {
-                 if (GroupSelectionContains(selection))
-                 {
-                     foreach (Shape sh in GroupSelection)
-                     {
-                         sh.FillColor = color;
-                         if (sh.Transperancy == 0)
-                             sh.Transperancy = 255;
-                     }
-                 }
-                 else
-                 {
-                     selection.FillColor = color;
-                     if (selection.Transperancy == 0)
-                         selection.Transperancy = 255;
-                 }
-             }
-         }
-
-         /// <summary>
-         /// Задаване на цвят на линията
-         /// </summary>
-         public void SetBorderColor(Color color)
-         {
-             if (IsSelectionNotNull())
-             {
-                 if (GroupSelectionContains(selection))
-                 {
-                     foreach (Shape sh in GroupSelection)
-                     {
-                         sh.BorderColor = color;
-                     }
-                 }
-                 else
-                     selection.BorderColor = color;
-             }
-         }*/
-
-        #endregion Shape Options      
 
         /// <summary>
         /// Проверява дали дадена точка е в елемента.

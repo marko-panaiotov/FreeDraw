@@ -56,6 +56,7 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
 
+            grfx.Transform = this.Transform;
             grfx.FillRectangle(new SolidBrush(base.FillColor), Rectangle.X, Rectangle.Y, 100, 100);
             grfx.DrawRectangle(new Pen(base.BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, 100, 100);
 

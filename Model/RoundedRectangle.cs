@@ -73,6 +73,7 @@ namespace FreeDraw.Model
             path.AddArc(arc, 90, 90);
             path.CloseFigure();
 
+            grfx.Transform = this.Transform;
             grfx.FillPath(new SolidBrush(FillColor), path);
             grfx.DrawPath(new Pen(BorderColor,BorderWidth), path);
 

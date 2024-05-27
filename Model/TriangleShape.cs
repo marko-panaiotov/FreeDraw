@@ -64,13 +64,10 @@ namespace FreeDraw.Model
                           new Point((int)Rectangle.X, (int)(Rectangle.Y + 100)),
                           new Point((int)(Rectangle.X + 150), (int)(Rectangle.Y + 100)) };
 
+            grfx.Transform = this.Transform;
             grfx.FillPolygon(new SolidBrush(FillColor), p);
             grfx.DrawPolygon(new Pen(BorderColor, BorderWidth), p);
 
-           
-
         }
-
-       
     }
 }

@@ -937,6 +937,7 @@ namespace FreeDraw
         {
             statusBar.Items[0].Text = "Изтриване...";
             dialogProcessor.Delete();
+            dialogProcessor.ListBoxUpdate(shapeBox);
             viewPort.Invalidate();
         }
 

@@ -60,6 +60,7 @@ namespace FreeDraw.Model
             PointF P1 = new PointF(Rectangle.X, Rectangle.Y);
             PointF P2 = new PointF(Rectangle.X + Rectangle.Width, Rectangle.Y + Rectangle.Width);
 
+            grfx.Transform = this.Transform;
             grfx.DrawLine(blackPen, P1, P2);
             grfx.ResetTransform();
 

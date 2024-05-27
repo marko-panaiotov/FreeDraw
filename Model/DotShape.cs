@@ -60,6 +60,7 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
 
+            grfx.Transform = this.Transform;
             grfx.FillEllipse(new SolidBrush(base.FillColor), Rectangle.X - 3, Rectangle.Y - 3, 7, 7);
             grfx.DrawEllipse(new Pen(base.BorderColor,BorderWidth), Rectangle.X-3, Rectangle.Y-3, 7, 7);
         }

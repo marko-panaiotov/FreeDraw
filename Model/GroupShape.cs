@@ -110,7 +110,7 @@ namespace FreeDraw.Model
 
             foreach (Shape sh in subShape)
                 sh.DrawSelf(grfx);
-
+            grfx.Transform = this.Transform;
             // grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
             // grfx.DrawRectangle(new Pen(BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
         }
