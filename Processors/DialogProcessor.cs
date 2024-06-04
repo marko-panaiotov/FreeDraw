@@ -365,11 +365,11 @@ namespace FreeDraw.Processors
             if (selectionList.Count > 0)
             {
                 GroupShape group = new GroupShape();
-                RectangleF kontur = selectionList[0].Rectangle;
-                float minX = kontur.Left;
-                float minY = kontur.Top;
-                float maxRight = kontur.Right;
-                float maxBottom = kontur.Bottom;
+                RectangleF counture = selectionList[0].Rectangle;
+                float minX = counture.Left;
+                float minY = counture.Top;
+                float maxRight = counture.Right;
+                float maxBottom = counture.Bottom;
 
                 foreach (Shape sh in selectionList)
                 {
@@ -383,11 +383,11 @@ namespace FreeDraw.Processors
                 }
 
                 PointF location = new PointF(minX, minY);
-                kontur.Location = location;
-                kontur.Width = maxRight - minX;
-                kontur.Height = maxBottom - minY;
+                counture.Location = location;
+                counture.Width = maxRight - minX;
+                counture.Height = maxBottom - minY;
 
-                group.Rectangle = kontur;
+                group.Rectangle = counture;
                 if (CountShapes(group) <= groupCount)
                 {
                     group.Name = "Group " + (groupCount + 1);
@@ -399,12 +399,12 @@ namespace FreeDraw.Processors
                     groupCount = CountShapes(group);
                 }
 
-
+                group.Rectangle = counture;
                 ShapeList.Add(group);
                 selectionList.Clear();
                 selectionList.Add(group);
 
-                Selection = group;
+               // Selection = group;
 
             }
         }
@@ -473,9 +473,6 @@ namespace FreeDraw.Processors
 
                     grfx.Transform = sh.Transform;
                     grfx.DrawRectangle(pen, counture.Location.X, counture.Location.Y, counture.Width, counture.Height);
-
-                    sh.DrawSelf(grfx);
-
                 }
             }
         }
@@ -490,6 +487,7 @@ namespace FreeDraw.Processors
             {
                 foreach (Shape item in SelectionList)
                 {
+                    
                     //item.Location = new PointF(item.Location.X + p.X - lastLocation.X, item.Location.Y + p.Y - lastLocation.Y);
                     PointF offset = new PointF(p.X - lastLocation.X, p.Y - lastLocation.Y);
                     item.Translate(offset);
@@ -646,8 +644,8 @@ namespace FreeDraw.Processors
         /// </summary>
         public void UpdateUdnoList()
         {
-            //UnduRedoList.Insert(CurrentIndex, Clone(ShapeList));
-            UndoRedoList.Add(Clone(SelectionList));
+            //UndoRedoList.Insert(CurrentIndex, Clone(ShapeList));
+            UndoRedoList.Add(Clone(ShapeList));
 
             if (UndoRedoList.Count > 10) UndoRedoList.Remove(UndoRedoList.First());
 
@@ -715,57 +713,8 @@ namespace FreeDraw.Processors
             fileDialog.DefaultExt = "fd";
             fileDialog.CheckPathExists = true;
 
-            /*ImageFormat format;
-            switch (fileDialog.FilterIndex)
-            {
-                case 1:
-                    format = ImageFormat.Png;
-                    break;
-                case 2:
-                    format = ImageFormat.Jpeg;
-                    break;
-                default:
-                    format = ImageFormat.Jpeg;
-                    break;
-            }
-            DoubleBufferedPanel panel = new DoubleBufferedPanel();
-            panel.GetImageFromPanel();
-            panel.SaveImage(fileDialog, format);*/
         }
-        /*public void SaveAsImage()
-        {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.ValidateNames = true;
-            dlg.Filter = "Png Image (.png)|*.png|JPEG Image (.jpg)|*.jpg";
-
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                // Зареждане на изображението, което искате да запазите (този код може да бъде заменен със зареждане на вашето изображение)
-                //Bitmap bitmap = new Bitmap() ;
-                DoubleBufferedPanel panel=new DoubleBufferedPanel();
-                panel.GetImageFromPanel();
-                // Създаване на кодера за запазване в зависимост от избрания тип на файл
-                ImageFormat format;
-                switch (dlg.FilterIndex)
-                {
-                    case 1:
-                        format = ImageFormat.Png;
-                        break;
-                    case 2:
-                        format = ImageFormat.Jpeg;
-                        break;
-                    default:
-                        format = ImageFormat.Jpeg;
-                        break;
-                }
-
-                // Запазване на изображението
-               // panel.SaveImage(dlg.FileName, format);
-                //tmap.Save(dlg.FileName, format);
-
-
-            }
-        }*/
+        
         public void Expand()
         {
             
@@ -806,14 +755,6 @@ namespace FreeDraw.Processors
         public bool IsSelectionNotNull()
         {
             if (selection != null)
-                return true;
-            else
-                return false;
-        }
-
-        public bool GroupSelectionContains(Shape item)
-        {
-            if (SelectionList.Contains(item))
                 return true;
             else
                 return false;

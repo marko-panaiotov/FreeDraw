@@ -479,8 +479,8 @@ namespace FreeDraw
 
                 dialogProcessor.ControlKey = false;
 
-                //dialogProcessor.ComboboxUpdate(comboBox1);
-                //comboBox1.SelectedItem = dialogProcessor.ShapeList.Last();
+                dialogProcessor.ListBoxUpdate(shapeBox);
+                shapeBox.SelectedItem = dialogProcessor.ShapeList.Last();
             }
 
             statusBar.Items[0].Text = "Отваряне на " + openFileDialog.FileName;
@@ -701,11 +701,11 @@ namespace FreeDraw
         private void Undo_Click(object sender, EventArgs e)
         {
             dialogProcessor.Undo();
-            //dialogProcessor.ComboboxUpdate(comboBox1);
-            viewPort.Invalidate();
+            dialogProcessor.ListBoxUpdate(shapeBox);
+            //viewPort.Invalidate();
             if (dialogProcessor.UndoRedoList.Count < 1)
-
-                // Redo.Enabled = true;
+                Undo.Enabled= false;
+                 Redo.Enabled = true;
 
                 viewPort.Invalidate();
         }
@@ -713,8 +713,8 @@ namespace FreeDraw
         private void Redo_Click(object sender, EventArgs e)
         {
             dialogProcessor.Redo();
-            viewPort.Invalidate();
-            // dialogProcessor.ComboboxUpdate(comboBox1);
+            //viewPort.Invalidate();
+            dialogProcessor.ListBoxUpdate(shapeBox);
             if (dialogProcessor.CurrentIndex > 9)
 
                 viewPort.Invalidate();
@@ -734,6 +734,7 @@ namespace FreeDraw
                     }
 
                     dialogProcessor.UpdateUdnoList();
+                    Undo.Enabled = true;
                     viewPort.Invalidate();
                 }
             }

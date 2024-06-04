@@ -22,8 +22,8 @@ namespace FreeDraw.Model
 
         }
 
-        public GroupShape(Shape shape)
-            : base(shape)
+        public GroupShape(GroupShape rectangle)
+            : base(rectangle)
         {
 
         }
@@ -59,7 +59,7 @@ namespace FreeDraw.Model
             set
             {
                 fillColor = value;
-                foreach (Shape subsh in subShape)
+                foreach (Shape subsh in SubShape)
                     subsh.FillColor = value;
             }
         }
@@ -71,7 +71,7 @@ namespace FreeDraw.Model
             set
             {
                 borderColor = value;
-                foreach (Shape subsh in subShape)
+                foreach (Shape subsh in SubShape)
                     subsh.BorderColor = value;
             }
         }
@@ -83,7 +83,7 @@ namespace FreeDraw.Model
             set
             {
                 borderWidth = value;
-                foreach (Shape subsh in subShape)
+                foreach (Shape subsh in SubShape)
                     subsh.BorderWidth = value;
             }
         }
@@ -92,7 +92,7 @@ namespace FreeDraw.Model
 
         public override bool Contains(PointF point)
         {
-            foreach (Shape sh in subShape)
+            foreach (Shape sh in SubShape)
             {
                 if (sh.Contains(point)) return true;
             }
@@ -103,7 +103,7 @@ namespace FreeDraw.Model
         {
             base.Translate(vector);
 
-            foreach (Shape sh in subShape)
+            foreach (Shape sh in SubShape)
             {
                 sh.Translate(vector);
             }
@@ -113,7 +113,7 @@ namespace FreeDraw.Model
         {
             base.Translate(offsetX, offsetY);
 
-            foreach (Shape sh in subShape)
+            foreach (Shape sh in SubShape)
                 sh.Translate(offsetX, offsetY);
         }
 
@@ -121,7 +121,7 @@ namespace FreeDraw.Model
         {
             base.Rotate(gradus);
 
-            foreach (Shape sh in subShape)
+            foreach (Shape sh in SubShape)
             {
                 sh.Rotate(gradus);
             }
@@ -131,7 +131,7 @@ namespace FreeDraw.Model
         {
             base.Rotate(angle, center);
 
-            foreach (Shape sh in subShape)
+            foreach (Shape sh in SubShape)
                 sh.Rotate(angle, center);
         }
 
@@ -139,7 +139,7 @@ namespace FreeDraw.Model
         {
             base.Scale(offsetX, offsetY, center);
 
-            foreach (Shape sh in subShape)
+            foreach (Shape sh in SubShape)
             {
                 sh.Scale(offsetX, offsetY, center);
             }
@@ -149,9 +149,11 @@ namespace FreeDraw.Model
         {
             base.DrawSelf(grfx);
 
+            //grfx.ResetTransform();
+            //grfx.DrawRectangles(new RectangleF(this.Location, this.Size));
             grfx.Transform = this.Transform;
 
-            foreach (Shape sh in subShape)
+            foreach (Shape sh in SubShape)
             {
                 sh.DrawSelf(grfx);
             }
