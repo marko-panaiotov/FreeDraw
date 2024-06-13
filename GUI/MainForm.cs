@@ -149,22 +149,6 @@ namespace FreeDraw
             #region Esc Key
             if (e.KeyCode == Keys.Escape)
             {
-                /*if (DrawPolygon.Checked && polyPoints.Count > 0)
-                {
-                    polyPoints.Clear();
-                }
-                else
-                {
-                    DrawEllipse.Checked = false;
-                    DrawRectangle.Checked = false;
-                    DrawLine.Checked = false;
-                    DrawPolygon.Checked = false;
-                    DrawTriangle.Checked = false;
-                    DrawPentagon.Checked = false;
-                    dialogProcessor.IsDrawing = false;
-                    pickUpSpeedButton.Checked = true;
-                }
-                dialogProcessor.GroupSelection.Clear();*/
                 viewPort.Invalidate();
             }
             #endregion Esc Key
@@ -305,7 +289,6 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomSquare();
 
-            //shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат";
             dialogProcessor.ListBoxUpdate(shapeBox);
 
@@ -316,7 +299,6 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomTriangle();
 
-            //shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
             dialogProcessor.ListBoxUpdate(shapeBox);
 
@@ -327,7 +309,6 @@ namespace FreeDraw
         {
             dialogProcessor.AddRandomLine();
 
-            //shapeBox.Items.Add(dialogProcessor.ShapeList.Last().Name);
             statusBar.Items[0].Text = "Последно действие: Рисуване на права";
             dialogProcessor.ListBoxUpdate(shapeBox);
 
@@ -437,7 +418,6 @@ namespace FreeDraw
         {
             pickUpSpeedButton.Checked = true;
             dialogProcessor.IsDrawing = false;
-            // polyPoints.Clear();
             viewPort.Invalidate();
         }
 
