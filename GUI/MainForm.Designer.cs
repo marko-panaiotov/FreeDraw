@@ -105,13 +105,14 @@
             rotateToolStripMenuItem = new ToolStripMenuItem();
             groupToolStripMenuItem = new ToolStripMenuItem();
             unGroupToolStripMenuItem = new ToolStripMenuItem();
+            renameToolStripMenuItem = new ToolStripMenuItem();
             colorPickerDialog = new ColorDialog();
             transperancyTrackBar = new TrackBar();
             label1 = new Label();
             shapeBox = new ListBox();
             label2 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
-            renameToolStripMenuItem = new ToolStripMenuItem();
+            shape8Button = new ToolStripButton();
             mainMenu.SuspendLayout();
             statusBar.SuspendLayout();
             speedMenu.SuspendLayout();
@@ -332,7 +333,7 @@
             // speedMenu
             // 
             speedMenu.AutoSize = false;
-            speedMenu.Items.AddRange(new ToolStripItem[] { pickUpSpeedButton, toolStripSeparator1, drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator5, groupButton, unGroupButton, toolStripSeparator7, Stroke, toolStripSeparator6, CutButton, CopyButton, PasteButton, DeleteButton, toolStripSeparator9, Rotation, toolStripSeparator8, ExpandButton, ShrinkButton });
+            speedMenu.Items.AddRange(new ToolStripItem[] { pickUpSpeedButton, toolStripSeparator1, drawDotSpeedButton, drawLineSpeedButton, drawCircleSpeedButton, drawRectangleSpeedButton, drawTriangleSpeedButton, pickColorButton, toolStripSeparator5, groupButton, unGroupButton, toolStripSeparator7, Stroke, toolStripSeparator6, CutButton, CopyButton, PasteButton, DeleteButton, toolStripSeparator9, Rotation, toolStripSeparator8, ExpandButton, ShrinkButton, shape8Button });
             speedMenu.Location = new Point(0, 24);
             speedMenu.Name = "speedMenu";
             speedMenu.Size = new Size(780, 45);
@@ -687,35 +688,42 @@
             // 
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { deleteToolStripMenuItem, rotateToolStripMenuItem, groupToolStripMenuItem, unGroupToolStripMenuItem, renameToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(181, 136);
+            contextMenuStrip1.Size = new Size(123, 114);
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(180, 22);
+            deleteToolStripMenuItem.Size = new Size(122, 22);
             deleteToolStripMenuItem.Text = "Delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
             // rotateToolStripMenuItem
             // 
             rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
-            rotateToolStripMenuItem.Size = new Size(180, 22);
+            rotateToolStripMenuItem.Size = new Size(122, 22);
             rotateToolStripMenuItem.Text = "Rotate";
             rotateToolStripMenuItem.Click += rotateToolStripMenuItem_Click;
             // 
             // groupToolStripMenuItem
             // 
             groupToolStripMenuItem.Name = "groupToolStripMenuItem";
-            groupToolStripMenuItem.Size = new Size(180, 22);
+            groupToolStripMenuItem.Size = new Size(122, 22);
             groupToolStripMenuItem.Text = "Group";
             groupToolStripMenuItem.Click += groupToolStripMenuItem_Click;
             // 
             // unGroupToolStripMenuItem
             // 
             unGroupToolStripMenuItem.Name = "unGroupToolStripMenuItem";
-            unGroupToolStripMenuItem.Size = new Size(180, 22);
+            unGroupToolStripMenuItem.Size = new Size(122, 22);
             unGroupToolStripMenuItem.Text = "UnGroup";
             unGroupToolStripMenuItem.Click += unGroupToolStripMenuItem_Click;
+            // 
+            // renameToolStripMenuItem
+            // 
+            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            renameToolStripMenuItem.Size = new Size(122, 22);
+            renameToolStripMenuItem.Text = "Rename";
+            renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
             // 
             // colorPickerDialog
             // 
@@ -779,12 +787,15 @@
             tableLayoutPanel1.Size = new Size(780, 397);
             tableLayoutPanel1.TabIndex = 9;
             // 
-            // renameToolStripMenuItem
+            // shape8Button
             // 
-            renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            renameToolStripMenuItem.Size = new Size(180, 22);
-            renameToolStripMenuItem.Text = "Rename";
-            renameToolStripMenuItem.Click += renameToolStripMenuItem_Click;
+            shape8Button.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            shape8Button.Image = (Image)resources.GetObject("shape8Button.Image");
+            shape8Button.ImageTransparentColor = Color.Magenta;
+            shape8Button.Name = "shape8Button";
+            shape8Button.Size = new Size(23, 42);
+            shape8Button.Text = "shape8";
+            shape8Button.Click += shape8Button_Click;
             // 
             // MainForm
             // 
@@ -903,5 +914,6 @@
         private ToolStripMenuItem groupToolStripMenuItem;
         private ToolStripMenuItem unGroupToolStripMenuItem;
         private ToolStripMenuItem renameToolStripMenuItem;
+        private ToolStripButton shape8Button;
     }
 }

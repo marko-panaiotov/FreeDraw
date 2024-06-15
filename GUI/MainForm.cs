@@ -315,6 +315,17 @@ namespace FreeDraw
             viewPort.Invalidate();
         }
 
+
+        private void shape8Button_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomShape8();
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на Фигура 8";
+            dialogProcessor.ListBoxUpdate(shapeBox);
+
+            viewPort.Invalidate();
+        }
+
         /// <summary>
         /// Прихващане на координатите при натискането на бутон на мишката и проверка (в обратен ред) дали не е
         /// щракнато върху елемент. Ако е така то той се отбелязва като селектиран и започва процес на "влачене".
@@ -684,10 +695,10 @@ namespace FreeDraw
             dialogProcessor.ListBoxUpdate(shapeBox);
             //viewPort.Invalidate();
             if (dialogProcessor.UndoRedoList.Count < 1)
-                Undo.Enabled= false;
-                 Redo.Enabled = true;
+                Undo.Enabled = false;
+            Redo.Enabled = true;
 
-                viewPort.Invalidate();
+            viewPort.Invalidate();
         }
 
         private void Redo_Click(object sender, EventArgs e)
@@ -982,6 +993,7 @@ namespace FreeDraw
                 }
             }
         }
+
     }
 }
 

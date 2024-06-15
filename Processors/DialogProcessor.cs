@@ -159,6 +159,7 @@ namespace FreeDraw.Processors
         private int squareCount = 0;
         private int lineCount = 0;
         private int groupCount = 0;
+        private int shape8Count = 0;
 
         #endregion
 
@@ -357,6 +358,31 @@ namespace FreeDraw.Processors
 
             ShapeList.Add(line);
         }
+
+        public void AddRandomShape8()
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(100, 1000);
+            int y = rnd.Next(100, 600);
+
+            Shape8 shape8= new Shape8(new Rectangle(x, y, 100, 200));
+
+            shape8.FillColor = System.Drawing.Color.White;
+
+            if (CountShapes(shape8) <= shape8Count)
+            {
+                shape8.Name = "Shape8 " + (shape8Count + 1);
+                shape8Count++;
+            }
+            else
+            {
+                shape8.Name = "Shape8 " + CountShapes(shape8);
+                shape8Count = CountShapes(shape8);
+            }
+
+            ShapeList.Add(shape8);
+        }
+
         #endregion Creating Shapes
 
         #region Group and UnGroup

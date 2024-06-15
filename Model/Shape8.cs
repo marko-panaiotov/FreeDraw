@@ -1,35 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FreeDraw.Model
 {
-    [Serializable] // za zapisvane na fail
-    public class RectangleShape : Shape
+    [Serializable]
+    public class Shape8 : Shape
     {
         #region Constructor
 
-        public RectangleShape(RectangleF rect) : base(rect)
+        public Shape8(RectangleF rect) : base(rect)
         {
         }
 
-        public RectangleShape(RectangleShape rectangle) : base(rectangle)
+        public Shape8(Shape8 shape8) : base(shape8)
         {
         }
 
         public override Shape Clone(int offset)
         {
-            RectangleShape newRect = new RectangleShape(this);
-            newRect.Location = new PointF(newRect.Location.X + offset, newRect.Location.Y + offset);
-            newRect.FillColor = this.FillColor;
-            newRect.BorderColor = this.BorderColor;
-            newRect.BorderWidth = this.BorderWidth;
-            newRect.Name = this.Name+" Copy";
-            return newRect;
+            Shape8 newShape8 = new Shape8(this);
+            newShape8.Location = new PointF(newShape8.Location.X + offset, newShape8.Location.Y + offset);
+            newShape8.FillColor = this.FillColor;
+            newShape8.BorderColor = this.BorderColor;
+            newShape8.BorderWidth = this.BorderWidth;
+            newShape8.Name = this.Name + " Copy";
+            return newShape8;
         }
 
         #endregion
@@ -60,10 +58,20 @@ namespace FreeDraw.Model
             base.DrawSelf(grfx);
 
             grfx.Transform = this.Transform;
-            grfx.FillRectangle(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawRectangle(new Pen(BorderColor, BorderWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+          
+            grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, 200, 200);
+            grfx.DrawEllipse(new Pen(base.BorderColor,BorderWidth), Rectangle.X, Rectangle.Y, 200, 200);
 
-           
+            PointF p1 = new PointF(Rectangle.X, Rectangle.Y + 200 / 2);
+            PointF p2 = new PointF(Rectangle.X + 200, Rectangle.Y + 200 / 2);
+
+            PointF p3 = new PointF(Rectangle.X + 200 / 2, Rectangle.Y);
+            PointF p4 = new PointF(Rectangle.X + 200 / 2, Rectangle.Y + 200);
+
+
+            grfx.DrawLine(new Pen(base.BorderColor, BorderWidth), p1, p2);
+            grfx.DrawLine(new Pen(base.BorderColor, BorderWidth), p3, p4);
+
 
         }
     }
